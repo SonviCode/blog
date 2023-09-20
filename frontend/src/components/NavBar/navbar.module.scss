@@ -1,0 +1,29 @@
+.list_links {
+  display: flex;
+  gap: 20px;
+
+  li {
+    list-style: none;
+    position: relative;
+  }
+
+  .active_link {
+    font-weight: 800;
+  }
+}
+
+.hamburger {
+  display: none;
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 880px) {
+  .hamburger {
+    display: block;
+  }
+
+  .list_links {
+    display: none;
+  }
+}
