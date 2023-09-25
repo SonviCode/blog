@@ -56,3 +56,15 @@ a,
 button {
   cursor: pointer;
 }
+
+.container_aside {
+  display: flex;
+  margin: 20px 0;
+}
+
+.section_aside_left {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 80%;
+}

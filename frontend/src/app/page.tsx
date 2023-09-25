@@ -6,6 +6,7 @@ import Link from "next/link";
 
 const listArticles = [
   {
+    id: 1,
     date: "2023-08-12",
     title: "Test",
     img: "/IMG_1371.JPG",
@@ -14,6 +15,7 @@ const listArticles = [
     category: "montagne",
   },
   {
+    id: 2,
     date: "2020-05-10",
     title: "La traversée des Vosges",
     img: "/IMG_1371.JPG",
@@ -34,19 +36,21 @@ export default function Home() {
       <ul className={styles.category}>
         {LIST_CATEGORY.map((category, i) => (
           <li key={i} style={{ background: category.color }}>
-            <Image
-              src={category.img}
-              alt={category.name}
-              width={20}
-              height={20}
-            />
-            <p>{category.name}</p>
+            <Link href={`/category/${category.name}`}>
+              <Image
+                src={category.img}
+                alt={category.name}
+                width={20}
+                height={20}
+              />
+              <p>{category.name}</p>
+            </Link>
           </li>
         ))}
       </ul>
       <h2>Articles récents</h2>
-      <div className={styles.container}>
-        <section className={styles.section_article}>
+      <div className="container_aside">
+        <section className="section_aside_left">
           {listArticles.map((article, i) => (
             <div key={i} className={styles.article}>
               <div className={styles.container_img}>
@@ -58,7 +62,7 @@ export default function Home() {
                 </p>
                 <h1>{article.title}</h1>
                 <p>{article.content}</p>
-                <Link href="/">Lire plus</Link>
+                <Link href={`/article/${article.id}`}>Lire plus</Link>
               </div>
             </div>
           ))}

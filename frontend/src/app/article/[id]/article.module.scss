@@ -1,0 +1,18 @@
+.container_title {
+  display: flex;
+
+  div {
+    flex: 1;
+    display: flex;
+  }
+
+  .info_title {
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+        font-size: 40px;
+        margin: 40px 0;
+    }
+  }
+}
