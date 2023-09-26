@@ -4,6 +4,8 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import { authSuccess, incorrectCredential } from "../constants/constants";
 import jwt from "jsonwebtoken";
+import { User } from "../models/user.model";
+import { MysqlError } from "mysql";
 
 dotenv.config();
 
@@ -13,23 +15,27 @@ dotenv.config();
 export const getUsers = (_req: Request, res: Response, _next: NextFunction) => {
   const sql = process.env.SQl_GET_USERS!;
 
-  database.query(sql, (err, data) => {
+  database.query(sql, (err: MysqlError | null, users: User[]) => {
     if (err) res.status(400).json(err);
 
-    res.status(200).json(data);
+    res.status(200).json(users);
   });
 };
 
 /**
  * Function to get one user
  */
-export const getUserById = (req: Request, res: Response, _next: NextFunction) => {
+export const getUserById = (
+  req: Request,
+  res: Response,
+  _next: NextFunction
+) => {
   const sql = process.env.SQl_GET_USER_BY_ID!;
 
-  database.query(sql, [req.params.id], (err, data) => {
+  database.query(sql, [req.params.id], (err, user: User) => {
     if (err) res.status(400).json(err);
 
-    res.status(200).json(data);
+    res.status(200).json(user);
   });
 };
 

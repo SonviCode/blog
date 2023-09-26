@@ -1,0 +1,15 @@
+.info_user {
+  padding: 20px;
+  box-shadow: var(--box-shadow);
+  border-radius: 20px;
+}
+
+.container_img {
+  width: 150px;
+  height: 150px;
+  position: relative;
+
+  img {
+    border-radius: 100%;
+  }
+}

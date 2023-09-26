@@ -3,6 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkIfEmailAlreadyExist = void 0;
 const connexion_1 = require("../DB/connexion");
 const constants_1 = require("../constants/constants");
+/**
+ * Middleware to check if the email already exist - when the user want to sign up
+ */
 const checkIfEmailAlreadyExist = (req, res, next) => {
     const sql = process.env.SQL_CHECK_EMAIL;
     const { email } = req.body;
@@ -12,7 +15,7 @@ const checkIfEmailAlreadyExist = (req, res, next) => {
         if (err)
             return res.status(500).json(err);
         if (rows.length > 0)
-            return res.status(401).json({ message: constants_1.incorrectCredential });
+            return res.status(401).json({ message: constants_1.emailAlreadyUse });
         next();
     });
 };

@@ -1,7 +1,10 @@
-import { database } from "../DB/connexion";
 import { NextFunction, Request, Response } from "express";
-import { emailNotFound, incorrectCredential } from "../constants/constants";
+import { database } from "../DB/connexion";
+import { emailAlreadyUse, emailNotFound } from "../constants/constants";
 
+/**
+ * Middleware to check if the email already exist - when the user want to sign up
+ */
 export const checkIfEmailAlreadyExist = (
   req: Request,
   res: Response,
@@ -17,7 +20,7 @@ export const checkIfEmailAlreadyExist = (
     if (err) return res.status(500).json(err);
 
     if (rows.length > 0)
-      return res.status(401).json({ message: incorrectCredential });
+      return res.status(401).json({ message: emailAlreadyUse });
 
     next();
   });

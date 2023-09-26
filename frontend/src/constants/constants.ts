@@ -1,3 +1,11 @@
+// API
+const API_ROOTDIR = "http://localhost:5000/api/";
+export const API_LOGIN = API_ROOTDIR + "auth/login";
+export const APi_SIGNUP = API_ROOTDIR + "auth/signup"
+
+// ERROR MESSAGE RESPONSE
+export const INPUT_EMPTY = "Un ou plusieurs champs sont vides";
+
 export const NAV_LINKS = [
   {
     href: "/",
@@ -12,7 +20,7 @@ export const NAV_LINKS = [
     name: "À propos",
   },
   {
-    href: "/auth",
+    href: "/account",
     name: "Connexion",
   },
 ];
@@ -48,4 +56,4 @@ export const LIST_CATEGORY = [
 export const BLOG_NAME = "Sonvic'o Blog";
 
 export const PITCH_PRESENTATION =
-  "Passionné par le développement d'application mais également par plein d'autres choses, j'ai décidé de mettre en pratique mes compétences pour pouvoir partager mes autres passions.";
+  "Passionné par le développement d'application mais pas que, j'ai décidé de mettre en pratique mes compétences pour pouvoir partager mes autres passions.";

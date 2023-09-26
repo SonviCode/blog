@@ -6,6 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const constants_1 = require("../constants/constants");
+/**
+ * Middleware to check if the token is good
+ */
 const checkToken = (req, res, next) => {
     try {
         const token = req.headers.authorization.split(" ")[1];

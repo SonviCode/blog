@@ -1,0 +1,65 @@
+// LOGIN AND SIGNUP
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin: 20px;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    input {
+      border-radius: 4px;
+      border: 1px solid gray;
+      padding: 10px;
+    }
+
+    svg {
+      position: absolute;
+      right: 10px;
+      top: 30px;
+      cursor: pointer;
+    }
+  }
+
+  button {
+    border-radius: 4px;
+    border: none;
+    background-color: var(--green);
+    color: var(--white);
+    padding: 10px;
+  }
+
+  .error_msg {
+    font-style: italic;
+    color: var(--red_error);
+  }
+}
+
+// CONNECT MODAL
+.auth_container {
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--box-shadow);
+  border-radius: 20px;
+  padding: 20px 40px 40px 40px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.btn_container {
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    border: none;
+    background: none;
+    margin-bottom: 20px;
+  }
+
+  .is_active {
+    font-weight: bold;
+  }
+}

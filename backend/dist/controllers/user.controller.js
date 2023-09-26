@@ -24,10 +24,10 @@ dotenv_1.default.config();
  */
 const getUsers = (_req, res, _next) => {
     const sql = process.env.SQl_GET_USERS;
-    connexion_1.database.query(sql, (err, data) => {
+    connexion_1.database.query(sql, (err, users) => {
         if (err)
             res.status(400).json(err);
-        res.status(200).json(data);
+        res.status(200).json(users);
     });
 };
 exports.getUsers = getUsers;
@@ -36,10 +36,10 @@ exports.getUsers = getUsers;
  */
 const getUserById = (req, res, _next) => {
     const sql = process.env.SQl_GET_USER_BY_ID;
-    connexion_1.database.query(sql, [req.params.id], (err, data) => {
+    connexion_1.database.query(sql, [req.params.id], (err, user) => {
         if (err)
             res.status(400).json(err);
-        res.status(200).json(data);
+        res.status(200).json(user);
     });
 };
 exports.getUserById = getUserById;
