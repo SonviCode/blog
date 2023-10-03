@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
-import Providers from "@/redux/Provider";
+import ReduxProvider from "@/redux/Provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.scss";
@@ -20,11 +20,11 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={inter.className}>
-        <Providers>
+        <ReduxProvider>
           <Header />
           {children}
           <Footer />
-        </Providers>
+        </ReduxProvider>
       </body>
     </html>
   );
