@@ -11,7 +11,7 @@ const constants_1 = require("../constants/constants");
  */
 const checkToken = (req, res, next) => {
     try {
-        const token = req.headers.authorization.split(" ")[1];
+        const token = req.cookies.jwt_token;
         const decodedToken = jsonwebtoken_1.default.verify(token, process.env.JWT_RANDOM_TOKEN);
         const id = decodedToken.id;
         Object.assign(req, { auth: id });

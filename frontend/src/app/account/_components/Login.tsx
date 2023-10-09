@@ -1,6 +1,7 @@
 "use client";
 
-import { API_LOGIN, INPUT_EMPTY } from "@/constants/constants";
+import { INPUT_EMPTY } from "@/constants/constants";
+import { fetchLogin } from "@/service/userService";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FormEvent, useState } from "react";
@@ -21,17 +22,7 @@ export default function Login() {
       setMsg(INPUT_EMPTY);
     }
 
-    fetch(API_LOGIN, {
-      method: "POST",
-      headers: {
-        Accept: "application.json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    })
-      .then((res) => res.json())
-      .then((json) => setMsg(json.message))
-      .catch((error: any) => console.log(error));
+    fetchLogin(email, password, setMsg);
   };
 
   return (

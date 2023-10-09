@@ -8,10 +8,14 @@ const express_1 = __importDefault(require("express"));
 const connexion_1 = require("./DB/connexion");
 const article_route_1 = __importDefault(require("./routes/article.route"));
 const user_route_1 = __importDefault(require("./routes/user.route"));
+const category_route_1 = __importDefault(require("./routes/category.route"));
+const path_1 = __importDefault(require("path"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const app = (0, express_1.default)();
 /**
  * CONFIG
  */
+app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
@@ -26,6 +30,8 @@ app.use((0, cors_1.default)({
 /**
  * ROUTER
  */
+app.use("/images", express_1.default.static(path_1.default.join(__dirname, "images")));
 app.use("/api/auth", user_route_1.default);
 app.use("/api/article", article_route_1.default);
+app.use("/api/category", category_route_1.default);
 exports.default = app;

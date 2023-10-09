@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.signUp = exports.getUserById = exports.getUsers = void 0;
+exports.checkCookies = exports.updateUser = exports.login = exports.signUp = exports.getUserById = exports.getUsers = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -68,7 +68,7 @@ exports.getUserById = getUserById;
 const signUp = (req, res) => {
     UserModel.save(Object.assign({}, req.body))
         .then(() => res.status(201).json({ message: constants_1.userCreated }))
-        .catch((error) => res.status(500).json({ error }));
+        .catch((error) => res.status(400).json({ error }));
 };
 exports.signUp = signUp;
 /**
@@ -80,14 +80,37 @@ const login = (req, res) => {
         .then((user) => __awaiter(void 0, void 0, void 0, function* () {
         const isValid = yield bcrypt_1.default.compare(req.body.password, user.password);
         if (!isValid)
-            return res.status(401).json({ message: constants_1.incorrectCredential });
+            return res.status(403).json({ message: constants_1.incorrectCredential });
         // CREATE THE TOKEN WITH JWT
         const id = user.id;
-        const token = jsonwebtoken_1.default.sign({ id }, process.env.JWT_RANDOM_TOKEN, {
+        const role = user.role;
+        const token = jsonwebtoken_1.default.sign({ id, role }, process.env.JWT_RANDOM_TOKEN, {
             expiresIn: "1h",
         });
-        res.status(200).json({ message: constants_1.authSuccess, token });
+        res
+            .cookie("jwt_token", token, {
+            httpOnly: true,
+            secure: false,
+            maxAge: 3600000, // durée de validité du token, en secondes
+        })
+            .status(200)
+            .json({ message: constants_1.authSuccess, token, id });
     }))
-        .catch(() => res.status(404).json({ message: constants_1.userNotFound }));
+        .catch(() => res.status(403).json({ message: constants_1.incorrectCredential }));
 };
 exports.login = login;
+/**
+ * Function to login and get the token
+ * @param req.body
+ */
+const updateUser = (req, res) => {
+    UserModel.findOneAndUpdate([Object.assign({}, req.body), { id: parseInt(req.params.id) }])
+        .then((user) => res.status(200).json(user))
+        .catch((error) => res.status(404).json({ error }));
+};
+exports.updateUser = updateUser;
+const checkCookies = (req, res) => {
+    console.log(req.auth);
+    res.status(200).json({ id: req.auth });
+};
+exports.checkCookies = checkCookies;

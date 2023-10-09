@@ -1,8 +1,6 @@
-import bcrypt from "bcrypt";
 import { database } from "../DB/connexion";
-import { userNotFound } from "../constants/constants";
-
-const promisify = require("util").promisify;
+import { hashPassword } from "../service/hash.service";
+import { v4 as uuidv4 } from "uuid";
 
 export interface UserInterface {
   id: number;
@@ -14,29 +12,37 @@ export interface UserInterface {
 }
 
 export const save = async (body: UserInterface) => {
-  const hash = await bcrypt.hash(body.password!, 10);
-  body.password = hash;
+  await hashPassword(body);
   const parameter = Object.values(body);
   const sql = process.env.SQL_SIGNUP!;
 
+  // ADD UUID
+  parameter.unshift(uuidv4());
   // ADD DATE IN THE GOOD INDEX
-  parameter.splice(3, 0, new Date());
-
+  parameter.splice(4, 0, new Date());
   // ADD THE ROLE (customer by default)
   parameter.push("customer");
 
-  database.query(sql, parameter);
+  console.log(parameter);
+
+  return await new Promise((resolve, reject) => {
+    database.query(sql, parameter, (err, user) => {
+      if (err) return reject(err);
+
+      resolve(user[0]);
+    });
+  });
 };
 
 export const findOne = async (params: Object) => {
   const sql = process.env.SQL_GET_USER_BY!;
 
   return await new Promise((resolve, reject) => {
-    database.query(sql, [params], (err, users) => {
-      if (err) return reject(new Error(err.message));
-      if (users.length === 0) return reject(new Error());
+    database.query(sql, [params], (err, user) => {
+      if (err) return reject(err);
+      if (user.length === 0) return reject(new Error());
 
-      resolve(users[0]);
+      resolve(user[0]);
     });
   });
 };
@@ -46,6 +52,23 @@ export const find = async () => {
 
   return await new Promise((resolve, reject) => {
     database.query(sql, (err, users) => {
+      if (err) reject(err);
+
+      resolve(users);
+    });
+  });
+};
+
+export const findOneAndUpdate = async (
+  params: [UserInterface, { id: number }]
+) => {
+  const sql = process.env.SQL_UPDATE_USER!;
+  const body = params[0];
+
+  if (body.password) await hashPassword(body);
+
+  return await new Promise((resolve, reject) => {
+    database.query(sql, params, (err, users) => {
       if (err) reject(err);
 
       resolve(users);

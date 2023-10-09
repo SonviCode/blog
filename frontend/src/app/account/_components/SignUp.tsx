@@ -1,8 +1,9 @@
-import { APi_SIGNUP, INPUT_EMPTY } from "@/constants/constants";
+import { API_SIGNUP, INPUT_EMPTY } from "@/constants/constants";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FormEvent, useState } from "react";
 import styles from "./auth.module.scss";
+import { fetchSignUp } from "@/service/userService";
 
 export default function SignUp() {
   const [msg, setMsg] = useState<string>("");
@@ -19,17 +20,7 @@ export default function SignUp() {
       setMsg(INPUT_EMPTY);
     }
 
-    fetch(APi_SIGNUP, {
-      method: "POST",
-      headers: {
-        Accept: "application.json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    })
-      .then((res) => res.json())
-      .then((json) => setMsg(json.message))
-      .catch((error: any) => console.log(error));
+    fetchSignUp(email, password, setMsg);
   };
 
   return (

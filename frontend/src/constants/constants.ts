@@ -1,10 +1,19 @@
 // API
 const API_ROOTDIR = "http://localhost:5000/api/";
+// USER
 export const API_LOGIN = API_ROOTDIR + "auth/login";
-export const APi_SIGNUP = API_ROOTDIR + "auth/signup"
+export const API_SIGNUP = API_ROOTDIR + "auth/signup";
+export const API_GET_USER = API_ROOTDIR + "auth/user/";
+export const API_CHECK_COOKIES = API_ROOTDIR + "auth/cookies";
+// CATEGORY
+export const API_ADD_CATEGORY = API_ROOTDIR + "category";
 
 // ERROR MESSAGE RESPONSE
 export const INPUT_EMPTY = "Un ou plusieurs champs sont vides";
+export const incorrectCredential = "Identifiant/mot de passe incorrect";
+
+// RESPONSE SUCCESS MESSAGE
+export const authSuccess = "Authentification réussi avec succès";
 
 export const NAV_LINKS = [
   {

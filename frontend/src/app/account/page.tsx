@@ -1,15 +1,27 @@
 "use client";
 
+import { useSelector } from "react-redux";
 import ConnectModal from "./_components/ConnectModal";
 import UserAccount from "./_components/UserAccount";
 import styles from "./account.module.scss";
+import { User } from "@/types/userTypes";
+import { RootState } from "@/redux/store";
+import useCheckCookies from "@/hooks/useCheckCookies";
+import AdminAccount from "./_components/AdminAccount";
 
 export default function Auth() {
-  const user = null;
+  const user: User | null = useSelector((state: RootState) => state.user.value);
+
+  useCheckCookies();
+
   return (
     <main className={styles.main}>
       {user && Object.keys(user!).length > 0 ? (
-        <UserAccount user={user} />
+        user.role === "admin" ? (
+          <AdminAccount />
+        ) : (
+          <UserAccount user={user} />
+        )
       ) : (
         <ConnectModal />
       )}

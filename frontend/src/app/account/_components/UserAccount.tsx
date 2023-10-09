@@ -1,11 +1,13 @@
-import Image from "next/image";
-import React from "react";
-import styles from "./user.module.scss";
 import { User } from "@/types/userTypes";
+import Image from "next/image";
+import styles from "./user.module.scss";
+import { handleDate } from "../../../utils/userUtils";
 
 function UserAccount({ user }: { user: User }) {
+  console.log(user);
+
   return (
-    <div>
+    <>
       <div className={styles.info_user}>
         <div className={styles.container_img}>
           <Image
@@ -14,9 +16,14 @@ function UserAccount({ user }: { user: User }) {
             fill={true}
           />
         </div>
-        <h2>Tom Sonvico</h2>
+        <h2>
+          {user.firstname} {user.name}
+        </h2>
+        <p>{handleDate(user.date)}</p>
+        <p>{user.email}</p>
+        {user.role === "admin" && <p>{user.role}</p>}
       </div>
-    </div>
+    </>
   );
 }
 
