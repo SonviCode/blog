@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import styles from "./auth.module.scss";
-import SignUp from "@/app/account/_components/SignUp";
-import Login from "@/app/account/_components/Login";
+import SignUp from "@/app/account/_components/_auth/SignUp";
+import Login from "@/app/account/_components/_auth/Login";
 
 export default function ConnectModal() {
   const [signUp, setSignUp] = useState(true);

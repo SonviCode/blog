@@ -1,8 +1,8 @@
-import styles from "./home.module.scss";
 import Aside from "@/components/Aside/Aside";
-import { LIST_CATEGORY } from "@/constants/constants";
+import CategoryList from "@/components/CategoryList/CategoryList";
 import Image from "next/image";
 import Link from "next/link";
+import styles from "./home.module.scss";
 
 const listArticles = [
   {
@@ -33,21 +33,7 @@ export default function Home() {
         idées, mes projets...
       </h2>
       <h2>Catégorie</h2>
-      <ul className={styles.category}>
-        {LIST_CATEGORY.map((category, i) => (
-          <li key={i} style={{ background: category.color }}>
-            <Link href={`/category/${category.name}`}>
-              <Image
-                src={category.img}
-                alt={category.name}
-                width={20}
-                height={20}
-              />
-              <p>{category.name}</p>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <CategoryList />
       <h2>Articles récents</h2>
       <div className="container_aside">
         <section className="section_aside_left">

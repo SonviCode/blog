@@ -1,10 +1,9 @@
 import { User } from "@/types/userTypes";
 import Image from "next/image";
 import styles from "./user.module.scss";
-import { handleDate } from "../../../utils/userUtils";
+import { handleDate } from "../../../../utils/userUtils";
 
 function UserAccount({ user }: { user: User }) {
-  console.log(user);
 
   return (
     <>

@@ -110,7 +110,6 @@ const updateUser = (req, res) => {
 };
 exports.updateUser = updateUser;
 const checkCookies = (req, res) => {
-    console.log(req.auth);
     res.status(200).json({ id: req.auth });
 };
 exports.checkCookies = checkCookies;

@@ -4,6 +4,7 @@ import { incorrectToken } from "../constants/constants";
 
 interface JwtPayload {
   id: string;
+  role: string;
 }
 
 /**

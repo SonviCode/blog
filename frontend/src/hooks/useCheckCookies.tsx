@@ -11,6 +11,8 @@ const useCheckCookies = (): void => {
         });
         const { id } = await res.json();
 
+        if (!id) return;
+
         fetchUser(id);
       };
 

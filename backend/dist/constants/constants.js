@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.categoryDeleted = exports.categoryCreated = exports.userCreated = exports.authSuccess = exports.adminOnly = exports.categoryNotFound = exports.userNotFound = exports.incorrectToken = exports.emailAlreadyUse = exports.incorrectCredential = exports.emailNotFound = void 0;
+exports.articleCreated = exports.categoryDeleted = exports.categoryCreated = exports.userCreated = exports.authSuccess = exports.adminOnly = exports.categoryNotFound = exports.userNotFound = exports.incorrectToken = exports.emailAlreadyUse = exports.incorrectCredential = exports.emailNotFound = void 0;
 // RESPONSE ERROR MESSAGE
 exports.emailNotFound = "Impossible de trouver l'e-mail en paramètre";
 exports.incorrectCredential = "Identifiant/mot de passe incorrect";
@@ -14,3 +14,4 @@ exports.authSuccess = "Authentification réussi avec succès";
 exports.userCreated = "Utilisateur créé avec succès";
 exports.categoryCreated = "Catégorie créé avec succès";
 exports.categoryDeleted = "Catégorie supprimé avec succès";
+exports.articleCreated = "Article créé avec succès";

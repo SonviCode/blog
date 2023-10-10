@@ -12,9 +12,6 @@ const app: Express = express();
 /**
  * CONFIG
  */
-app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -22,6 +19,9 @@ app.use(
     optionsSuccessStatus: 200,
   })
 );
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 /**
  * DB connection
@@ -31,7 +31,7 @@ connectionDB();
 /**
  * ROUTER
  */
-app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/public", express.static(path.join(__dirname, "../public")));
 app.use("/api/auth", userRoutes);
 app.use("/api/article", articleRoutes);
 app.use("/api/category", categoryRoutes);

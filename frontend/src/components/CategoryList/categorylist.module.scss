@@ -1,0 +1,23 @@
+.category {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin: 20px 0 ;
+  
+    li {
+      border-radius: 10px;
+    }
+  
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      gap: 5px;
+      width: 150px;
+    }
+  
+    img {
+      border-radius: 50px;
+    }
+  }

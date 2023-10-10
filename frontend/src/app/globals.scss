@@ -4,11 +4,12 @@
   
   --red_error: #ce2610;
   --green: #e5efe6;
-  --blue: #fee2de;
-  --mauve: #dfdcfc;
+  --red: #fee2de;
+  --blue: #dfdcfc;
   --violet: #fee0dd;
   --orange: #fde6d5;
   --black: #000;
+  --gray: #d6d6d6;
 }
 
 // @media (prefers-color-scheme: dark) {
@@ -55,6 +56,9 @@ label,
 a,
 button {
   cursor: pointer;
+  outline: none;
+  background:none;
+  font: inherit;
 }
 
 .container_aside {

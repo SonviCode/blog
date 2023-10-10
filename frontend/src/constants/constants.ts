@@ -7,6 +7,9 @@ export const API_GET_USER = API_ROOTDIR + "auth/user/";
 export const API_CHECK_COOKIES = API_ROOTDIR + "auth/cookies";
 // CATEGORY
 export const API_ADD_CATEGORY = API_ROOTDIR + "category";
+export const API_GET_CATEGORYS = API_ROOTDIR + "category";
+// ARTICLE
+export const API_ADD_ARTICLE = API_ROOTDIR + "article"
 
 // ERROR MESSAGE RESPONSE
 export const INPUT_EMPTY = "Un ou plusieurs champs sont vides";

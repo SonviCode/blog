@@ -23,8 +23,6 @@ export const save = async (body: UserInterface) => {
   // ADD THE ROLE (customer by default)
   parameter.push("customer");
 
-  console.log(parameter);
-
   return await new Promise((resolve, reject) => {
     database.query(sql, parameter, (err, user) => {
       if (err) return reject(err);

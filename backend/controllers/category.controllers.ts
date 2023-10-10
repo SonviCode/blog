@@ -14,7 +14,7 @@ dotenv.config();
  */
 export const getCategorys = (_req: Request, res: Response) => {
   CategoryModel.find()
-    .then((categorys) => res.status(200).json({ categorys }))
+    .then((categorys) => res.status(200).json(categorys))
     .catch((error) => res.status(400).json({ error }));
 };
 
@@ -35,7 +35,7 @@ export const getCategoryById = (req: Request, res: Response) => {
 export const deleteCategory = (req: Request, res: Response) => {
   CategoryModel.findOne({ id: parseInt(req.params.id) })
     .then(() => res.status(201).json({ message: categoryDeleted }))
-    .catch((error) => res.status(500).json({ error }));
+    .catch((error) => res.status(400).json({ error }));
 };
 
 /**
@@ -43,9 +43,10 @@ export const deleteCategory = (req: Request, res: Response) => {
  * @param req.body : email, password
  */
 export const addCategory = (req: Request, res: Response) => {
-  console.log(req.body);
-
-  CategoryModel.save({ ...req.body })
+  CategoryModel.save({
+    ...req.body,
+    imgUrl: `${req.protocol}://${req.get("host")}/public/${req.file!.filename}`,
+  })
     .then(() => res.status(201).json({ message: categoryCreated }))
-    .catch((error) => res.status(500).json({ error }));
+    .catch((error) => res.status(400).json({ error }));
 };

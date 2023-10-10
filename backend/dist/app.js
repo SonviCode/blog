@@ -15,14 +15,14 @@ const app = (0, express_1.default)();
 /**
  * CONFIG
  */
-app.use((0, cookie_parser_1.default)());
-app.use(express_1.default.urlencoded({ extended: true }));
-app.use(express_1.default.json());
 app.use((0, cors_1.default)({
     origin: "http://localhost:3000",
     credentials: true,
     optionsSuccessStatus: 200,
 }));
+app.use((0, cookie_parser_1.default)());
+app.use(express_1.default.urlencoded({ extended: true }));
+app.use(express_1.default.json());
 /**
  * DB connection
  */
@@ -30,7 +30,7 @@ app.use((0, cors_1.default)({
 /**
  * ROUTER
  */
-app.use("/images", express_1.default.static(path_1.default.join(__dirname, "images")));
+app.use("/public", express_1.default.static(path_1.default.join(__dirname, "../public")));
 app.use("/api/auth", user_route_1.default);
 app.use("/api/article", article_route_1.default);
 app.use("/api/category", category_route_1.default);

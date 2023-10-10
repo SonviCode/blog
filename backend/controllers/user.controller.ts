@@ -83,7 +83,5 @@ export const updateUser = (req: Request, res: Response) => {
 };
 
 export const checkCookies = (req: Request, res: Response) => {
-  console.log(req.auth);
-
   res.status(200).json({ id: req.auth });
 };

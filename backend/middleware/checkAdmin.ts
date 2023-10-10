@@ -4,6 +4,7 @@ import { incorrectToken } from "../constants/constants";
 
 interface JwtPayload {
   id: string;
+  role: string;
 }
 
 /**
@@ -11,7 +12,8 @@ interface JwtPayload {
  */
 export const checkAdmin = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const token = req.headers.authorization!.split(" ")[1];
+    const token = req.cookies.jwt_token;
+
     const decodedToken = jwt.verify(
       token,
       process.env.JWT_RANDOM_TOKEN!
@@ -19,7 +21,9 @@ export const checkAdmin = (req: Request, res: Response, next: NextFunction) => {
     const id = decodedToken.id;
     Object.assign(req, { auth: id });
 
-    console.log(decodedToken);
+    const role = decodedToken.role;
+
+    if (role !== "admin") throw new Error(incorrectToken);
 
     next();
   } catch (error) {
