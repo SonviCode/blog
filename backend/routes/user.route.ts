@@ -4,6 +4,7 @@ import {
   getUserById,
   getUsers,
   login,
+  logout,
   signUp,
   updateUser,
 } from "../controllers/user.controller";
@@ -17,6 +18,7 @@ router.get("/user/:id", checkToken, getUserById);
 router.put("/user/:id", updateUser);
 router.post("/signup", checkIfEmailAlreadyExist, signUp);
 router.post("/login", login);
+router.post("/logout", logout);
 router.get("/cookies", checkToken, checkCookies);
 
 export default router;

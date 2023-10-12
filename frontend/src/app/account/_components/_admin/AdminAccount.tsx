@@ -4,6 +4,7 @@ import AdminCategory from "./AdminCategory";
 import { User } from "@/types/userTypes";
 import { handleDate } from "../../../../utils/userUtils";
 import AdminArticles from "./AdminArticles";
+import { fetchLogout } from "@/service/userService";
 
 function AdminAccount({ user }: { user: User }) {
   const [index, setIndex] = useState<number>(1);
@@ -52,10 +53,11 @@ function AdminAccount({ user }: { user: User }) {
           <p>{user.email}</p>
           <p>{handleDate(user.date)}</p>
           <p>{user.id}</p>
+          <button onClick={() => fetchLogout()}>Se déconnecter</button>
         </div>
       </div>
       {index == 1 && <AdminCategory />}
-      {index == 2 && <AdminArticles userId={user.id}/>}
+      {index == 2 && <AdminArticles userId={user.id} />}
     </div>
   );
 }

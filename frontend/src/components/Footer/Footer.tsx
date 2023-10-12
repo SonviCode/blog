@@ -1,21 +1,30 @@
+"use client";
+
 import {
+  API_GET_CATEGORYS,
   BLOG_NAME,
-  LIST_CATEGORY,
   NAV_LINKS,
-  PITCH_PRESENTATION,
+  PITCH_PRESENTATION
 } from "@/constants/constants";
+import useFetchData from "@/hooks/useFetchData";
+import { Category } from "@/types/categoryTypes";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { useState } from "react";
 import styles from "./footer.module.scss";
 
 export default function Footer() {
+  const [categorys, setCategorys] = useState<Category[]>();
+
+  useFetchData(setCategorys, API_GET_CATEGORYS);
+
   return (
     <footer className={styles.footer}>
       <div className={styles.media_container}>
         <h2>{BLOG_NAME}</h2>
         <p>{PITCH_PRESENTATION}</p>
-        <div >
+        <div>
           <ul className={styles.social_media}>
             <li>
               <Link href="https://github.com/SonviCode" target="blank">
@@ -31,9 +40,7 @@ export default function Footer() {
               </Link>
             </li>
           </ul>
-          <Link href="/notice">
-            Mentions légales
-          </Link>
+          <Link href="/notice">Mentions légales</Link>
         </div>
       </div>
       <div className={styles.nav_container}>
@@ -52,8 +59,10 @@ export default function Footer() {
         <nav className={styles.nav}>
           <p>Catégorie</p>
           <ul className={styles.links}>
-            {LIST_CATEGORY.map((category, i) => (
-              <li key={i}>{category.name}</li>
+            {categorys?.map((category, i) => (
+              <Link href={`/category/${category.name}`} key={i}>
+                {category.name}
+              </Link>
             ))}
           </ul>
         </nav>

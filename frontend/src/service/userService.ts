@@ -1,6 +1,7 @@
 import {
   API_GET_USER,
   API_LOGIN,
+  API_LOGOUT,
   API_SIGNUP,
   authSuccess,
 } from "@/constants/constants";
@@ -33,15 +34,36 @@ export const fetchLogin = async (
     });
     const data = await res.json();
 
+    console.log(data);
+    
     if (data.message !== authSuccess) {
       setMsg(data.message);
       return;
     }
+
+
     fetchUser(data.id);
   } catch (e: any) {
     console.log(e);
 
     // setMsg(e);
+  }
+};
+
+export const fetchLogout = async () => {
+  try {
+    fetch(API_LOGOUT, {
+      method: "POST",
+      headers: {
+        Accept: "application.json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    store.dispatch(setUser(null));
+  } catch (e: any) {
+    console.log(e);
   }
 };
 
@@ -73,6 +95,8 @@ export const fetchUser = async (id: number) => {
   try {
     const res = await fetch(API_GET_USER + id, { credentials: "include" });
     const user = await res.json();
+
+    console.log(user);
 
     store.dispatch(setUser(user));
   } catch (e) {

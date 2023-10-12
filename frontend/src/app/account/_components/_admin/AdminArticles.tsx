@@ -1,39 +1,47 @@
-import { API_ADD_ARTICLE } from "@/constants/constants";
+"use client";
+
+import { addArticle } from "@/service/articleService";
 import { FormEvent, useState } from "react";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import styles from "./admin.module.scss";
+// from https://github.com/zenoamaro/react-quill/issues/122#issuecomment-560192943
+const ReactQuill =
+  typeof window === "object" ? require("react-quill") : () => false;
 
 function AdminArticles({ userId }: { userId: number }) {
-  const [content, setContent] = useState("");
-
-  console.log(content);
+  const [content, setContent] = useState<string>("");
+  const [msg, setMsg] = useState<string>("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    formData.append("content", content);
+    formData.append("user_id", userId.toString());
 
-    const elements = e.currentTarget.elements as unknown as HTMLFormElement;
-    const title = elements.titleArticle.value;
-
-    fetch(API_ADD_ARTICLE, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        Accept: "application.json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ author: userId, title, content }),
-      //   body: JSON.stringify({ value }),
-    })
-      .then((res) => res.json())
-      .then((json) => console.log(json.message))
-      .catch((error: any) => console.log(error));
+    addArticle(formData, setMsg);
   };
 
   return (
-    <div>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <label htmlFor="titleArticle">Titre</label>
-        <input type="text" name="title" id="titleArticle" />
+    <div className={styles.editor}>
+      <form encType="multipart/form-data" onSubmit={(e) => handleSubmit(e)}>
+        <div className={styles.inputForm}>
+          <label htmlFor="titleArticle">Titre</label>
+          <input type="text" name="title" id="titleArticle" required />
+        </div>
+        <div className={styles.inputForm}>
+          <label htmlFor="description">Description</label>
+          <input type="text" name="description" id="description" required />
+        </div>
+        <div className={styles.inputForm}>
+          <label htmlFor="img">Image de présentation</label>
+          <input
+            type="file"
+            name="imagePresentation"
+            id="img"
+            accept="image/*"
+            required
+          />
+        </div>
         <ReactQuill
           theme="snow"
           value={content}
@@ -41,7 +49,7 @@ function AdminArticles({ userId }: { userId: number }) {
           onChange={setContent}
           placeholder="Ecris ton article ici"
         />
-        <button>Ajouter</button>
+        <button className={styles.add_element}>Ajouter</button>
       </form>
     </div>
   );

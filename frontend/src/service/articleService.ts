@@ -1,11 +1,11 @@
-import { API_ADD_CATEGORY } from "@/constants/constants";
+import { API_ADD_ARTICLE, API_ADD_CATEGORY } from "@/constants/constants";
 import { Dispatch, SetStateAction } from "react";
 
-export const addCategory = (
+export const addArticle = (
   formData: FormData,
   setMsg: Dispatch<SetStateAction<string>>
 ) => {
-  fetch(API_ADD_CATEGORY, {
+  fetch(API_ADD_ARTICLE, {
     method: "POST",
     credentials: "include",
     body: formData,

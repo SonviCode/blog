@@ -13,5 +13,6 @@ router.get("/user/:id", checkToken_1.checkToken, user_controller_1.getUserById);
 router.put("/user/:id", user_controller_1.updateUser);
 router.post("/signup", checkEmail_1.checkIfEmailAlreadyExist, user_controller_1.signUp);
 router.post("/login", user_controller_1.login);
+router.post("/logout", user_controller_1.logout);
 router.get("/cookies", checkToken_1.checkToken, user_controller_1.checkCookies);
 exports.default = router;

@@ -6,6 +6,7 @@ import {
   authSuccess,
   incorrectCredential,
   userCreated,
+  userLogout,
   userNotFound,
 } from "../constants/constants";
 import * as UserModel from "../models/user.model";
@@ -82,6 +83,23 @@ export const updateUser = (req: Request, res: Response) => {
     .catch((error) => res.status(404).json({ error }));
 };
 
+/**
+ * Function call the first time on the page to know if your session is currently good
+ */
 export const checkCookies = (req: Request, res: Response) => {
   res.status(200).json({ id: req.auth });
+};
+
+/**
+ * Function to logout, it's clear the cookies
+ */
+export const logout = (req: Request, res: Response) => {
+  res
+    .cookie("jwt_token", "", {
+      httpOnly: true, // Impossible de le recupérer en JS avec document.cookie
+      secure: false, // certificat SSL
+      maxAge: -1, // durée de validité du token, en secondes
+    })
+    .status(200)
+    .json({ message: userLogout });
 };

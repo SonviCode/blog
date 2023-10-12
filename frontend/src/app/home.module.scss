@@ -8,7 +8,28 @@
   }
 }
 
+.presentation {
+  padding: 40px 0;
+  display: flex;
 
+  .presentation_img {
+    position: relative;
+    width: 500px;
+    height: 300px;
+    flex: 1;
+    img {
+      object-fit: cover;
+      border-radius: 20px;
+    }
+  }
+  
+  .presentation_text {
+    flex: 1;
+    display: flex;
+    padding: 40px;
+    font-size: 20px;
+  }
+}
 
 .container {
   display: flex;

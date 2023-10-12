@@ -1,12 +1,7 @@
 import dotenv from "dotenv";
 import { Request, Response } from "express";
+import { articleCreated, articleNotFound } from "../constants/constants";
 import * as ArticleModel from "../models/article.model";
-import {
-  articleCreated,
-  categoryCreated,
-  categoryDeleted,
-  categoryNotFound,
-} from "../constants/constants";
 
 dotenv.config();
 
@@ -19,15 +14,17 @@ export const getArticles = (_req: Request, res: Response) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-// /**
-//  * Function to get one user
-//  * @param req.param : number corresponding to the id to retrieve
-//  */
-// export const getCategoryById = (req: Request, res: Response) => {
-//   CategoryModel.findOne({ id: parseInt(req.params.id) })
-//     .then((user) => res.status(200).json(user))
-//     .catch(() => res.status(404).json({ message: categoryNotFound }));
-// };
+/**
+ * Function to get one article
+ * @param req.param : number corresponding to the id to retrieve
+ */
+export const getArticleById = (req: Request, res: Response) => {
+  console.log(req.params);
+
+  ArticleModel.findOne({ id: req.params.id })
+    .then((user) => res.status(200).json(user))
+    .catch(() => res.status(404).json({ message: articleNotFound }));
+};
 
 // /**
 //  * Function to sign up = create an user

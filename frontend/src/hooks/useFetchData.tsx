@@ -14,6 +14,9 @@ const useFetchData = (
     try {
       const fetchData = async () => {
         const res = await fetch(api_url);
+
+        if (!res.ok) throw res;
+
         const data = await res.json();
         setData(data);
       };

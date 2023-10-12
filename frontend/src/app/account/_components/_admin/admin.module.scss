@@ -1,8 +1,10 @@
+// ----------------------CSS FOR ALL MODULES-----------------------------
 .admin_container {
   display: flex;
   box-shadow: var(--box-shadow);
   border-radius: 20px;
   width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -68,13 +70,6 @@
       border: 1px solid gray;
       padding: 10px;
     }
-
-    svg {
-      position: absolute;
-      right: 10px;
-      top: 30px;
-      cursor: pointer;
-    }
   }
 
   button {
@@ -88,6 +83,10 @@
   .error_msg {
     font-style: italic;
     color: var(--red_error);
+  }
+  .succes_msg {
+    font-style: italic;
+    color: var(--green_succes);
   }
 }
 
@@ -111,4 +110,95 @@
   position: absolute;
   left: 0px;
   bottom: 0px;
+}
+
+//-------------------------CSS FOR CATEGORY MODULE------------------------
+.category {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  justify-content: space-around;
+  margin: 20px 0;
+
+  li {
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 5px;
+    width: 150px;
+    cursor: pointer;
+  }
+
+  img {
+    border-radius: 50px;
+  }
+}
+
+//-------------------------CSS FOR MODAL EDIT------------------------
+.modal {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  width: fit-content;
+
+  div {
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--orange);
+    }
+  }
+}
+
+.confirm_modal {
+  button {
+    padding: 10px;
+    border-radius: 10px;
+
+    &:nth-child(2) {
+      background: var(--red);
+    }
+    &:nth-child(3) {
+      background: var(--green);
+    }
+  }
+}
+
+// ---------------------------
+.editor {
+  position: relative;
+
+  form {
+    height: 100%;
+  }
+  img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .quill,
+  .quill > * {
+    height: 100%;
+  }
+
+  .inputForm {
+    display: flex;
+    position: relative;
+    align-items: center;
+    padding: 10px;
+    gap: 20px;
+
+    input {
+      border-radius: 4px;
+      border: 1px solid gray;
+      padding: 10px;
+      width: 100%;
+    }
+  }
 }

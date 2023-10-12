@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkCookies = exports.updateUser = exports.login = exports.signUp = exports.getUserById = exports.getUsers = void 0;
+exports.logout = exports.checkCookies = exports.updateUser = exports.login = exports.signUp = exports.getUserById = exports.getUsers = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -109,7 +109,24 @@ const updateUser = (req, res) => {
         .catch((error) => res.status(404).json({ error }));
 };
 exports.updateUser = updateUser;
+/**
+ * Function call the first time on the page to know if your session is currently good
+ */
 const checkCookies = (req, res) => {
     res.status(200).json({ id: req.auth });
 };
 exports.checkCookies = checkCookies;
+/**
+ * Function to logout, it's clear the cookies
+ */
+const logout = (req, res) => {
+    res
+        .cookie("jwt_token", "", {
+        httpOnly: true,
+        secure: false,
+        maxAge: -1, // durée de validité du token, en secondes
+    })
+        .status(200)
+        .json({ message: constants_1.userLogout });
+};
+exports.logout = logout;
