@@ -4,6 +4,9 @@ import { addArticle } from "@/service/articleService";
 import { FormEvent, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import styles from "./admin.module.scss";
+import { Category } from "@/types/categoryTypes";
+import { API_GET_CATEGORYS } from "@/constants/constants";
+import useFetchData from "@/hooks/useFetchData";
 // from https://github.com/zenoamaro/react-quill/issues/122#issuecomment-560192943
 const ReactQuill =
   typeof window === "object" ? require("react-quill") : () => false;
@@ -12,11 +15,16 @@ function AdminArticles({ userId }: { userId: number }) {
   const [content, setContent] = useState<string>("");
   const [msg, setMsg] = useState<string>("");
 
+  const [categorys, setCategorys] = useState<Category[]>();
+
+  useFetchData(setCategorys, API_GET_CATEGORYS);
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     formData.append("content", content);
     formData.append("user_id", userId.toString());
+    formData.append("category_id", (e.currentTarget.elements as any).category.value);
 
     addArticle(formData, setMsg);
   };
@@ -33,14 +41,18 @@ function AdminArticles({ userId }: { userId: number }) {
           <input type="text" name="description" id="description" required />
         </div>
         <div className={styles.inputForm}>
-          <label htmlFor="img">Image de présentation</label>
-          <input
-            type="file"
-            name="imagePresentation"
-            id="img"
-            accept="image/*"
-            required
-          />
+          <label htmlFor="file">Image de présentation</label>
+          <input type="file" name="file" id="file" accept="image/*" required />
+        </div>
+        <div className={styles.inputForm}>
+          <label htmlFor="category">Catégorie</label>
+          <select name="category" id="category" required>
+            {categorys?.map((category, i) => (
+              <option key={i} value={category.id} >
+                {category.name}
+              </option>
+            ))}
+          </select>
         </div>
         <ReactQuill
           theme="snow"

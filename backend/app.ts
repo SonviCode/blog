@@ -1,11 +1,12 @@
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Express } from "express";
+import path from "path";
 import { connectionDB } from "./DB/connexion";
 import articleRoutes from "./routes/article.route";
-import userRoutes from "./routes/user.route";
 import categoryRoutes from "./routes/category.route";
-import path from "path";
-import cookieParser from "cookie-parser";
+import commentRoutes from "./routes/comment.route";
+import userRoutes from "./routes/user.route";
 
 const app: Express = express();
 
@@ -35,5 +36,6 @@ app.use("/public", express.static(path.join(__dirname, "../public")));
 app.use("/api/auth", userRoutes);
 app.use("/api/article", articleRoutes);
 app.use("/api/category", categoryRoutes);
+app.use("/api/comment", commentRoutes);
 
 export default app;

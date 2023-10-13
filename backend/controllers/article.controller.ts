@@ -43,7 +43,12 @@ export const getArticleById = (req: Request, res: Response) => {
 export const addArticle = (req: Request, res: Response) => {
   console.log(req.body);
 
-  ArticleModel.save({ ...req.body })
+  ArticleModel.save({
+    ...req.body,
+    imagePresentation: `${req.protocol}://${req.get("host")}/public/${
+      req.file!.filename
+    }`,
+  })
     .then(() => res.status(201).json({ message: articleCreated }))
     .catch((error) => res.status(400).json({ error }));
 };

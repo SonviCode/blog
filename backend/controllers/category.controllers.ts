@@ -19,17 +19,17 @@ export const getCategorys = (_req: Request, res: Response) => {
 };
 
 /**
- * Function to get one user
- * @param req.param : number corresponding to the id to retrieve
+ * Function to get one category by the name
+ * @param req.param : string corresponding to the name to retrieve
  */
-export const getCategoryById = (req: Request, res: Response) => {
-  CategoryModel.findOne({ id: parseInt(req.params.id) })
+export const getCategoryByName = (req: Request, res: Response) => {
+  CategoryModel.findOne(req.params)
     .then((user) => res.status(200).json(user))
     .catch(() => res.status(404).json({ message: categoryNotFound }));
 };
 
 /**
- * Function to sign up = create an user
+ * Function to delete one category
  * @param req.body : name, firstname, email, password
  */
 export const deleteCategory = (req: Request, res: Response) => {
@@ -39,7 +39,7 @@ export const deleteCategory = (req: Request, res: Response) => {
 };
 
 /**
- * Function to login and get the token
+ * Function to add one catgeory
  * @param req.body : email, password
  */
 export const addCategory = (req: Request, res: Response) => {

@@ -1,0 +1,40 @@
+.form {
+  display: flex;
+  gap: 40px;
+  padding: 40px 0;
+  align-items: center;
+
+  textarea {
+    max-width: 750px;
+    width: 100%;
+    padding: 20px;
+    min-height: 100px;
+  }
+
+  button {
+    border-radius: 10px;
+    background-color: var(--orange);
+    padding: 10px;
+    height: fit-content;
+  }
+}
+
+.user_container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .date {
+    font-weight: light;
+  }
+
+  .img_user {
+    border-radius: 50px;
+    object-fit: cover;
+  }
+}

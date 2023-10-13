@@ -4,7 +4,7 @@ import {
   API_GET_CATEGORYS,
   BLOG_NAME,
   NAV_LINKS,
-  PITCH_PRESENTATION
+  PITCH_PRESENTATION,
 } from "@/constants/constants";
 import useFetchData from "@/hooks/useFetchData";
 import { Category } from "@/types/categoryTypes";
@@ -43,6 +43,7 @@ export default function Footer() {
           <Link href="/notice">Mentions légales</Link>
         </div>
       </div>
+
       <div className={styles.nav_container}>
         <nav className={styles.nav}>
           <p>Navigation</p>

@@ -9,19 +9,13 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import styles from "./article.module.scss";
 import Error from "next/error";
-
-const article = {
-  id: 1,
-  date: "2023-08-12",
-  title: "Test",
-  img: "/IMG_1371.JPG",
-  user: "tom sonvico",
-  content: "blablablalbalbalblal",
-  category: "montagne",
-};
+import { handleDate } from "@/utils/userUtils";
+import { Comment } from "@/types/commentTypes";
+import Comments from "./_comments/Comments";
 
 export default function Article() {
   const [article, setArticle] = useState<Article>();
+
   const pathname = usePathname();
 
   useFetchData(setArticle, `${API_GET_ARTICLES}/${pathname.split("/")[2]}`);
@@ -33,30 +27,36 @@ export default function Article() {
       <article className={styles.container_title}>
         <div className={styles.info_title}>
           <h1>{article.title}</h1>
-          <div>
-            <p>{article.user_id}</p>
+          <div className={styles.user_container}>
+            <Image
+              className={styles.img_user}
+              src={article.imagePresentation}
+              alt={article.title}
+              width={50}
+              height={50}
+            />
+            <div>
+              <p>Tom Sonvico</p>
+              <p className={styles.date}>{handleDate(article.date)}</p>
+            </div>
           </div>
         </div>
-        <div>
-          {/* <Image
-            src={article.img}
+        <div className={styles.container_img}>
+          <Image
+            src={article.imagePresentation}
             alt={article.title}
-            width={400}
-            height={200}
-          /> */}
+            fill={true}
+          />
         </div>
       </article>
 
       <div className="container_aside">
         <section className="section_aside_left">
-          <h2>titre contenu</h2>
-          {/* <>{html.body}</> */}
           <div dangerouslySetInnerHTML={{ __html: article.content }} />
+          <Comments />
         </section>
         <Aside />
       </div>
     </main>
   );
 }
-
-// TODO HERE : GET ARTICLE BY ID FROM URL

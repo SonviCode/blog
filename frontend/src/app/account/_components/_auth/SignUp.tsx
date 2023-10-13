@@ -3,7 +3,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FormEvent, useState } from "react";
 import styles from "./auth.module.scss";
-import { fetchSignUp } from "@/service/userService";
+import { signUp } from "@/service/userService";
 
 export default function SignUp() {
   const [msg, setMsg] = useState<string>("");
@@ -12,6 +12,12 @@ export default function SignUp() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // if (e.target.value.trim().length > 0) {
+    //   console.log('✅ Input is not empty');
+    // } else {
+    //   console.log('⛔️ Input is empty');
+    // }
+
     const elements = e.currentTarget.elements as unknown as HTMLFormElement;
     const email: string = elements.email.value;
     const password: string = elements.password.value;
@@ -19,8 +25,10 @@ export default function SignUp() {
     if (email.trim() == "" || password.trim() == "") {
       setMsg(INPUT_EMPTY);
     }
+    const formData = new FormData(e.currentTarget);
 
-    fetchSignUp(email, password, setMsg);
+
+    signUp(formData, setMsg);
   };
 
   return (

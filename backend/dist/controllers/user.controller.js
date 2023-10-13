@@ -117,14 +117,14 @@ const checkCookies = (req, res) => {
 };
 exports.checkCookies = checkCookies;
 /**
- * Function to logout, it's clear the cookies
+ * Function to logout, it clear the cookies
  */
-const logout = (req, res) => {
+const logout = (_req, res) => {
     res
         .cookie("jwt_token", "", {
         httpOnly: true,
         secure: false,
-        maxAge: -1, // durée de validité du token, en secondes
+        maxAge: -1,
     })
         .status(200)
         .json({ message: constants_1.userLogout });

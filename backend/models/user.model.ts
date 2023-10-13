@@ -9,12 +9,18 @@ export interface UserInterface {
   date: Date;
   password?: string;
   role: string;
+  imgUser?: string;
 }
 
 export const save = async (body: UserInterface) => {
   await hashPassword(body);
   const parameter = Object.values(body);
   const sql = process.env.SQL_SIGNUP!;
+
+  console.log(body);
+  
+
+  const params = [];
 
   // ADD UUID
   parameter.unshift(uuidv4());

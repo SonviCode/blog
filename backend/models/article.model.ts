@@ -7,22 +7,29 @@ dotenv.config();
 interface ArticleInterface {
   id: number;
   title: string;
-  author: string;
-  data: Date;
+  user_id: number;
+  date: Date;
   content: string;
+  description: string;
+  imagePresentation: string;
+  category_id: number;
 }
 
 export const save = async (body: ArticleInterface) => {
   const sql = process.env.SQL_ADD_ARTICLE!;
-  const parameter = Object.values(body);
-
-  // ADD UUID
-  parameter.unshift(uuidv4());
-  // ADD DATE IN THE GOOD INDEX
-  parameter.splice(3, 0, new Date());
+  const params = [
+    uuidv4(),
+    body.title,
+    body.user_id,
+    new Date(),
+    body.content,
+    body.description,
+    body.imagePresentation,
+    body.category_id,
+  ];
 
   return await new Promise((resolve, reject) => {
-    database.query(sql, parameter, (err, article) => {
+    database.query(sql, params, (err, article) => {
       if (err) return reject(err);
 
       resolve(article[0]);
@@ -31,9 +38,7 @@ export const save = async (body: ArticleInterface) => {
 };
 
 export const findOne = async (params: Object) => {
-  const sql =
-    "SELECT * FROM article LEFT JOIN user ON article.user_id = user.id";
-  // const sql = process.env.SQL_GET_ARTICLE_BY!;
+  const sql = process.env.SQL_GET_ARTICLE_BY!;
 
   return await new Promise((resolve, reject) => {
     database.query(sql, [params], (err, article) => {
@@ -47,7 +52,7 @@ export const findOne = async (params: Object) => {
 
 export const find = async () => {
   const sql =
-    "SELECT article.id, title, article.date, content, description, imagePresentation, category.name AS category, CONCAT(user.name,' ', user.firstname) AS user, CONCAT(user.*) AS user FROM article INNER JOIN user ON article.user_id = user.id INNER JOIN category ON article.category_id = category.id";
+    "SELECT article.id, title, article.date, content, description, imagePresentation, category_id, category.color AS category_color, category.imgUrl AS category_image, category.name AS category_name, CONCAT(user.name,' ', user.firstname) AS user_name, user_id FROM article INNER JOIN user ON article.user_id = user.id INNER JOIN category ON article.category_id = category.id";
   // const sql = process.env.SQL_GET_ARTICLES!;
 
   return await new Promise((resolve, reject) => {

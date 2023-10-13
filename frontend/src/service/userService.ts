@@ -35,12 +35,11 @@ export const fetchLogin = async (
     const data = await res.json();
 
     console.log(data);
-    
+
     if (data.message !== authSuccess) {
       setMsg(data.message);
       return;
     }
-
 
     fetchUser(data.id);
   } catch (e: any) {
@@ -67,9 +66,8 @@ export const fetchLogout = async () => {
   }
 };
 
-export const fetchSignUp = async (
-  email: string,
-  password: string,
+export const signUp = async (
+  formData: FormData,
   setMsg: Dispatch<SetStateAction<string>>
 ) => {
   fetch(API_SIGNUP, {
@@ -79,7 +77,7 @@ export const fetchSignUp = async (
       "Content-Type": "application/json",
     },
     credentials: "include",
-    body: JSON.stringify({ email, password }),
+    body: formData,
   })
     .then((res) => res.json())
     .then((json) => setMsg(json.message))

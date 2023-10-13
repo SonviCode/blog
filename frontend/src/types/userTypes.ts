@@ -6,6 +6,7 @@ export type User = {
   date: Date;
   password?: string;
   role: string;
+  imgUser?: string;
 };
 
 export type UserState = {

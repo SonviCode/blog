@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 20px 100px;
+  gap: 20px 50px;
   padding: 20px 0;
 
   h2 {
@@ -11,9 +11,10 @@
   }
 }
 
+// LEFT
 .media_container {
   p {
-    max-width: 600px;
+    max-width: 400px;
     font-size: 14px;
   }
   div {
@@ -35,8 +36,10 @@
   cursor: pointer;
 }
 
+// RIGHT
 .nav_container {
   display: flex;
+  flex-direction: column;
   gap: 40px;
 
   p {
@@ -46,17 +49,21 @@
 
 .nav {
   display: flex;
-  flex-direction: column;
   gap: 10px;
 }
 .links {
   display: flex;
-  flex-direction: column;
   gap: 10px;
 }
 
 @media (max-width: 1100px) {
   .footer {
     padding: 20px;
+  }
+}
+
+@media (max-width: 957px) {
+  .footer {
+    justify-content: center;
   }
 }

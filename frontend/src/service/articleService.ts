@@ -1,4 +1,4 @@
-import { API_ADD_ARTICLE, API_ADD_CATEGORY } from "@/constants/constants";
+import { API_ADD_ARTICLE } from "@/constants/constants";
 import { Dispatch, SetStateAction } from "react";
 
 export const addArticle = (

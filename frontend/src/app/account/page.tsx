@@ -11,8 +11,6 @@ import AdminAccount from "./_components/_admin/AdminAccount";
 
 export default function Auth() {
   const user: User | null = useSelector((state: RootState) => state.user.value);
-
-  console.log(user);
   
   useCheckCookies();
 
