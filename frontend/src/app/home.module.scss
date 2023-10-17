@@ -42,3 +42,20 @@
   gap: 40px;
   width: 80%;
 }
+
+//----------------------RESPONSIVE----------------------
+@media (max-width: 800px) {
+  .presentation {
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 0;
+
+    .presentation_img {
+      flex: auto;
+    }
+
+    .presentation_text {
+      padding: 0px;
+    }
+  }
+}

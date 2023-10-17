@@ -3,13 +3,12 @@ import Header from "@/components/Header/Header";
 import ReduxProvider from "@/redux/Provider";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import "@/styles/globals.scss";
 
 const poppins = Poppins({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Tom Sonvico Blog",
-  description: "Blog personnel de Tom Sonvico - Montagne, Voyage, Code...",
+  title: "Back office de Sonvic'o Blog",
+  description: "Gestion des articles, des catégories, des utilisateurs...",
 };
 
 export default function RootLayout({
@@ -19,12 +18,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body className={`${poppins.className} body_wrapper`}>
-        <ReduxProvider>
-          <Header />
-          {children}
-          <Footer />
-        </ReduxProvider>
+      <body className={poppins.className}>
+        <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
   );

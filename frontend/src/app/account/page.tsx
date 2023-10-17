@@ -7,21 +7,22 @@ import styles from "./account.module.scss";
 import { User } from "@/types/userTypes";
 import { RootState } from "@/redux/store";
 import useCheckCookies from "@/hooks/useCheckCookies";
-import AdminAccount from "./_components/_admin/AdminAccount";
+import AdminAccount from "./admin/page";
+import { redirect } from "next/navigation";
 
 export default function Auth() {
   const user: User | null = useSelector((state: RootState) => state.user.value);
-  
+
+  console.log("test");
+
   useCheckCookies();
+
+  if (user && user.role === "admin") redirect("/account/admin");
 
   return (
     <main className={styles.main}>
       {user && Object.keys(user!).length > 0 ? (
-        user.role === "admin" ? (
-          <AdminAccount user={user} />
-        ) : (
-          <UserAccount user={user} />
-        )
+        <UserAccount user={user} />
       ) : (
         <ConnectModal />
       )}

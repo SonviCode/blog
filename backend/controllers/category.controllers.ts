@@ -33,7 +33,9 @@ export const getCategoryByName = (req: Request, res: Response) => {
  * @param req.body : name, firstname, email, password
  */
 export const deleteCategory = (req: Request, res: Response) => {
-  CategoryModel.findOne({ id: parseInt(req.params.id) })
+  console.log(req.params);
+
+  CategoryModel.deleteOne(req.params)
     .then(() => res.status(201).json({ message: categoryDeleted }))
     .catch((error) => res.status(400).json({ error }));
 };

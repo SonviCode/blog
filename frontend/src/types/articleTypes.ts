@@ -9,5 +9,5 @@ export type Article = {
   content: string;
   description: string;
   imagePresentation: string;
-  category: Category;
+  category_id: number;
 };

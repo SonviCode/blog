@@ -13,7 +13,9 @@ const useFetchData = (
   useEffect(() => {
     try {
       const fetchData = async () => {
-        const res = await fetch(api_url);
+        const res = await fetch(api_url, {
+          credentials: "include",
+        });
 
         if (!res.ok) throw res;
 

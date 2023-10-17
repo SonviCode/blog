@@ -24,7 +24,7 @@ export default function Article() {
 
   return (
     <main>
-      <article className={styles.container_title}>
+      <div className={styles.container_title}>
         <div className={styles.info_title}>
           <h1>{article.title}</h1>
           <div className={styles.user_container}>
@@ -48,11 +48,14 @@ export default function Article() {
             fill={true}
           />
         </div>
-      </article>
+      </div>
 
       <div className="container_aside">
         <section className="section_aside_left">
-          <div dangerouslySetInnerHTML={{ __html: article.content }} />
+          <article
+            className={styles.article}
+            dangerouslySetInnerHTML={{ __html: article.content }}
+          />
           <Comments />
         </section>
         <Aside />

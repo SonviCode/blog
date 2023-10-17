@@ -1,0 +1,10 @@
+@import "@/styles/mixins";
+
+.confirm_modal {
+  position: fixed;
+  @include absolute-center;
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+  padding: 20px;
+  z-index: 100;
+}

@@ -18,7 +18,7 @@ dotenv.config();
  */
 export const getUsers = (_req: Request, res: Response) => {
   UserModel.find()
-    .then((users) => res.status(200).json({ users }))
+    .then((users) => res.status(200).json(users))
     .catch((error) => res.status(400).json({ error }));
 };
 

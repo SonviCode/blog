@@ -34,8 +34,6 @@ export const fetchLogin = async (
     });
     const data = await res.json();
 
-    console.log(data);
-
     if (data.message !== authSuccess) {
       setMsg(data.message);
       return;
@@ -51,7 +49,7 @@ export const fetchLogin = async (
 
 export const fetchLogout = async () => {
   try {
-    fetch(API_LOGOUT, {
+    await fetch(API_LOGOUT, {
       method: "POST",
       headers: {
         Accept: "application.json",
