@@ -10,6 +10,7 @@ export const API_CHECK_COOKIES = API_ROOTDIR + "auth/cookies";
 // CATEGORY
 export const API_ADD_CATEGORY = API_ROOTDIR + "category";
 export const API_DELETE_CATEGORY = API_ROOTDIR + "category";
+export const API_UPDATE_CATEGORY = API_ROOTDIR + "category";
 export const API_GET_CATEGORYS = API_ROOTDIR + "category";
 // ARTICLE
 export const API_ADD_ARTICLE = API_ROOTDIR + "article";
@@ -22,6 +23,7 @@ export const API_GET_COMMENTS = API_ROOTDIR + "comment";
 // ERROR MESSAGE
 export const INPUT_EMPTY = "Un ou plusieurs champs sont vides";
 export const incorrectCredential = "Identifiant/mot de passe incorrect";
+export const COMMENT_EMPTY = "Le contenu du commentaire ne doit pas être vide !"
 
 // SUCCESS MESSAGE
 export const authSuccess = "Authentification réussi avec succès !";

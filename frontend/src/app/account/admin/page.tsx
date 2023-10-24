@@ -4,7 +4,7 @@ import useCheckCookies from "@/hooks/useCheckCookies";
 import { RootState } from "@/redux/store";
 import { fetchLogout } from "@/service/userService";
 import { User } from "@/types/userTypes";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { handleDate } from "../../../utils/userUtils";
@@ -18,9 +18,12 @@ function AdminAccount() {
 
   const user: User | null = useSelector((state: RootState) => state.user.value);
 
-  useCheckCookies();
+  const router = useRouter();
 
-  if (!user) redirect("/account");
+  if (!user) {
+    router.push("/");
+    return;
+  }
 
   return (
     <div className={styles.admin_container}>
@@ -41,7 +44,10 @@ function AdminAccount() {
           </ul>
         </div>
 
-        <button className={styles.back_website} onClick={() => redirect("/")}>
+        <button
+          className={styles.back_website}
+          onClick={() => router.push("/")}
+        >
           Retour sur le site
         </button>
 

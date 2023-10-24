@@ -48,20 +48,16 @@ export const fetchLogin = async (
 };
 
 export const fetchLogout = async () => {
-  try {
-    await fetch(API_LOGOUT, {
-      method: "POST",
-      headers: {
-        Accept: "application.json",
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    });
-
-    store.dispatch(setUser(null));
-  } catch (e: any) {
-    console.log(e);
-  }
+  fetch(API_LOGOUT, {
+    method: "POST",
+    headers: {
+      Accept: "application.json",
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  })
+    .then(() => store.dispatch(setUser(null)))
+    .catch((e) => console.error(e));
 };
 
 export const signUp = async (

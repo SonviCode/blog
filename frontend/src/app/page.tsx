@@ -7,6 +7,8 @@ import { PITCH_PRESENTATION } from "@/constants/constants";
 import Image from "next/image";
 import styles from "./home.module.scss";
 import useCheckCookies from "@/hooks/useCheckCookies";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export default function Home() {
   useCheckCookies();
@@ -30,7 +32,9 @@ export default function Home() {
         </div>
       </section>
       <h2>Catégorie</h2>
-      <CategoryList />
+      <Suspense fallback={<Loading />}>
+        <CategoryList />
+      </Suspense>
       <div className="container_aside">
         <section className="section_aside_left">
           <h2>Articles récents</h2>

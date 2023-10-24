@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logout = exports.checkCookies = exports.updateUser = exports.login = exports.signUp = exports.getUserById = exports.getUsers = void 0;
+exports.checkCookies = exports.logout = exports.updateUser = exports.login = exports.signUp = exports.getUserById = exports.getUsers = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -110,13 +110,6 @@ const updateUser = (req, res) => {
 };
 exports.updateUser = updateUser;
 /**
- * Function call the first time on the page to know if your session is currently good
- */
-const checkCookies = (req, res) => {
-    res.status(200).json({ id: req.auth });
-};
-exports.checkCookies = checkCookies;
-/**
  * Function to logout, it clear the cookies
  */
 const logout = (_req, res) => {
@@ -130,3 +123,10 @@ const logout = (_req, res) => {
         .json({ message: constants_1.userLogout });
 };
 exports.logout = logout;
+/**
+ * Function call the first time on the page to know if your session is currently good
+ */
+const checkCookies = (req, res) => {
+    res.status(200).json({ id: req.auth });
+};
+exports.checkCookies = checkCookies;

@@ -1,9 +1,17 @@
 import { API_CHECK_COOKIES } from "@/constants/constants";
+import { setUser } from "@/redux/features/slice/userSlice";
+import { store } from "@/redux/store";
 import { fetchUser } from "@/service/userService";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const useCheckCookies = (): void => {
+  const calledOnce = useRef(false);
+
   useEffect(() => {
+    if (calledOnce.current) {
+      return;
+    }
+
     try {
       const fetchCookies = async () => {
         const res = await fetch(API_CHECK_COOKIES, {
@@ -16,10 +24,15 @@ const useCheckCookies = (): void => {
         fetchUser(id);
       };
 
+      console.log("test2");
+
       fetchCookies();
     } catch (e) {
       console.log(e);
+      store.dispatch(setUser(null));
     }
+
+    calledOnce.current = true;
   }, []);
 };
 

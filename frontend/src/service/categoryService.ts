@@ -1,4 +1,4 @@
-import { API_ADD_CATEGORY, API_DELETE_CATEGORY } from "@/constants/constants";
+import { API_ADD_CATEGORY, API_DELETE_CATEGORY, API_UPDATE_CATEGORY } from "@/constants/constants";
 import { Dispatch, SetStateAction } from "react";
 
 /**
@@ -36,6 +36,25 @@ export const deleteCategory = (
   id: number
 ) => {
   fetch(`${API_DELETE_CATEGORY}/${id}`, {
+    method: "DELETE",
+    credentials: "include",
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((json) => console.log(json.message))
+    .catch((error: any) => console.log(error));
+};
+
+/**
+ * Service to update a category
+ *
+ * @param formData
+ */
+export const updateCategory = (
+  id: number
+) => {
+  fetch(`${API_UPDATE_CATEGORY}/${id}`, {
     method: "DELETE",
     credentials: "include",
   })

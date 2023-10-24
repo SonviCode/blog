@@ -85,7 +85,7 @@ function AdminArticles({ userId }: { userId: number }) {
           <th>Description</th>
           <th>Contenu</th>
           <th>Catégorie</th>
-        </tr>
+        </tr> 
         {articles?.map((article, i) => (
           <tr key={i}>
             <td>{article.title}</td>

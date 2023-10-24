@@ -20,46 +20,46 @@ export default function Article() {
 
   useFetchData(setArticle, `${API_GET_ARTICLES}/${pathname.split("/")[2]}`);
 
-  if (!article) return <Error statusCode={404} />;
-
   return (
-    <main>
-      <div className={styles.container_title}>
-        <div className={styles.info_title}>
-          <h1>{article.title}</h1>
-          <div className={styles.user_container}>
-            <Image
-              className={styles.img_user}
-              src={article.imagePresentation}
-              alt={article.title}
-              width={50}
-              height={50}
-            />
-            <div>
-              <p>Tom Sonvico</p>
-              <p className={styles.date}>{handleDate(article.date)}</p>
+    article && (
+      <main>
+        <div className={styles.container_title}>
+          <div className={styles.info_title}>
+            <h1>{article.title}</h1>
+            <div className={styles.user_container}>
+              <Image
+                className={styles.img_user}
+                src={article.imagePresentation}
+                alt={article.title}
+                width={50}
+                height={50}
+              />
+              <div>
+                <p>Tom Sonvico</p>
+                <p className={styles.date}>{handleDate(article.date)}</p>
+              </div>
             </div>
           </div>
+          <div className={styles.container_img}>
+            <Image
+              src={article.imagePresentation}
+              alt={article.title}
+              fill={true}
+            />
+          </div>
         </div>
-        <div className={styles.container_img}>
-          <Image
-            src={article.imagePresentation}
-            alt={article.title}
-            fill={true}
-          />
-        </div>
-      </div>
 
-      <div className="container_aside">
-        <section className="section_aside_left">
-          <article
-            className={styles.article}
-            dangerouslySetInnerHTML={{ __html: article.content }}
-          />
-          <Comments />
-        </section>
-        <Aside />
-      </div>
-    </main>
+        <div className="container_aside">
+          <section className="section_aside_left">
+            <article
+              className={styles.article}
+              dangerouslySetInnerHTML={{ __html: article.content }}
+            />
+            <Comments />
+          </section>
+          <Aside />
+        </div>
+      </main>
+    )
   );
 }

@@ -1,21 +1,21 @@
+import ConfirmModal from "@/components/Modal/ConfirmModal/ConfirmModal";
 import { API_GET_CATEGORYS } from "@/constants/constants";
 import useFetchData from "@/hooks/useFetchData";
-import { addCategory, deleteCategory } from "@/service/categoryService";
+import { deleteCategory } from "@/service/categoryService";
 import { Category } from "@/types/categoryTypes";
-import Image from "next/image";
-import { FormEvent, useRef, useState } from "react";
-import "../admin.scss";
-import styles from "./admincategory.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
-import ConfirmModal from "@/components/Modal/ConfirmModal/ConfirmModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
+import { useState } from "react";
+import "../admin.scss";
 import HandleCategory from "./HandleCategory";
+import useFetchCategorys from "@/hooks/fetch/useFetchCategorys";
 
 function AdminCategory() {
   const [handleCategory, setHandleCategory] = useState<boolean>(false);
-  const [categorys, setCategorys] = useState<Category[]>();
+  const [defaultValue, setDefaultValue] = useState<Category>();
 
-  useFetchData(setCategorys, API_GET_CATEGORYS);
+  const categorys = useFetchCategorys();
 
   const handleDelete = (id: number) => {
     deleteCategory(id);
@@ -25,11 +25,18 @@ function AdminCategory() {
   const handleEdit = (category: Category) => {
     console.log(category);
 
-    return <ConfirmModal />;
+    setDefaultValue(category);
+    setHandleCategory(true);
   };
 
   if (handleCategory) {
-    return <HandleCategory setHandleCategory={setHandleCategory} />;
+    return (
+      <HandleCategory
+        setHandleCategory={setHandleCategory}
+        defaultValue={defaultValue}
+        setDefaultValue={setDefaultValue}
+      />
+    );
   }
 
   return (
@@ -37,36 +44,35 @@ function AdminCategory() {
       <h1>Liste des catégories</h1>
 
       <table className="table">
-        <tr>
-          <th>Nom</th>
-          <th>Color</th>
-          <th>Image</th>
-        </tr>
-        {categorys?.map((category, i) => (
-          <tr key={i}>
-            <td>{category.name}</td>
-            <td>{category.color}</td>
-            <td className="td_img">
-              <Image
-                src={category.imgUrl}
-                alt={category.name}
-                width={20}
-                height={20}
-              />
-            </td>
-            <div className="icon_container">
-              <div
-                className="icon_handle trash"
-                onClick={() => handleDelete(category.id)}
-              >
-                <FontAwesomeIcon icon={faTrash} />
-              </div>
-              <div className="icon_handle" onClick={() => handleEdit(category)}>
-                <FontAwesomeIcon icon={faPenToSquare} />
-              </div>
-            </div>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Color</th>
+            <th>Image</th>
           </tr>
-        ))}
+        </thead>
+        <tbody>
+          {categorys?.map((category, i) => (
+            <tr key={i}>
+              <td>{category.name}</td>
+              <td>{category.color}</td>
+              <td className="td_img">
+                <Image
+                  src={category.imgUrl}
+                  alt={category.name}
+                  width={20}
+                  height={20}
+                />
+              </td>
+              <td className="icon_handle trash">
+                <FontAwesomeIcon icon={faTrash} />
+              </td>
+              <td className="icon_handle" onClick={() => handleEdit(category)}>
+                <FontAwesomeIcon icon={faPenToSquare} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
 
       <button className="add_element" onClick={() => setHandleCategory(true)}>

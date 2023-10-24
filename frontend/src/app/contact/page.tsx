@@ -1,14 +1,20 @@
+"use client"
+
 import React from "react";
 import styles from "./contact.module.scss";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Contact() {
+
+  const router = useRouter();
+
   return (
     <main>
       <div className={styles.container_img}>
         <Image src="/IMG_1371.JPG" alt="Tom contact" fill={true} />
       </div>
-      <h1 className={styles.title}>Mes projets te plaisent ?</h1>
+      <h1 className={styles.title} onClick={() => router.push("/")}>Mes projets te plaisent ?</h1>
       <ul className={styles.list_contact}>
         <li>
           👉 Voici mon site portfolio de développeur :{" "}

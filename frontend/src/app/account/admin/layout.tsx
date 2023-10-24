@@ -1,5 +1,3 @@
-import Footer from "@/components/Footer/Footer";
-import Header from "@/components/Header/Header";
 import ReduxProvider from "@/redux/Provider";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";

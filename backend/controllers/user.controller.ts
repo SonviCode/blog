@@ -84,13 +84,6 @@ export const updateUser = (req: Request, res: Response) => {
 };
 
 /**
- * Function call the first time on the page to know if your session is currently good
- */
-export const checkCookies = (req: Request, res: Response) => {
-  res.status(200).json({ id: req.auth });
-};
-
-/**
  * Function to logout, it clear the cookies
  */
 export const logout = (_req: Request, res: Response) => {
@@ -102,4 +95,11 @@ export const logout = (_req: Request, res: Response) => {
     })
     .status(200)
     .json({ message: userLogout });
+};
+
+/**
+ * Function call the first time on the page to know if your session is currently good
+ */
+export const checkCookies = (req: Request, res: Response) => {
+  res.status(200).json({ id: req.auth });
 };

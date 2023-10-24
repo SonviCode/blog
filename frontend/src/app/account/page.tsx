@@ -1,30 +1,38 @@
 "use client";
 
+import useCheckCookies from "@/hooks/useCheckCookies";
+import { RootState } from "@/redux/store";
+import { User } from "@/types/userTypes";
+import { useRouter } from "next/navigation";
+import { Suspense, lazy } from "react";
 import { useSelector } from "react-redux";
-import ConnectModal from "./_components/_auth/ConnectModal";
+const ConnectModal = lazy(() => import("./_components/_auth/ConnectModal"));
 import UserAccount from "./_components/_user/UserAccount";
 import styles from "./account.module.scss";
-import { User } from "@/types/userTypes";
-import { RootState } from "@/redux/store";
-import useCheckCookies from "@/hooks/useCheckCookies";
 import AdminAccount from "./admin/page";
-import { redirect } from "next/navigation";
+import Loading from "../loading";
 
 export default function Auth() {
   const user: User | null = useSelector((state: RootState) => state.user.value);
 
-  console.log("test");
+  const router = useRouter();
 
   useCheckCookies();
 
-  if (user && user.role === "admin") redirect("/account/admin");
+  // useEffect(() => {
+  //   if (user?.role === "admin") router.push("/account/admin");
+  // }, [user]);
+
+  if (user?.role === "admin") return <AdminAccount />;
 
   return (
     <main className={styles.main}>
       {user && Object.keys(user!).length > 0 ? (
         <UserAccount user={user} />
       ) : (
-        <ConnectModal />
+        <Suspense fallback={<Loading />}>
+          <ConnectModal />
+        </Suspense>
       )}
     </main>
   );

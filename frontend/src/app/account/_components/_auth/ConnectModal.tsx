@@ -8,8 +8,6 @@ import Login from "@/app/account/_components/_auth/Login";
 export default function ConnectModal() {
   const [signUp, setSignUp] = useState(true);
 
-  console.log("test");
-
   return (
     <div className={styles.auth_container}>
       <div className={styles.btn_container}>

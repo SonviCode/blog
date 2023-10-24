@@ -1,4 +1,4 @@
-@import '@/styles/mixins';
+@import "@/styles/mixins";
 // ----------------------CSS FOR ALL MODULES-----------------------------
 .admin_container {
   padding: 20px;
@@ -36,24 +36,19 @@
   }
 }
 
-.icon_container {
-  display: flex;
-  height: 42px;
+.icon_handle {
+  position: relative;
+  width: 70px;
+  cursor: pointer;
 
-  .icon_handle {
-    position: relative;
-    width: 70px;
-    cursor: pointer;
-
-    svg {
-      position: absolute;
-      @include absolute-center;
-    }
+  svg {
+    position: absolute;
+    @include absolute-center;
   }
+}
 
-  .trash {
-    color: var(--red_error);
-  }
+.trash {
+  color: var(--red_error);
 }
 
 // button

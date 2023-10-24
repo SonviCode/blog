@@ -45,6 +45,8 @@ export const deleteCategory = (req: Request, res: Response) => {
  * @param req.body : email, password
  */
 export const addCategory = (req: Request, res: Response) => {
+  console.log(req.body);
+
   CategoryModel.save({
     ...req.body,
     imgUrl: `${req.protocol}://${req.get("host")}/public/${req.file!.filename}`,

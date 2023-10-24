@@ -1,7 +1,9 @@
 import React from "react";
-import styles from './confirmModal.module.scss'
+import styles from "./confirmModal.module.scss";
 
 function ConfirmModal() {
+  console.log("confirm modal");
+
   return (
     <div className={styles.confirm_modal}>
       <h4>Etes-vous sûr de vouloir supprimer cette catégorie ?</h4>
