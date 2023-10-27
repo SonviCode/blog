@@ -1,3 +1,5 @@
+@import "@/styles/mixins";
+
 .list_links {
   display: flex;
   gap: 20px;
@@ -16,6 +18,18 @@
   display: none;
   width: 20px;
   height: 20px;
+  cursor: pointer;
+}
+
+.modal_nav {
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+  position: fixed;
+  display: flex;
+  @include absolute-center;
+  z-index: 1000;
+  background-color: white;
 }
 
 @media (max-width: 880px) {

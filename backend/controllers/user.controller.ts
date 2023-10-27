@@ -37,8 +37,16 @@ export const getUserById = (req: Request, res: Response) => {
  * @param req.body : name, firstname, email, password
  */
 export const signUp = (req: Request, res: Response) => {
-  UserModel.save({ ...req.body })
-    .then(() => res.status(201).json({ message: userCreated }))
+  // if an image is provided, set this, else set an empty string
+  const imgUser = req.file
+    ? `${req.protocol}://${req.get("host")}/public/${req.file!.filename}`
+    : "";
+
+  UserModel.save({
+    ...req.body,
+    imgUser,
+  })
+    .then(() => login(req, res))
     .catch((error) => res.status(400).json({ error }));
 };
 
@@ -63,9 +71,9 @@ export const login = (req: Request, res: Response) => {
 
       res
         .cookie("jwt_token", token, {
-          httpOnly: true, // Impossible de le recupérer en JS avec document.cookie
-          secure: false, // certificat SSL
-          maxAge: 3600000, // durée de validité du token, en secondes
+          httpOnly: true, // Impossible to get in the frontend
+          secure: false, // SSL certificate
+          maxAge: 3600000, // validity period of the token ( in seconds )
         })
         .status(200)
         .json({ message: authSuccess, token, id });

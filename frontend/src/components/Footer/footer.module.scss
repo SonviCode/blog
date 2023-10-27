@@ -62,8 +62,15 @@
   }
 }
 
-@media (max-width: 957px) {
+@media (max-width: 948px) {
   .footer {
-    justify-content: center;
+    align-items: center;
+    flex-direction: column-reverse;
+  }
+}
+
+@media (max-width: 500px) {
+  .nav_container nav ul {
+    flex-direction: column;
   }
 }

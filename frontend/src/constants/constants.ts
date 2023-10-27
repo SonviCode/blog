@@ -22,8 +22,10 @@ export const API_GET_COMMENTS = API_ROOTDIR + "comment";
 //---------------RESPONSE---------------
 // ERROR MESSAGE
 export const INPUT_EMPTY = "Un ou plusieurs champs sont vides";
+export const DIFFERENT_PASSWORD = "Les 2 mots de passes ne sont pas identiques !";
 export const incorrectCredential = "Identifiant/mot de passe incorrect";
-export const COMMENT_EMPTY = "Le contenu du commentaire ne doit pas être vide !"
+export const COMMENT_EMPTY =
+  "Le contenu du commentaire ne doit pas être vide !";
 
 // SUCCESS MESSAGE
 export const authSuccess = "Authentification réussi avec succès !";

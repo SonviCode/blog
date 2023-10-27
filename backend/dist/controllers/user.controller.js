@@ -66,8 +66,12 @@ exports.getUserById = getUserById;
  * @param req.body : name, firstname, email, password
  */
 const signUp = (req, res) => {
-    UserModel.save(Object.assign({}, req.body))
-        .then(() => res.status(201).json({ message: constants_1.userCreated }))
+    // if an image is provided, set this, else set an empty string
+    const imgUser = req.file
+        ? `${req.protocol}://${req.get("host")}/public/${req.file.filename}`
+        : "";
+    UserModel.save(Object.assign(Object.assign({}, req.body), { imgUser }))
+        .then(() => (0, exports.login)(req, res))
         .catch((error) => res.status(400).json({ error }));
 };
 exports.signUp = signUp;
@@ -91,7 +95,7 @@ const login = (req, res) => {
             .cookie("jwt_token", token, {
             httpOnly: true,
             secure: false,
-            maxAge: 3600000, // durée de validité du token, en secondes
+            maxAge: 3600000, // validity period of the token ( in seconds )
         })
             .status(200)
             .json({ message: constants_1.authSuccess, token, id });

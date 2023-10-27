@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -9,9 +18,9 @@ const constants_1 = require("../constants/constants");
 /**
  * Middleware to check if the token is good
  */
-const checkToken = (req, res, next) => {
+const checkToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const token = req.cookies.jwt_token;
+        const token = yield req.cookies.jwt_token;
         const decodedToken = jsonwebtoken_1.default.verify(token, process.env.JWT_RANDOM_TOKEN);
         const id = decodedToken.id;
         Object.assign(req, { auth: id });
@@ -20,5 +29,5 @@ const checkToken = (req, res, next) => {
     catch (error) {
         res.status(401).json({ message: constants_1.incorrectToken });
     }
-};
+});
 exports.checkToken = checkToken;

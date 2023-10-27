@@ -10,9 +10,13 @@ interface JwtPayload {
 /**
  * Middleware to check if the token is good
  */
-export const checkToken = (req: Request, res: Response, next: NextFunction) => {
+export const checkToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const token = req.cookies.jwt_token;
+    const token = await req.cookies.jwt_token;
 
     const decodedToken = jwt.verify(
       token,

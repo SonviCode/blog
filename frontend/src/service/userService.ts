@@ -34,7 +34,7 @@ export const fetchLogin = async (
     });
     const data = await res.json();
 
-    if (data.message !== authSuccess) {
+    if (!res.ok) {
       setMsg(data.message);
       return;
     }
@@ -47,6 +47,10 @@ export const fetchLogin = async (
   }
 };
 
+
+/**
+ * Function to logout ( delete the cookie and dispatch user to null)
+ */
 export const fetchLogout = async () => {
   fetch(API_LOGOUT, {
     method: "POST",
@@ -60,22 +64,35 @@ export const fetchLogout = async () => {
     .catch((e) => console.error(e));
 };
 
+
+/**
+ * Service to create user info and call the fetch user function
+ * 
+ * @param formData 
+ * @param setMsg 
+ * @returns 
+ */
 export const signUp = async (
   formData: FormData,
-  setMsg: Dispatch<SetStateAction<string>>
+  setError: Dispatch<SetStateAction<string>>
 ) => {
-  fetch(API_SIGNUP, {
-    method: "POST",
-    headers: {
-      Accept: "application.json",
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: formData,
-  })
-    .then((res) => res.json())
-    .then((json) => setMsg(json.message))
-    .catch((error: any) => console.log(error));
+  try {
+    const res = await fetch(API_SIGNUP, {
+      method: "POST",
+      body: formData,
+      credentials: "include",
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.message);
+      return;
+    }
+
+    fetchUser(data.id);
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 /**
@@ -87,8 +104,6 @@ export const fetchUser = async (id: number) => {
   try {
     const res = await fetch(API_GET_USER + id, { credentials: "include" });
     const user = await res.json();
-
-    console.log(user);
 
     store.dispatch(setUser(user));
   } catch (e) {

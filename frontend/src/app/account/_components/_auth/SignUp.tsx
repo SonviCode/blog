@@ -1,4 +1,8 @@
-import { API_SIGNUP, INPUT_EMPTY } from "@/constants/constants";
+import {
+  API_SIGNUP,
+  DIFFERENT_PASSWORD,
+  INPUT_EMPTY,
+} from "@/constants/constants";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FormEvent, useState } from "react";
@@ -6,50 +10,51 @@ import styles from "./auth.module.scss";
 import { signUp } from "@/service/userService";
 
 export default function SignUp() {
-  const [msg, setMsg] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [seePswd, setSeePswd] = useState<boolean>(false);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // if (e.target.value.trim().length > 0) {
-    //   console.log('✅ Input is not empty');
-    // } else {
-    //   console.log('⛔️ Input is empty');
-    // }
-
-    const elements = e.currentTarget.elements as unknown as HTMLFormElement;
-    const email: string = elements.email.value;
-    const password: string = elements.password.value;
-
-    if (email.trim() == "" || password.trim() == "") {
-      setMsg(INPUT_EMPTY);
-    }
     const formData = new FormData(e.currentTarget);
 
+    const elements = e.currentTarget.elements as unknown as HTMLFormElement;
+    const password = elements.password.value;
+    const password_confirm = elements.password_confirm.value;
 
-    signUp(formData, setMsg);
+    if (password !== password_confirm) {
+      setError(DIFFERENT_PASSWORD);
+      return;
+    }
+    console.log((e.target as HTMLInputElement).value);
+
+    signUp(formData, setError);
   };
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>
+    <form
+      encType="multipart/form-data"
+      onSubmit={(e) => handleSubmit(e)}
+      className={styles.form}
+    >
       <div>
         <label htmlFor="firstname">Prénom</label>
-        <input type="text" id="firstname" required />
+        <input type="text" id="firstname" name="firstname" required />
       </div>
       <div>
         <label htmlFor="name">Nom</label>
-        <input type="text" id="name" required />
+        <input type="text" id="name" name="name" required />
       </div>
       <div>
         <label htmlFor="email">Email</label>
-        <input type="email" id="email" required />
+        <input type="email" id="email" name="email" required />
       </div>
       <div>
         <label htmlFor="password">Mot de passe</label>
         <input
           type={seePswd ? "text" : "password"}
           id="password"
+          name="password"
           autoComplete="new-password"
           required
         />
@@ -71,9 +76,13 @@ export default function SignUp() {
           onClick={() => setSeePswd(!seePswd)}
         />
       </div>
+      <div>
+        <label htmlFor="file">Photo de profil (optionnel)</label>
+        <input type="file" accept="image/*" id="file" name="file" />
+      </div>
 
       <button>Se connecter</button>
-      {msg && <p className={styles.error_msg}>{msg}</p>}
+      {error && <p className={styles.error_msg}>{error}</p>}
     </form>
   );
 }

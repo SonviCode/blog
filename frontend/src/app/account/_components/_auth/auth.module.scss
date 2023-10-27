@@ -35,6 +35,7 @@
   .error_msg {
     font-style: italic;
     color: var(--red_error);
+    font-size: 15px;
   }
 }
 
@@ -61,5 +62,15 @@
 
   .is_active {
     font-weight: bold;
+  }
+}
+
+@media (max-width: 450px) {
+  .auth_container {
+    padding: 20px;
+  }
+
+  .form {
+    margin: 0;
   }
 }

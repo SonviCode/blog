@@ -6,6 +6,7 @@ export interface UserInterface {
   id: number;
   name: string;
   firstname: string;
+  email: string;
   date: Date;
   password?: string;
   role: string;
@@ -14,23 +15,21 @@ export interface UserInterface {
 
 export const save = async (body: UserInterface) => {
   await hashPassword(body);
-  const parameter = Object.values(body);
   const sql = process.env.SQL_SIGNUP!;
 
-  console.log(body);
-  
-
-  const params = [];
-
-  // ADD UUID
-  parameter.unshift(uuidv4());
-  // ADD DATE IN THE GOOD INDEX
-  parameter.splice(4, 0, new Date());
-  // ADD THE ROLE (customer by default)
-  parameter.push("customer");
+  const params = [
+    uuidv4(), // user id
+    body.name,
+    body.firstname,
+    body.email,
+    new Date(),
+    body.password,
+    "user",
+    body.imgUser,
+  ];
 
   return await new Promise((resolve, reject) => {
-    database.query(sql, parameter, (err, user) => {
+    database.query(sql, params, (err, user) => {
       if (err) return reject(err);
 
       resolve(user[0]);
