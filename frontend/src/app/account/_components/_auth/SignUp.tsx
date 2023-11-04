@@ -26,7 +26,6 @@ export default function SignUp() {
       setError(DIFFERENT_PASSWORD);
       return;
     }
-    console.log((e.target as HTMLInputElement).value);
 
     signUp(formData, setError);
   };

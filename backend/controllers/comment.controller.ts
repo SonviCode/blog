@@ -22,7 +22,7 @@ export const getCommentsByArticle = (req: Request, res: Response) => {
  */
 export const deleteComment = (req: Request, res: Response) => {
   CommentModel.findOne({ id: parseInt(req.params.id) })
-    .then(() => res.status(201).json({ message: commentDeleted }))
+    .then((comments) => res.status(200).json(comments))
     .catch((error) => res.status(400).json({ error }));
 };
 
@@ -34,8 +34,6 @@ export const addComment = (req: Request, res: Response) => {
   CommentModel.save({
     ...req.body,
   })
-    .then((comments) =>
-      res.status(201).json({ message: commentCreated, comments })
-    )
+    .then((comments) => res.status(201).json(comments))
     .catch((error) => res.status(400).json({ error }));
 };

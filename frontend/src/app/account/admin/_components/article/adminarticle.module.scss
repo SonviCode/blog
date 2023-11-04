@@ -4,3 +4,35 @@
   white-space: nowrap;
   color: #000;
 }
+
+.editor {
+  position: relative;
+
+  form {
+    height: 100%;
+  }
+  img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .quill,
+  .quill > * {
+    height: 100%;
+  }
+
+  .inputForm {
+    display: flex;
+    position: relative;
+    align-items: center;
+    padding: 10px;
+    gap: 20px;
+
+    input {
+      border-radius: 4px;
+      border: 1px solid gray;
+      padding: 10px;
+      width: 100%;
+    }
+  }
+}

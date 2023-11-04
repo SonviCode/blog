@@ -57,11 +57,13 @@ export const deleteOne = async (params: Object) => {
   const sql = process.env.SQL_DELETE_CATEGORY!;
 
   return await new Promise((resolve, reject) => {
-    database.query(sql, [params], (err, catgeory) => {
+    database.query(sql, [params], async (err, catgeory)  => {
       if (err) return reject(err);
       if (catgeory.length === 0) return reject(err);
 
-      resolve(catgeory[0]);
+      const result = await find()
+
+      resolve(result);
     });
   });
 };

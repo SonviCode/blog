@@ -1,6 +1,5 @@
 "use client";
 
-import useCheckCookies from "@/hooks/useCheckCookies";
 import { RootState } from "@/redux/store";
 import { fetchLogout } from "@/service/userService";
 import { User } from "@/types/userTypes";
@@ -64,7 +63,7 @@ function AdminAccount() {
         </div>
       </div>
       {index == 1 && <AdminCategory />}
-      {index == 2 && <AdminArticles userId={user.id} />}
+      {index == 2 && <AdminArticles />}
       {index == 3 && <AdminUser />}
     </div>
   );

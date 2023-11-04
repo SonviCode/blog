@@ -1,30 +1,32 @@
-import { API_GET_COMMENTS, COMMENT_EMPTY } from "@/constants/constants";
+import {
+  API_GET_COMMENTS,
+  COMMENT_EMPTY,
+  alertTextDeleteComment,
+} from "@/constants/constants";
 import useFetchData from "@/hooks/useFetchData";
 import { RootState } from "@/redux/store";
 import { addComment } from "@/service/commentService";
 import { Comment } from "@/types/commentTypes";
 import { User } from "@/types/userTypes";
-import React, { FormEvent, useState } from "react";
+import { handleDate } from "@/utils/userUtils";
+import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { usePathname } from "next/navigation";
+import { FormEvent, useState } from "react";
 import { useSelector } from "react-redux";
 import styles from "./comments.module.scss";
-import useCheckCookies from "@/hooks/useCheckCookies";
+import ConfirmModal from "@/components/Modal/ConfirmModal/ConfirmModal";
 import Image from "next/image";
-import { handleDate } from "@/utils/userUtils";
-import { usePathname } from "next/navigation";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 function Comments() {
   const [comments, setComments] = useState<Comment[]>([]);
-  const [editComment, setEditComment] = useState<Comment>();
-  const [msg, setMsg] = useState<string>("");
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   const user: User | null = useSelector((state: RootState) => state.user.value);
 
   const pathname = usePathname();
   const articleId = pathname.split("/")[2];
-
-  useCheckCookies();
 
   useFetchData(setComments, `${API_GET_COMMENTS}/${articleId}`);
 
@@ -36,7 +38,7 @@ function Comments() {
         e.currentTarget.elements as unknown as HTMLFormElement
       ).content.value.trim() === ""
     ) {
-      setMsg(COMMENT_EMPTY);
+      setError(COMMENT_EMPTY);
       return;
     }
 
@@ -44,15 +46,15 @@ function Comments() {
     formData.append("user_id", user?.id.toString()!);
     formData.append("article_id", articleId);
 
-    addComment(formData, setMsg, setComments);
+    addComment(formData, setError, setComments);
   };
 
   return (
     <div>
-      <h3 className={styles.title}>Commentaires</h3>
+      <h3>Commentaires</h3>
       {user && (
         <>
-          {msg && <p className="error_msg">{msg}</p>}
+          {error && <p className="error_msg">{error}</p>}
           <form
             encType="multipart/form-data"
             className={styles.form}
@@ -62,7 +64,7 @@ function Comments() {
               name="content"
               id="content"
               placeholder="Ajouter un commentaire"
-              onChange={() => setMsg("")}
+              onChange={() => setError("")}
               required
             />
             <button>Ajouter</button>
@@ -72,44 +74,31 @@ function Comments() {
       <div className={styles.comment_container}>
         {comments && comments.length > 0 ? (
           comments.map((comment, i) => (
-            <div
-              key={i}
-              className={
-                editComment?.id === comment.id ? styles.edit_comment : ""
-              }
-            >
+            <div key={i} className={styles.comment}>
               <div className={styles.user_container}>
-                {/* <Image
-                  className={styles.img_user}
-                  src={comment.user.imgUser!}
-                  alt={comment.user.name}
-                  width={50}
-                  height={50}
-                /> */}
-                <div>
-                  <p>{comment.user_id}</p>
-                  <p className={styles.date}>{handleDate(comment.date)}</p>
-                  {editComment?.id === comment.id ? (
-                    <form className={styles.edit_form}>
-                      <textarea
-                        name="content"
-                        id="content"
-                        defaultValue={comment.content}
-                        required
-                      />
-                    </form>
-                  ) : (
-                    <p>{comment.content}</p>
-                  )}
-                </div>
-                {user?.id === comment.user_id && (
-                  <FontAwesomeIcon
-                    icon={faPenToSquare}
-                    className={styles.edit_logo}
-                    onClick={() => setEditComment(comment)}
+                <div className={styles.user_info}>
+                  <Image
+                    className={styles.img_user}
+                    // src={comment.}
+                    src={"/IMG_1371.JPG"}
+                    alt={comment.user_id.toString()}
+                    width={50}
+                    height={50}
                   />
-                )}
+                  <div>
+                    <p>{comment.user_id}</p>
+                    <p className={styles.date}>{handleDate(comment.date)}</p>
+                  </div>
+                </div>
+                <p>{comment.content}</p>
               </div>
+              {user?.id === comment.user_id && (
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  className={styles.delete_logo}
+                  onClick={() => setIsOpenModal(true)}
+                />
+              )}
             </div>
           ))
         ) : (
@@ -118,6 +107,12 @@ function Comments() {
           </div>
         )}
       </div>
+      {isOpenModal && (
+        <ConfirmModal
+          setIsOpenModal={setIsOpenModal}
+          alertText={alertTextDeleteComment}
+        />
+      )}
     </div>
   );
 }

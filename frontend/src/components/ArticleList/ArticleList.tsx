@@ -8,7 +8,7 @@ import Image from "next/image";
 import { handleDate } from "../../utils/userUtils";
 
 function ArticleList() {
-  const [articles, setArticles] = useState<any[]>();
+  const [articles, setArticles] = useState<any[]>([]);
 
   useFetchData(setArticles, API_GET_ARTICLES);
 

@@ -36,7 +36,7 @@ export const deleteCategory = (req: Request, res: Response) => {
   console.log(req.params);
 
   CategoryModel.deleteOne(req.params)
-    .then(() => res.status(201).json({ message: categoryDeleted }))
+    .then((categorys) => res.status(200).json(categorys))
     .catch((error) => res.status(400).json({ error }));
 };
 

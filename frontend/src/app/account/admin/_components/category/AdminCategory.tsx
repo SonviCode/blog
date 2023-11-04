@@ -9,35 +9,36 @@ import Image from "next/image";
 import { useState } from "react";
 import "../admin.scss";
 import HandleCategory from "./HandleCategory";
-import useFetchCategorys from "@/hooks/fetch/useFetchCategorys";
 
 function AdminCategory() {
-  const [handleCategory, setHandleCategory] = useState<boolean>(false);
+  const [handling, setHandling] = useState<boolean>(false);
   const [defaultValue, setDefaultValue] = useState<Category>();
+  const [categorys, setCategorys] = useState<Category[]>([]);
 
-  const categorys = useFetchCategorys();
+  useFetchData(setCategorys, API_GET_CATEGORYS);
+
+  const handleAdd = (): void => {
+    setDefaultValue(undefined);
+    setHandling(true);
+  };
 
   const handleDelete = (id: number) => {
-    deleteCategory(id);
-    return <ConfirmModal />;
+    deleteCategory(id, setCategorys);
   };
 
-  const handleEdit = (category: Category) => {
-    console.log(category);
-
+  const handleEdit = (category: Category): void => {
     setDefaultValue(category);
-    setHandleCategory(true);
+    setHandling(true);
   };
 
-  if (handleCategory) {
+  if (handling)
     return (
       <HandleCategory
-        setHandleCategory={setHandleCategory}
+        setHandleCategory={setHandling}
+        setCategorys={setCategorys}
         defaultValue={defaultValue}
-        setDefaultValue={setDefaultValue}
       />
     );
-  }
 
   return (
     <div className="admin_container">
@@ -64,7 +65,10 @@ function AdminCategory() {
                   height={20}
                 />
               </td>
-              <td className="icon_handle trash">
+              <td
+                className="icon_handle trash"
+                onClick={() => handleDelete(category.id)}
+              >
                 <FontAwesomeIcon icon={faTrash} />
               </td>
               <td className="icon_handle" onClick={() => handleEdit(category)}>
@@ -75,7 +79,7 @@ function AdminCategory() {
         </tbody>
       </table>
 
-      <button className="add_element" onClick={() => setHandleCategory(true)}>
+      <button className="add_element" onClick={() => handleAdd()}>
         + Ajouter une catégorie
       </button>
     </div>

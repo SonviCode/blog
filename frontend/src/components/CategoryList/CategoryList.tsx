@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
-import styles from "./categorylist.module.scss";
-import Image from "next/image";
 import { API_GET_CATEGORYS } from "@/constants/constants";
-import { Category } from "@/types/categoryTypes";
-import Link from "next/link";
 import useFetchData from "@/hooks/useFetchData";
-import useFetchData2 from "@/hooks/useFetchData2";
+import { Category } from "@/types/categoryTypes";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import styles from "./categorylist.module.scss";
 
 function CategoryList() {
-  const categorys: Category[] = useFetchData2(API_GET_CATEGORYS);
+  const [categorys, setCategorys] = useState<Category[]>();
+
+  useFetchData(setCategorys, API_GET_CATEGORYS);
 
   return (
-    categorys.length > 0 && (
+    categorys?.length! > 0 && (
       <ul className={styles.category}>
-        {categorys.map((category, i) => (
+        {categorys?.map((category, i) => (
           <li key={i} style={{ background: category.color }}>
             <Link href={`/category/${category.name}`}>
               <Image

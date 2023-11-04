@@ -18,11 +18,13 @@ export const API_GET_ARTICLES = API_ROOTDIR + "article";
 // COMMENT
 export const API_ADD_COMMENT = API_ROOTDIR + "comment";
 export const API_GET_COMMENTS = API_ROOTDIR + "comment";
+export const API_DELETE_COMMENT = API_ROOTDIR + "comment";
 
 //---------------RESPONSE---------------
 // ERROR MESSAGE
 export const INPUT_EMPTY = "Un ou plusieurs champs sont vides";
-export const DIFFERENT_PASSWORD = "Les 2 mots de passes ne sont pas identiques !";
+export const DIFFERENT_PASSWORD =
+  "Les 2 mots de passes ne sont pas identiques !";
 export const incorrectCredential = "Identifiant/mot de passe incorrect";
 export const COMMENT_EMPTY =
   "Le contenu du commentaire ne doit pas être vide !";
@@ -81,3 +83,7 @@ export const BLOG_NAME = "Sonvic'o Blog";
 
 export const PITCH_PRESENTATION =
   "Passionné par le développement d'application mais pas que, j'ai décidé de mettre en pratique mes compétences pour pouvoir partager mes autres passions.";
+
+// MODAL
+export const alertTextDeleteComment =
+  "Êtes-vous sûr de vouloir supprimer ce commentaire ?";

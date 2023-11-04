@@ -1,21 +1,57 @@
-import { API_ADD_COMMENT } from "@/constants/constants";
+import { API_ADD_COMMENT, API_DELETE_COMMENT } from "@/constants/constants";
 import { Dispatch, SetStateAction } from "react";
-import { Comment } from "../types/commentTypes";
+import { Comment } from "@/types/commentTypes";
 
-export const addComment = (
+/**
+ * Service to add a comment
+ *
+ * @param formData
+ * @param setError
+ * @param setComments
+ */
+export const addComment = async (
   formData: any,
-  setMsg: Dispatch<SetStateAction<string>>,
+  setError: Dispatch<SetStateAction<string>>,
   setComments: Dispatch<SetStateAction<Comment[]>>
 ) => {
-  fetch(API_ADD_COMMENT, {
-    method: "POST",
-    credentials: "include",
-    body: formData,
-  })
-    .then((res) => res.json())
-    .then((json) => {
-      setComments(json.comments);
-      setMsg(json.message);
-    })
-    .catch((error: any) => console.error(error));
+  try {
+    const res = await fetch(API_ADD_COMMENT, {
+      method: "POST",
+      credentials: "include",
+      body: formData,
+    });
+
+    const data = await res.json();
+
+    console.log(data);
+
+    if (!res.ok) {
+      setError(data.message);
+      return;
+    }
+
+    setComments(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const deleteComment = async (
+  id: number,
+  setComments: Dispatch<SetStateAction<Comment[]>>
+) => {
+  try {
+    const res = await fetch(`${API_DELETE_COMMENT}/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) throw res;
+
+    setComments(data);
+  } catch (e) {
+    console.log(e);
+  }
 };

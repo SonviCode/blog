@@ -1,4 +1,4 @@
-import { addCategory } from "@/service/categoryService";
+import { addCategory, updateCategory } from "@/service/categoryService";
 import { Dispatch, FormEvent, SetStateAction, useRef, useState } from "react";
 import "../admin.scss";
 import styles from "./admincategory.module.scss";
@@ -6,23 +6,23 @@ import { Category } from "@/types/categoryTypes";
 
 function HandleCategory({
   setHandleCategory,
+  setCategorys,
   defaultValue,
-  setDefaultValue,
-}: {
-  setHandleCategory: Dispatch<SetStateAction<boolean>>;
-  defaultValue?: Category;
-  setDefaultValue?: Dispatch<SetStateAction<Category | undefined>>;
-}) {
-  const [msg, setMsg] = useState<string>("");
-  const [success, setSucces] = useState<boolean>(false);
-
+}: HandleCategoryProps) {
+  const [error, setError] = useState<string>("");
   const form = useRef<HTMLFormElement>(null);
+
+  console.log(defaultValue);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
-    addCategory(formData, setMsg, setSucces);
+    if (defaultValue) {
+      updateCategory(1, setError, setCategorys);
+    } else {
+      addCategory(formData, setError, setCategorys);
+    }
 
     setHandleCategory(false);
   };
@@ -66,16 +66,19 @@ function HandleCategory({
         className="cancel_btn"
         onClick={() => {
           setHandleCategory(false);
-          setDefaultValue!(undefined);
         }}
       >
         Annuler
       </div>
-      {msg && (
-        <p className={success ? styles.succes_msg : styles.error_msg}>{msg}</p>
-      )}
+      {error && <p className={styles.error_msg}>{error}</p>}
     </form>
   );
 }
 
 export default HandleCategory;
+
+type HandleCategoryProps = {
+  setHandleCategory: Dispatch<SetStateAction<boolean>>;
+  setCategorys: Dispatch<SetStateAction<Category[]>>;
+  defaultValue?: Category;
+};

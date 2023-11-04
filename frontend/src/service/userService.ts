@@ -40,13 +40,10 @@ export const fetchLogin = async (
     }
 
     fetchUser(data.id);
-  } catch (e: any) {
+  } catch (e) {
     console.log(e);
-
-    // setMsg(e);
   }
 };
-
 
 /**
  * Function to logout ( delete the cookie and dispatch user to null)
@@ -64,13 +61,12 @@ export const fetchLogout = async () => {
     .catch((e) => console.error(e));
 };
 
-
 /**
  * Service to create user info and call the fetch user function
- * 
- * @param formData 
- * @param setMsg 
- * @returns 
+ *
+ * @param formData
+ * @param setMsg
+ * @returns
  */
 export const signUp = async (
   formData: FormData,
@@ -104,6 +100,10 @@ export const fetchUser = async (id: number) => {
   try {
     const res = await fetch(API_GET_USER + id, { credentials: "include" });
     const user = await res.json();
+
+    if (!res.ok) {
+      return;
+    }
 
     store.dispatch(setUser(user));
   } catch (e) {

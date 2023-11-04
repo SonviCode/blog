@@ -3,7 +3,8 @@
   box-shadow: var(--box-shadow);
   border-radius: 20px;
   width: 100%;
-  margin: 20px;
+  height: 100%;
+  margin: 40px 20px;
 }
 
 .container_img {
@@ -14,4 +15,10 @@
   img {
     border-radius: 100%;
   }
+}
+
+.logout {
+  border-radius: 10px;
+  background-color: var(--blue);
+  padding: 10px;
 }

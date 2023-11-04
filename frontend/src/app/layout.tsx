@@ -1,9 +1,9 @@
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import ReduxProvider from "@/redux/Provider";
+import "@/styles/globals.scss";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import "@/styles/globals.scss";
 
 const poppins = Poppins({ weight: "400", subsets: ["latin"] });
 
@@ -17,6 +17,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
   return (
     <html lang="fr">
       <body className={`${poppins.className} body_wrapper`}>

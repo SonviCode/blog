@@ -2,9 +2,35 @@
 
 .confirm_modal {
   position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   @include absolute-center;
   border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  background-color: white;
   box-shadow: var(--box-shadow);
-  padding: 20px;
+  padding: 50px;
   z-index: 100;
+}
+
+.button_container {
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid black;
+  }
+
+  .cancel {
+    background-color: var(--red);
+  }
+
+  .confirm {
+    background-color: var(--green);
+  }
 }
