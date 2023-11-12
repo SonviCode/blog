@@ -9,8 +9,6 @@ dotenv.config();
  * Function to get all comments according article
  */
 export const getCommentsByArticle = (req: Request, res: Response) => {
-  console.log(req.params);
-
   CommentModel.find(req.params.articleId)
     .then((comments) => res.status(200).json(comments))
     .catch((error) => res.status(400).json({ error }));
@@ -21,7 +19,7 @@ export const getCommentsByArticle = (req: Request, res: Response) => {
  * @param req.body : name, firstname, email, password
  */
 export const deleteComment = (req: Request, res: Response) => {
-  CommentModel.findOne({ id: parseInt(req.params.id) })
+  CommentModel.deleteOne({ id: req.params.id }, req.body.articleId)
     .then((comments) => res.status(200).json(comments))
     .catch((error) => res.status(400).json({ error }));
 };
@@ -34,6 +32,6 @@ export const addComment = (req: Request, res: Response) => {
   CommentModel.save({
     ...req.body,
   })
-    .then((comments) => res.status(201).json(comments))
+    .then(() => getCommentsByArticle(req, res))
     .catch((error) => res.status(400).json({ error }));
 };

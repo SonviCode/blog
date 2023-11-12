@@ -38,11 +38,17 @@ export const addComment = async (
 
 export const deleteComment = async (
   id: number,
+  articleId: string,
   setComments: Dispatch<SetStateAction<Comment[]>>
 ) => {
   try {
     const res = await fetch(`${API_DELETE_COMMENT}/${id}`, {
       method: "DELETE",
+      headers: {
+        Accept: "application.json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ articleId }),
       credentials: "include",
     });
 

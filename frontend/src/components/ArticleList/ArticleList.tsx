@@ -1,23 +1,26 @@
-import { API_GET_ARTICLES } from "@/constants/constants";
+import { API_ARTICLE } from "@/constants/constants";
 import useFetchData from "@/hooks/useFetchData";
-import { Article } from "@/types/articleTypes";
-import { useState } from "react";
-import styles from "./articlelist.module.scss";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 import { handleDate } from "../../utils/userUtils";
+import styles from "./articlelist.module.scss";
 
 function ArticleList() {
   const [articles, setArticles] = useState<any[]>([]);
 
-  useFetchData(setArticles, API_GET_ARTICLES);
+  useFetchData(setArticles, API_ARTICLE);
 
   console.log(articles);
 
   return (
     <>
       {articles?.map((article, i) => (
-        <div key={i} className={styles.article}>
+        <Link
+          key={i}
+          className={styles.article}
+          href={`/article/${article.id}`}
+        >
           <div className={styles.container_img}>
             <Image
               src={article.imagePresentation}
@@ -32,7 +35,7 @@ function ArticleList() {
               <Link
                 href={`/category/${article.category_name}`}
                 className={styles.category}
-                style={{ color: article.category_color }}
+                style={{ background: article.category_color }}
               >
                 {article.category_name}
               </Link>
@@ -42,11 +45,9 @@ function ArticleList() {
 
             <p className={styles.description}>{article.description}</p>
 
-            <Link className={styles.more_infos} href={`/article/${article.id}`}>
-              Lire plus
-            </Link>
+            <p className={styles.more_infos}>Lire plus</p>
           </div>
-        </div>
+        </Link>
       ))}
     </>
   );

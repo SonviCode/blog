@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.get("/users", checkToken, getUsers);
 router.get("/user/:id", checkToken, getUserById);
-router.put("/user/:id", updateUser);
+router.put("/user/:id", checkToken, updateUser);
 router.post("/signup", multerConfig, checkIfEmailAlreadyExist, signUp);
 router.post("/login", login);
 router.post("/logout", logout);

@@ -1,14 +1,14 @@
 import useFetchData from "@/hooks/useFetchData";
 import styles from "./aside.module.scss";
 import { useState } from "react";
-import { API_GET_ARTICLES } from "@/constants/constants";
+import { API_ARTICLE } from "@/constants/constants";
 import Link from "next/link";
 import { handleDate } from "@/utils/userUtils";
 
 export default function Aside() {
   const [articles, setArticles] = useState<any[]>();
 
-  useFetchData(setArticles, API_GET_ARTICLES);
+  useFetchData(setArticles, API_ARTICLE);
 
   return (
     <aside className={styles.aside}>

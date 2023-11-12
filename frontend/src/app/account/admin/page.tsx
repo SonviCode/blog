@@ -11,6 +11,9 @@ import AdminArticles from "./_components/article/AdminArticles";
 import AdminCategory from "./_components/category/AdminCategory";
 import AdminUser from "./_components/user/AdminUser";
 import styles from "./adminaccount.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import EditUser from "../_components/_user/EditUser";
 
 function AdminAccount() {
   const [index, setIndex] = useState<number>(1);
@@ -56,7 +59,9 @@ function AdminAccount() {
           </p>
           <p>{user.email}</p>
           <p>{handleDate(user.date)}</p>
-          <p>{user.id}</p>
+          <p onClick={() => setIndex(4)} className={styles.edit}>
+            <FontAwesomeIcon icon={faPenToSquare} /> Modifier mes informations
+          </p>
           <button className={styles.logout} onClick={() => fetchLogout()}>
             Se déconnecter
           </button>
@@ -65,6 +70,7 @@ function AdminAccount() {
       {index == 1 && <AdminCategory />}
       {index == 2 && <AdminArticles />}
       {index == 3 && <AdminUser />}
+      {index == 4 && <EditUser user={user} />}
     </div>
   );
 }

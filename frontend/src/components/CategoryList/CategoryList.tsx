@@ -5,12 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import styles from "./categorylist.module.scss";
+import Loading from "@/app/loading";
 
 function CategoryList() {
   const [categorys, setCategorys] = useState<Category[]>();
 
-  useFetchData(setCategorys, API_GET_CATEGORYS);
+  const isLoading = useFetchData(setCategorys, API_GET_CATEGORYS);
 
+  if (isLoading) return <CategoryListSkeleton />;
   return (
     categorys?.length! > 0 && (
       <ul className={styles.category}>
@@ -33,3 +35,12 @@ function CategoryList() {
 }
 
 export default CategoryList;
+
+const CategoryListSkeleton = () => {
+  return <ul className={styles.skeleton}>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </ul>;
+};

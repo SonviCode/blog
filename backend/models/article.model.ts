@@ -1,4 +1,4 @@
-import { database } from "../DB/connexion";
+import { database, databaseQuery } from "../DB/database";
 import dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
 
@@ -15,6 +15,12 @@ interface ArticleInterface {
   category_id: number;
 }
 
+/**
+ * Method to create an article
+ * 
+ * @param params the body of the article
+ * @returns Promises corresponding to the data API
+ */
 export const save = async (body: ArticleInterface) => {
   const sql = process.env.SQL_ADD_ARTICLE!;
   const params = [
@@ -27,39 +33,55 @@ export const save = async (body: ArticleInterface) => {
     body.imagePresentation,
     body.category_id,
   ];
-
-  return await new Promise((resolve, reject) => {
-    database.query(sql, params, (err, article) => {
-      if (err) return reject(err);
-
-      resolve(article[0]);
-    });
-  });
+  
+  return databaseQuery(sql, params);
 };
 
+/**
+ * Method to find an article by the id
+ * 
+ * @param params id of the article
+ * @returns Promises corresponding to the data API
+ */
 export const findOne = async (params: Object) => {
   const sql = process.env.SQL_GET_ARTICLE_BY!;
 
-  return await new Promise((resolve, reject) => {
-    database.query(sql, [params], (err, article) => {
-      if (err) return reject(err);
-      if (article.length === 0) return reject(new Error());
-
-      resolve(article[0]);
-    });
-  });
+  return databaseQuery(sql, params);
 };
 
+/**
+ * Method to get all articles
+ * 
+ * @returns Promises corresponding to the data API
+ */
 export const find = async () => {
-  const sql =
-    "SELECT article.id, title, article.date, content, description, imagePresentation, category_id, category.color AS category_color, category.imgUrl AS category_image, category.name AS category_name, CONCAT(user.name,' ', user.firstname) AS user_name, user_id FROM article INNER JOIN user ON article.user_id = user.id INNER JOIN category ON article.category_id = category.id";
-  // const sql = process.env.SQL_GET_ARTICLES!;
+  const sql = process.env.SQL_GET_ARTICLES!;
 
-  return await new Promise((resolve, reject) => {
-    database.query(sql, (err, articles) => {
-      if (err) reject(err);
+  return databaseQuery(sql, "");
+};
 
-      resolve(articles);
-    });
-  });
+/**
+ * Method to delete an article
+ * 
+ * @param params id of the article
+ * @returns Promises corresponding to the data API
+ */
+export const deleteOne = async (params: { id: string }) => {
+  const sql = process.env.SQL_DELETE_ARTICLE!;
+
+  return databaseQuery(sql, [params]);
+};
+
+/**
+ * Method to update an article
+ * 
+ * @param params body to update, id of the article
+ * @returns Promises corresponding to the data API
+ */
+export const findOneAndUpdate = async (
+  params: [ArticleInterface, { id: string }]
+) => {
+  const sql = process.env.SQL_UPDATE_ARTICLE!;
+
+  return databaseQuery(sql, params);
 };

@@ -22,6 +22,7 @@ export const checkToken = async (
       token,
       process.env.JWT_RANDOM_TOKEN!
     ) as JwtPayload;
+    
     const id = decodedToken.id;
     Object.assign(req, { auth: id });
 

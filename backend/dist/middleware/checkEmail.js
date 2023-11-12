@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkIfEmailAlreadyExist = void 0;
-const connexion_1 = require("../DB/connexion");
+const database_1 = require("../DB/database");
 const constants_1 = require("../constants/constants");
 /**
  * Middleware to check if the email already exist - when the user want to sign up
@@ -11,7 +11,7 @@ const checkIfEmailAlreadyExist = (req, res, next) => {
     const { email } = req.body;
     if (!email)
         return res.status(400).json({ message: constants_1.emailNotFound });
-    connexion_1.database.query(sql, email, (err, rows) => {
+    database_1.database.query(sql, email, (err, rows) => {
         if (err)
             return res.status(500).json(err);
         if (rows.length > 0)

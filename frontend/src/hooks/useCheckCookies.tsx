@@ -24,8 +24,6 @@ const useCheckCookies = (): void => {
         fetchUser(id);
       };
 
-      console.log("test2");
-
       fetchCookies();
     } catch (e) {
       console.log(e);

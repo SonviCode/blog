@@ -10,7 +10,7 @@ import { Dispatch, SetStateAction } from "react";
  * Service to add a category
  *
  * @param formData
- * @param setMsg
+ * @param setError
  * @param setSucces
  */
 export const addCategory = async (
@@ -72,13 +72,15 @@ export const deleteCategory = async (
  */
 export const updateCategory = async (
   id: number,
+  formData: FormData,
   setError: Dispatch<SetStateAction<string>>,
   setCategorys: Dispatch<SetStateAction<Category[]>>
 ) => {
   try {
     const res = await fetch(`${API_UPDATE_CATEGORY}/${id}`, {
-      method: "UPDATE",
+      method: "PUT",
       credentials: "include",
+      body: formData,
     });
 
     const data = await res.json();

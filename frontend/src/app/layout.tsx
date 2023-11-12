@@ -5,7 +5,7 @@ import "@/styles/globals.scss";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 
-const poppins = Poppins({ weight: "400", subsets: ["latin"] });
+const poppins = Poppins({ weight: ["200", "300", "400", "600"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Tom Sonvico Blog",
@@ -17,7 +17,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
   return (
     <html lang="fr">
       <body className={`${poppins.className} body_wrapper`}>

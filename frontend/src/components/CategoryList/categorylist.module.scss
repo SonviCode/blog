@@ -1,23 +1,37 @@
 .category {
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-    margin: 40px 0 ;
-  
-    li {
-      border-radius: 10px;
-    }
-  
-    a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      gap: 5px;
-      width: 150px;
-    }
-  
-    img {
-      border-radius: 50px;
-    }
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin: 40px 0;
+
+  li {
+    border-radius: 10px;
   }
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 5px;
+    width: 150px;
+  }
+
+  img {
+    border-radius: 50px;
+  }
+}
+
+.skeleton {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin: 40px 0;
+
+  div {
+    border-radius: 10px;
+    width: 150px;
+    height: 64px;
+    background-color: var(--gray);
+  }
+}

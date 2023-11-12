@@ -1,4 +1,4 @@
-import { database } from "../DB/connexion";
+import { database } from "../DB/database";
 import { hashPassword } from "../service/hash.service";
 import { v4 as uuidv4 } from "uuid";
 

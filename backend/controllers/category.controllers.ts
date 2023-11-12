@@ -1,11 +1,7 @@
 import dotenv from "dotenv";
 import { Request, Response } from "express";
+import { categoryCreated, categoryNotFound } from "../constants/constants";
 import * as CategoryModel from "../models/category.model";
-import {
-  categoryCreated,
-  categoryDeleted,
-  categoryNotFound,
-} from "../constants/constants";
 
 dotenv.config();
 
@@ -24,7 +20,7 @@ export const getCategorys = (_req: Request, res: Response) => {
  */
 export const getCategoryByName = (req: Request, res: Response) => {
   CategoryModel.findOne(req.params)
-    .then((user) => res.status(200).json(user))
+    .then((user: any) => res.status(200).json(user[0]))
     .catch(() => res.status(404).json({ message: categoryNotFound }));
 };
 
@@ -33,8 +29,6 @@ export const getCategoryByName = (req: Request, res: Response) => {
  * @param req.body : name, firstname, email, password
  */
 export const deleteCategory = (req: Request, res: Response) => {
-  console.log(req.params);
-
   CategoryModel.deleteOne(req.params)
     .then((categorys) => res.status(200).json(categorys))
     .catch((error) => res.status(400).json({ error }));
@@ -51,6 +45,28 @@ export const addCategory = (req: Request, res: Response) => {
     ...req.body,
     imgUrl: `${req.protocol}://${req.get("host")}/public/${req.file!.filename}`,
   })
-    .then(() => res.status(201).json({ message: categoryCreated }))
+    .then(() => getCategorys(req, res))
     .catch((error) => res.status(400).json({ error }));
+};
+
+/**
+ * Function to update one catgeory
+ * @param req.body : email, password
+ */
+export const updateCategory = async (req: Request, res: Response) => {
+  if (req.file!.filename)
+    req.body.imgUrl = `${req.protocol}://${req.get("host")}/public/${
+      req.file!.filename
+    }`;
+
+  try {
+    await CategoryModel.findOneAndUpdate([
+      { ...req.body },
+      { id: req.params.id },
+    ]);
+
+    getCategorys(req, res);
+  } catch (error) {
+    res.status(400).json({ error });
+  }
 };

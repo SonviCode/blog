@@ -1,6 +1,6 @@
 import React, { useState, FormEvent, Dispatch, SetStateAction } from "react";
 import styles from "./adminarticle.module.scss";
-import { addArticle } from "@/service/articleService";
+import { addArticle, updateArticle } from "@/service/articleService";
 import { User } from "@/types/userTypes";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -8,21 +8,27 @@ import useFetchData from "@/hooks/useFetchData";
 import { API_GET_CATEGORYS } from "@/constants/constants";
 import { Category } from "@/types/categoryTypes";
 import { Article } from "@/types/articleTypes";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
 
 // from https://github.com/zenoamaro/react-quill/issues/122#issuecomment-560192943
 const ReactQuill =
   typeof window === "object" ? require("react-quill") : () => false;
 
 function HandleArticle({
-  setHandleCategory,
+  setHandleArticle,
   setArticles,
   defaultValue,
 }: HanldeArticleProps) {
-  const [content, setContent] = useState<string>("");
+  const [content, setContent] = useState<string>(defaultValue?.content!);
   const [error, setError] = useState<string>("");
   const [categorys, setCategorys] = useState<Category[]>();
+  const [updateImg, setUpdateImg] = useState<boolean>(false);
 
   useFetchData(setCategorys, API_GET_CATEGORYS);
+
+  console.log(defaultValue);
 
   const user: User | null = useSelector((state: RootState) => state.user.value);
 
@@ -31,57 +37,104 @@ function HandleArticle({
     const formData = new FormData(e.currentTarget);
     formData.append("content", content);
     formData.append("user_id", user!.id.toString());
-    formData.append(
-      "category_id",
-      (e.currentTarget.elements as any).category.value
-    );
 
-    addArticle(formData, setError);
+    if (defaultValue) {
+      updateArticle(defaultValue.id, formData, setError, setArticles);
+    } else {
+      addArticle(formData, setError, setArticles);
+    }
+
+    setHandleArticle(false);
   };
 
   return (
-    <div className={styles.editor}>
-      <h1>Ajouter un article</h1>
-      <form encType="multipart/form-data" onSubmit={(e) => handleSubmit(e)}>
-        <div className={styles.inputForm}>
-          <label htmlFor="titleArticle">Titre</label>
-          <input type="text" name="title" id="titleArticle" required />
+    <form
+      className={styles.form}
+      encType="multipart/form-data"
+      onSubmit={(e) => handleSubmit(e)}
+    >
+      <div>
+        <div
+          id="cancel_btn"
+          onClick={() => {
+            setHandleArticle(false);
+          }}
+        >
+          <FontAwesomeIcon icon={faChevronLeft} />
+          <p>Annuler</p>
         </div>
-        <div className={styles.inputForm}>
-          <label htmlFor="description">Description</label>
-          <input type="text" name="description" id="description" required />
-        </div>
-        <div className={styles.inputForm}>
-          <label htmlFor="file">Image de présentation</label>
-          <input type="file" name="file" id="file" accept="image/*" required />
-        </div>
-        <div className={styles.inputForm}>
-          <label htmlFor="category">Catégorie</label>
-          <select name="category" id="category" required>
-            {categorys?.map((category, i) => (
-              <option key={i} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <ReactQuill
-          theme="snow"
-          value={content}
-          modules={modules}
-          onChange={setContent}
-          placeholder="Ecris ton article ici"
+        <h1>Ajouter un article</h1>
+      </div>
+      <div className={styles.inputForm}>
+        <label htmlFor="titleArticle">Titre</label>
+        <input
+          type="text"
+          name="title"
+          id="titleArticle"
+          required
+          defaultValue={defaultValue?.title}
         />
-        <button className="add_element">Ajouter</button>
-      </form>
-    </div>
+      </div>
+      <div className={styles.inputForm}>
+        <label htmlFor="description">Description</label>
+        <input
+          type="text"
+          name="description"
+          id="description"
+          required
+          defaultValue={defaultValue?.description}
+        />
+      </div>
+      <div className={styles.inputForm}>
+        <label htmlFor="file">Image de présentation</label>
+        {defaultValue == undefined || updateImg ? (
+          <input type="file" accept="image/*" id="file" name="file" required />
+        ) : (
+          <div className={styles.img_update}>
+            <Image
+              src={defaultValue?.imagePresentation!}
+              alt={defaultValue?.title!}
+              width={30}
+              height={30}
+            />
+            <button type="button" onClick={() => setUpdateImg(true)}>
+              Changer l&apos;image
+            </button>
+          </div>
+        )}
+      </div>
+      <div className={styles.inputForm}>
+        <label htmlFor="category">Catégorie</label>
+        <select name="category_id" id="category" required>
+          {categorys?.map((category, i) => (
+            <option
+              key={i}
+              value={category.id}
+              selected={defaultValue?.category_id == category.id}
+            >
+              {category.name}
+            </option>
+          ))}
+        </select>
+      </div>
+      <ReactQuill
+        theme="snow"
+        value={content}
+        modules={modules}
+        onChange={setContent}
+        placeholder="Ecris ton article ici"
+      />
+      <button className="add_element">
+        {defaultValue ? "Mettre à jour" : "Ajouter"}
+      </button>
+    </form>
   );
 }
 
 export default HandleArticle;
 
 type HanldeArticleProps = {
-  setHandleCategory: Dispatch<SetStateAction<boolean>>;
+  setHandleArticle: Dispatch<SetStateAction<boolean>>;
   setArticles: Dispatch<SetStateAction<Article[]>>;
   defaultValue?: Article;
 };

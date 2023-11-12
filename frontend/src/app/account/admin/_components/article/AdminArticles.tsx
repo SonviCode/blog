@@ -1,6 +1,6 @@
 "use client";
 
-import { API_GET_ARTICLES } from "@/constants/constants";
+import { API_ARTICLE } from "@/constants/constants";
 import useFetchData from "@/hooks/useFetchData";
 import { Article } from "@/types/articleTypes";
 import { Category } from "@/types/categoryTypes";
@@ -10,32 +10,37 @@ import { handleDate } from "../../../../../utils/userUtils";
 import "../admin.scss";
 import styles from "./adminarticle.module.scss";
 import HandleArticle from "./HandleArticle";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { deleteArticle } from "@/service/articleService";
 
 function AdminArticles() {
   const [handling, setHandling] = useState<boolean>(false);
-  const [articles, setArticles] = useState<Article[]>([]);
+  const [articles, setArticles] = useState<any[]>([]);
   const [defaultValue, setDefaultValue] = useState<Article>();
 
-  useFetchData(setArticles, API_GET_ARTICLES);
+  useFetchData(setArticles, API_ARTICLE);
 
   const handleAdd = (): void => {
     setDefaultValue(undefined);
     setHandling(true);
   };
 
-  // const handleDelete = (id: number) => {
-  //   deleteCategory(id, setCategorys);
-  // };
+  const handleDelete = (id: number): void => {
+    deleteArticle(id, setArticles);
+  };
 
-  // const handleEdit = (category: Category): void => {
-  //   setDefaultValue(category);
-  //   setHandling(true);
-  // };
+  const handleEdit = (article: Article): void => {
+    setDefaultValue(article);
+    setHandling(true);
+  };
+
+  console.log(articles);
 
   if (handling)
     return (
       <HandleArticle
-        setHandleCategory={setHandling}
+        setHandleArticle={setHandling}
         setArticles={setArticles}
         defaultValue={defaultValue}
       />
@@ -51,20 +56,32 @@ function AdminArticles() {
             <th>Titre</th>
             <th>Auteur</th>
             <th>Date</th>
-            <th>Description</th>
-            <th>Contenu</th>
             <th>Catégorie</th>
           </tr>
         </thead>
         <tbody>
           {articles?.map((article, i) => (
             <tr key={i}>
-              <td>{article.title}</td>
-              <td>{article.user_id}</td>
+              <td className={styles.long_content}>{article.title}</td>
+              <td>{article.user_name}</td>
               <td>{handleDate(article.date)}</td>
-              <td className={styles.long_content}>{article.description}</td>
-              <td className={styles.long_content}>{article.content}</td>
-              <td>{article.category_id}</td>
+              <td>
+                <span
+                  className={styles.category}
+                  style={{ background: article.category_color }}
+                >
+                  {article.category_name}
+                </span>
+              </td>
+              <td
+                className="icon_handle trash"
+                onClick={() => handleDelete(article.id)}
+              >
+                <FontAwesomeIcon icon={faTrash} />
+              </td>
+              <td className="icon_handle" onClick={() => handleEdit(article)}>
+                <FontAwesomeIcon icon={faPenToSquare} />
+              </td>
             </tr>
           ))}
         </tbody>

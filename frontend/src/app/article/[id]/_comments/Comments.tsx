@@ -5,26 +5,30 @@ import {
 } from "@/constants/constants";
 import useFetchData from "@/hooks/useFetchData";
 import { RootState } from "@/redux/store";
-import { addComment } from "@/service/commentService";
+import { addComment, deleteComment } from "@/service/commentService";
 import { Comment } from "@/types/commentTypes";
 import { User } from "@/types/userTypes";
 import { handleDate } from "@/utils/userUtils";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePathname } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import styles from "./comments.module.scss";
 import ConfirmModal from "@/components/Modal/ConfirmModal/ConfirmModal";
 import Image from "next/image";
 
 function Comments() {
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<any[]>([]);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
+  console.log(comments);
+  
+
   const user: User | null = useSelector((state: RootState) => state.user.value);
 
+  const form = useRef<HTMLFormElement>(null);
   const pathname = usePathname();
   const articleId = pathname.split("/")[2];
 
@@ -47,6 +51,12 @@ function Comments() {
     formData.append("article_id", articleId);
 
     addComment(formData, setError, setComments);
+
+    form.current!.reset();
+  };
+
+  const handleDeleteComment = (comment: Comment) => {
+    deleteComment(comment.id, articleId, setComments);
   };
 
   return (
@@ -56,6 +66,7 @@ function Comments() {
         <>
           {error && <p className="error_msg">{error}</p>}
           <form
+            ref={form}
             encType="multipart/form-data"
             className={styles.form}
             onSubmit={(e) => handleAddComment(e)}
@@ -80,13 +91,13 @@ function Comments() {
                   <Image
                     className={styles.img_user}
                     // src={comment.}
-                    src={"/IMG_1371.JPG"}
+                    src={comment.user_img ? comment.user_img : "/no-user-image.jpg"}
                     alt={comment.user_id.toString()}
                     width={50}
                     height={50}
                   />
                   <div>
-                    <p>{comment.user_id}</p>
+                    <p>{comment.user_name}</p>
                     <p className={styles.date}>{handleDate(comment.date)}</p>
                   </div>
                 </div>
@@ -96,7 +107,8 @@ function Comments() {
                 <FontAwesomeIcon
                   icon={faTrash}
                   className={styles.delete_logo}
-                  onClick={() => setIsOpenModal(true)}
+                  onClick={() => handleDeleteComment(comment)}
+                  // onClick={() => setIsOpenModal(true)}
                 />
               )}
             </div>

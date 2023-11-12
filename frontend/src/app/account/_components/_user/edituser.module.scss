@@ -10,14 +10,14 @@
     flex-direction: column;
     position: relative;
 
-    span {
-      color: var(--red_error);
-    }
-
-    input {
+    input, p {
       border-radius: 4px;
       border: 1px solid gray;
       padding: 10px;
+    }
+
+    p {
+        background-color: var(--gray_light);
     }
 
     svg {
@@ -44,37 +44,7 @@
   }
 }
 
-// CONNECT MODAL
-.auth_container {
-  display: flex;
-  flex-direction: column;
-  box-shadow: var(--box-shadow);
-  border-radius: 20px;
-  padding: 20px 40px 40px 40px;
-  width: 100%;
-  max-width: 400px;
-}
-
-.btn_container {
-  display: flex;
-  justify-content: space-between;
-
-  button {
-    border: none;
-    background: none;
-    margin-bottom: 20px;
-  }
-
-  .is_active {
-    font-weight: bold;
-  }
-}
-
 @media (max-width: 450px) {
-  .auth_container {
-    padding: 20px;
-  }
-
   .form {
     margin: 0;
   }

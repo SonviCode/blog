@@ -17,7 +17,7 @@
     border: 2px solid var(--gray);
     padding: 8px;
     text-align: left;
-    max-width: 200px;
+    max-width: 150px;
     overflow: hidden;
   }
 
@@ -59,15 +59,13 @@
   width: fit-content;
 }
 
-.cancel_btn {
-  border: 2px solid var(--blue);
-  padding: 10px;
-  border-radius: 10px;
+#cancel_btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
   width: fit-content;
   cursor: pointer;
-  position: absolute;
-  left: 0px;
-  bottom: 0px;
 }
 
 //-------------------------CSS FOR MODAL EDIT------------------------
@@ -101,4 +99,9 @@
       background: var(--green);
     }
   }
+}
+
+//REACT QUILL 
+.ql-container {
+  height: fit-content;
 }

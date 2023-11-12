@@ -22,7 +22,7 @@ const NavBar = () => {
   // console.log(pathname.split("/").splice(-1).splice(0, 0, "/"));
   // console.log(pathname.split("/").pop());
   // console.log(pathname.split("/"));
-  // console.log(arr);
+  // console.log(pathname);
 
   const user: User | null = useSelector((state: RootState) => state.user.value);
 

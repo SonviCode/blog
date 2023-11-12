@@ -20,9 +20,10 @@
     img {
       object-fit: cover;
       border-radius: 20px;
+      background-color: var(--gray);
     }
   }
-  
+
   .presentation_text {
     flex: 1;
     display: flex;

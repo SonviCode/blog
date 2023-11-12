@@ -11,7 +11,7 @@ const multerConfig_1 = require("../middleware/multerConfig");
 const router = express_1.default.Router();
 router.get("/users", checkToken_1.checkToken, user_controller_1.getUsers);
 router.get("/user/:id", checkToken_1.checkToken, user_controller_1.getUserById);
-router.put("/user/:id", user_controller_1.updateUser);
+router.put("/user/:id", checkToken_1.checkToken, user_controller_1.updateUser);
 router.post("/signup", multerConfig_1.multerConfig, checkEmail_1.checkIfEmailAlreadyExist, user_controller_1.signUp);
 router.post("/login", user_controller_1.login);
 router.post("/logout", user_controller_1.logout);

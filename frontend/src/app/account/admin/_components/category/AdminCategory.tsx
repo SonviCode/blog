@@ -22,7 +22,7 @@ function AdminCategory() {
     setHandling(true);
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: number): void => {
     deleteCategory(id, setCategorys);
   };
 

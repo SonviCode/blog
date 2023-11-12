@@ -2,7 +2,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Express } from "express";
 import path from "path";
-import { connectionDB } from "./DB/connexion";
+import { connectionDB } from "./DB/database";
 import articleRoutes from "./routes/article.route";
 import categoryRoutes from "./routes/category.route";
 import commentRoutes from "./routes/comment.route";
@@ -22,7 +22,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json({limit: '50mb'}));
+app.use(express.json({ limit: "50mb" }));
 
 /**
  * DB connection

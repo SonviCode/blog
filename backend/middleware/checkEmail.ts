@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { database } from "../DB/connexion";
+import { database } from "../DB/database";
 import { emailAlreadyUse, emailNotFound } from "../constants/constants";
 
 /**

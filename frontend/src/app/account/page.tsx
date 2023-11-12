@@ -2,13 +2,13 @@
 
 import { RootState } from "@/redux/store";
 import { User } from "@/types/userTypes";
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
 import { useSelector } from "react-redux";
 import Loading from "../loading";
+import ConnectModal from "./_components/_auth/ConnectModal";
 import UserAccount from "./_components/_user/UserAccount";
 import styles from "./account.module.scss";
 import AdminAccount from "./admin/page";
-const ConnectModal = lazy(() => import("./_components/_auth/ConnectModal"));
 
 export default function Auth() {
   const user: User | null = useSelector((state: RootState) => state.user.value);

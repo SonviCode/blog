@@ -14,6 +14,7 @@ export const userCreated = "Utilisateur créé avec succès !";
 export const userLogout = "Utilisateur déconnecté avec succès !";
 export const categoryCreated = "Catégorie créé avec succès !";
 export const categoryDeleted = "Catégorie supprimé avec succès !";
+export const categoryUpdated = "Catégorie mise à jour avec succès !";
 export const articleCreated = "Article créé avec succès !";
 export const commentDeleted = "Commentaire supprimé avec succès !";
 export const commentCreated = "Commentaire créé avec succès !";

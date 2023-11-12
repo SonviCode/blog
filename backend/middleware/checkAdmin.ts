@@ -8,7 +8,7 @@ interface JwtPayload {
 }
 
 /**
- * Middleware to check if the token is good
+ * Middleware to check if the token is corresponding to admin
  */
 export const checkAdmin = (req: Request, res: Response, next: NextFunction) => {
   try {

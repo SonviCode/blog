@@ -23,3 +23,14 @@ export const connectionDB = () => {
     console.log("⚡️[database]: Database connection is successful");
   });
 };
+
+export const databaseQuery = async (sql: string, params: string[] | Object) => {
+  return await new Promise((resolve, reject) => {
+    database.query(sql, params, (err, data) => {
+      if (err) return reject(err);
+      if (data.length === 0) return reject(new Error());
+
+      resolve(data);
+    });
+  });
+};

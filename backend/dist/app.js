@@ -7,7 +7,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
-const connexion_1 = require("./DB/connexion");
+const database_1 = require("./DB/database");
 const article_route_1 = __importDefault(require("./routes/article.route"));
 const category_route_1 = __importDefault(require("./routes/category.route"));
 const comment_route_1 = __importDefault(require("./routes/comment.route"));
@@ -23,11 +23,11 @@ app.use((0, cors_1.default)({
 }));
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.urlencoded({ extended: true }));
-app.use(express_1.default.json({ limit: '50mb' }));
+app.use(express_1.default.json({ limit: "50mb" }));
 /**
  * DB connection
  */
-(0, connexion_1.connectionDB)();
+(0, database_1.connectionDB)();
 /**
  * ROUTER
  */

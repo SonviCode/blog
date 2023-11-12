@@ -3,7 +3,8 @@ import {
   addCategory,
   deleteCategory,
   getCategoryByName,
-  getCategorys
+  getCategorys,
+  updateCategory
 } from "../controllers/category.controllers";
 import { checkAdmin } from "../middleware/checkAdmin";
 import { multerConfig } from "../middleware/multerConfig";
@@ -15,5 +16,6 @@ router.get("/", getCategorys);
 router.get("/:name", getCategoryByName);
 router.delete("/:id", checkAdmin, deleteCategory);
 router.post("/", checkAdmin, multerConfig, addCategory);
+router.put("/:id", checkAdmin, multerConfig, updateCategory)
 
 export default router;

@@ -13,8 +13,7 @@ export const API_DELETE_CATEGORY = API_ROOTDIR + "category";
 export const API_UPDATE_CATEGORY = API_ROOTDIR + "category";
 export const API_GET_CATEGORYS = API_ROOTDIR + "category";
 // ARTICLE
-export const API_ADD_ARTICLE = API_ROOTDIR + "article";
-export const API_GET_ARTICLES = API_ROOTDIR + "article";
+export const API_ARTICLE = API_ROOTDIR + "article";
 // COMMENT
 export const API_ADD_COMMENT = API_ROOTDIR + "comment";
 export const API_GET_COMMENTS = API_ROOTDIR + "comment";
@@ -38,12 +37,12 @@ export const NAV_LINKS = [
     name: "Accueil",
   },
   {
-    href: "/contact",
-    name: "Contact",
+    href: "/article",
+    name: "Articles",
   },
   {
-    href: "/about",
-    name: "À propos",
+    href: "/contact",
+    name: "Contact",
   },
   {
     href: "/account",
