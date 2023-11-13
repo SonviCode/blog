@@ -1,17 +1,19 @@
 "use client";
 
+import Loading from "@/app/loading";
 import Aside from "@/components/Aside/Aside";
 import { API_ARTICLE } from "@/constants/constants";
 import useFetchData from "@/hooks/useFetchData";
-import { Article } from "@/types/articleTypes";
 import { handleDate } from "@/utils/userUtils";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Error from "next/error";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Comments from "./_comments/Comments";
 import styles from "./article.module.scss";
-import Error from "next/error";
-import Loading from "@/app/loading";
 
 export default function Article() {
   const [article, setArticle] = useState<any>();
@@ -30,6 +32,14 @@ export default function Article() {
 
   return (
     <main>
+      <div className={styles.slug}>
+        <p>
+          <Link href="/">Accueil</Link>{" "}
+          <FontAwesomeIcon icon={faChevronRight} />{" "}
+          <Link href="/article">Articles</Link>{" "}
+          <FontAwesomeIcon icon={faChevronRight} /> {article.title}
+        </p>
+      </div>
       <div className={styles.container_title}>
         <div className={styles.info_title}>
           <h1>{article.title}</h1>

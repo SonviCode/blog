@@ -4,12 +4,13 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import {
   authSuccess,
-  incorrectCredential,
+  INCORRECT_CREDENTIAL,
   userCreated,
   userLogout,
-  userNotFound,
+  USER_NOT_FOUND,
 } from "../constants/constants";
 import * as UserModel from "../models/user.model";
+import { checkUserPayload } from "../service/checkPayload.service";
 
 dotenv.config();
 
@@ -29,7 +30,7 @@ export const getUsers = (_req: Request, res: Response) => {
 export const getUserById = (req: Request, res: Response) => {
   UserModel.findOne({ id: parseInt(req.params.id) })
     .then((user) => res.status(200).json(user))
-    .catch(() => res.status(404).json({ message: userNotFound }));
+    .catch(() => res.status(404).json({ message: USER_NOT_FOUND }));
 };
 
 /**
@@ -60,7 +61,7 @@ export const login = (req: Request, res: Response) => {
       const isValid = await bcrypt.compare(req.body.password, user.password);
 
       if (!isValid)
-        return res.status(403).json({ message: incorrectCredential });
+        return res.status(403).json({ message: INCORRECT_CREDENTIAL });
 
       // CREATE THE TOKEN WITH JWT
       const id = user.id;
@@ -78,7 +79,7 @@ export const login = (req: Request, res: Response) => {
         .status(200)
         .json({ message: authSuccess, token, id });
     })
-    .catch(() => res.status(403).json({ message: incorrectCredential }));
+    .catch(() => res.status(403).json({ message: INCORRECT_CREDENTIAL }));
 };
 
 /**
@@ -86,7 +87,18 @@ export const login = (req: Request, res: Response) => {
  * @param req.body
  */
 export const updateUser = (req: Request, res: Response) => {
-  UserModel.findOneAndUpdate([{ ...req.body }, { id: parseInt(req.params.id) }])
+  const imgUser = req.file
+    ? `${req.protocol}://${req.get("host")}/public/${req.file!.filename}`
+    : "";
+
+  try {
+    checkUserPayload(req.body);
+  } catch (error) {
+    res.status(400).json({ error });
+    return;
+  }
+
+  UserModel.findOneAndUpdate([{ ...req.body, imgUser }, { id: req.params.id }])
     .then((user) => res.status(200).json(user))
     .catch((error) => res.status(404).json({ error }));
 };

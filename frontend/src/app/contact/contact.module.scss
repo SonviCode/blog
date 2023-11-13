@@ -1,10 +1,11 @@
 .container_img {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 400px;
 
   img {
     object-fit: cover;
+    object-position: top;
   }
 }
 
@@ -22,4 +23,5 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    margin-bottom: 50px;
 }

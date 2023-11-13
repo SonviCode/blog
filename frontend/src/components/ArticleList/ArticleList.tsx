@@ -2,7 +2,7 @@ import { API_ARTICLE } from "@/constants/constants";
 import useFetchData from "@/hooks/useFetchData";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { handleDate } from "../../utils/userUtils";
 import styles from "./articlelist.module.scss";
 
@@ -10,8 +10,6 @@ function ArticleList() {
   const [articles, setArticles] = useState<any[]>([]);
 
   useFetchData(setArticles, API_ARTICLE);
-
-  console.log(articles);
 
   return (
     <>
@@ -32,13 +30,12 @@ function ArticleList() {
             <p>
               <span className={styles.date}>{handleDate(article.date)}</span>
               &nbsp;-&nbsp;
-              <Link
-                href={`/category/${article.category_name}`}
+              <span
                 className={styles.category}
                 style={{ background: article.category_color }}
               >
                 {article.category_name}
-              </Link>
+              </span>
             </p>
 
             <h3>{article.title}</h3>

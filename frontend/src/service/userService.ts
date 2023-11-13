@@ -3,7 +3,7 @@ import {
   API_LOGIN,
   API_LOGOUT,
   API_SIGNUP,
-  authSuccess,
+  API_UPDATE_USER,
 } from "@/constants/constants";
 import { setUser } from "@/redux/features/slice/userSlice";
 import { store } from "@/redux/store";
@@ -75,6 +75,37 @@ export const signUp = async (
   try {
     const res = await fetch(API_SIGNUP, {
       method: "POST",
+      body: formData,
+      credentials: "include",
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.message);
+      return;
+    }
+
+    fetchUser(data.id);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+/**
+ * Service to create user info and call the fetch user function
+ *
+ * @param formData
+ * @param setMsg
+ * @returns
+ */
+export const updateUser = async (
+  formData: FormData,
+  id: number,
+  setError: Dispatch<SetStateAction<string>>
+) => {
+  try {
+    const res = await fetch(API_UPDATE_USER + id, {
+      method: "PUT",
       body: formData,
       credentials: "include",
     });

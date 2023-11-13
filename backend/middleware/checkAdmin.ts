@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { incorrectToken } from "../constants/constants";
+import { INCORRECT_TOKEN } from "../constants/constants";
 
 interface JwtPayload {
   id: string;
@@ -23,10 +23,10 @@ export const checkAdmin = (req: Request, res: Response, next: NextFunction) => {
 
     const role = decodedToken.role;
 
-    if (role !== "admin") throw new Error(incorrectToken);
+    if (role !== "admin") throw new Error();
 
     next();
   } catch (error) {
-    res.status(401).json({ message: incorrectToken });
+    res.status(401).json({ message: INCORRECT_TOKEN });
   }
 };

@@ -35,3 +35,16 @@
     background-color: var(--gray);
   }
 }
+
+//----------------------RESPONSIVE----------------------
+@media (max-width: 600px) {
+  .category,
+  .skeleton {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .skeleton div {
+    width: 100%;
+  }
+}

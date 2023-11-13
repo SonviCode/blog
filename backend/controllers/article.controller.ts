@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import { Request, Response } from "express";
-import { articleCreated, articleNotFound } from "../constants/constants";
+import { ARTICLE_NOT_FOUND } from "../constants/constants";
 import * as ArticleModel from "../models/article.model";
 
 dotenv.config();
@@ -19,9 +19,23 @@ export const getArticles = (_req: Request, res: Response) => {
  * @param req.param : number corresponding to the id to retrieve
  */
 export const getArticleById = (req: Request, res: Response) => {
-  ArticleModel.findOne(req.params.id)
-    .then((article: any) => res.status(200).json(article[0]))
-    .catch((e) => res.status(404).json({ message: articleNotFound, e}));
+  ArticleModel.findOne({ "article.id": req.params.id })
+    .then((article: any) => {
+      if (article.length === 0) throw new Error();
+
+      res.status(200).json(article[0]);
+    })
+    .catch(() => res.status(404).json({ message: ARTICLE_NOT_FOUND }));
+};
+
+/**
+ * Function to get all article according the category name
+ * @param req.param : number corresponding to the category name to retrieve
+ */
+export const getArticleByCategoryName = (req: Request, res: Response) => {
+  ArticleModel.findOne({ "category.name": req.params.name })
+    .then((article: any) => res.status(200).json(article))
+    .catch((e) => res.status(404).json({ message: ARTICLE_NOT_FOUND, e }));
 };
 
 /**
@@ -61,14 +75,7 @@ export const updateArticle = async (req: Request, res: Response) => {
       req.file.filename
     }`;
 
-  try {
-    await ArticleModel.findOneAndUpdate([
-      { ...req.body },
-      { id: req.params.id },
-    ]);
-
-    getArticles(req, res);
-  } catch (error) {
-    res.status(400).json({ error });
-  }
+  ArticleModel.findOneAndUpdate([{ ...req.body }, { id: req.params.id }])
+    .then(() => getArticles(req, res))
+    .catch((error) => res.status(400).json({ error }));
 };

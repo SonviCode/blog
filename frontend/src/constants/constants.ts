@@ -4,6 +4,7 @@ const API_ROOTDIR = "http://localhost:5000/api/";
 export const API_LOGIN = API_ROOTDIR + "auth/login";
 export const API_LOGOUT = API_ROOTDIR + "auth/logout";
 export const API_SIGNUP = API_ROOTDIR + "auth/signup";
+export const API_UPDATE_USER = API_ROOTDIR + "auth/update/";
 export const API_GET_USER = API_ROOTDIR + "auth/user/";
 export const API_GET_USERS = API_ROOTDIR + "auth/users";
 export const API_CHECK_COOKIES = API_ROOTDIR + "auth/cookies";
@@ -46,7 +47,7 @@ export const NAV_LINKS = [
   },
   {
     href: "/account",
-    name: "Connexion",
+    name: "Compte",
   },
 ];
 

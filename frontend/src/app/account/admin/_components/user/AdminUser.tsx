@@ -39,11 +39,14 @@ function AdminUser() {
                 <td>{user.role}</td>
                 <td className="td_img">
                   {user.imgUser ? (
-                    <div className={styles.img_container}>
-                      <Image src={user.imgUser!} alt={user.name} fill={true} />
-                    </div>
+                    <Image
+                      src={user.imgUser!}
+                      alt={user.name}
+                      width={20}
+                      height={20}
+                    />
                   ) : (
-                    <div className={styles.userWithoutImg_container}>
+                    <div className={styles.container_userWithoutImg}>
                       <FontAwesomeIcon icon={faUser} />
                     </div>
                   )}

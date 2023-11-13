@@ -105,12 +105,17 @@ function HandleArticle({
       </div>
       <div className={styles.inputForm}>
         <label htmlFor="category">Catégorie</label>
-        <select name="category_id" id="category" required>
+        <select
+          name="category_id"
+          id="category"
+          required
+          defaultValue={defaultValue?.category_id}
+        >
           {categorys?.map((category, i) => (
             <option
               key={i}
               value={category.id}
-              selected={defaultValue?.category_id == category.id}
+              // selected={defaultValue?.category_id == category.id}
             >
               {category.name}
             </option>

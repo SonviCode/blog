@@ -68,13 +68,13 @@ function HandleCategory({
       </div>
       <div>
         <label htmlFor="file">Image</label>
-        {defaultValue == undefined || updateImg ? (
+        {!defaultValue || updateImg ? (
           <input type="file" accept="image/*" id="file" name="file" required />
         ) : (
           <div className={styles.img_update}>
             <Image
-              src={defaultValue?.imgUrl!}
-              alt={defaultValue?.name!}
+              src={defaultValue?.imgUrl}
+              alt={defaultValue?.name}
               width={30}
               height={30}
             />

@@ -1,12 +1,16 @@
 //---------------RESPONSE ERROR MESSAGE---------------
-export const emailNotFound = "Impossible de trouver l'e-mail en paramètre !";
-export const incorrectCredential = "Identifiant/mot de passe incorrect !";
-export const emailAlreadyUse = "Adresse e-mail déjà utilisé !";
-export const incorrectToken = "Token d'authentification invalide !";
-export const userNotFound = "Impossible de trouver cet utilisateur !";
-export const categoryNotFound = "Impossible de trouver cette catégorie !";
-export const articleNotFound = "Impossible de trouver cet article !";
-export const adminOnly = "Cette page est réservé aux administrateurs !";
+//email
+export const EMAIL_NOT_FOUND = "Impossible de trouver l'e-mail en paramètre !";
+export const EMAIl_ALREADY_USE = "Adresse e-mail déjà utilisé !";
+//login
+export const INCORRECT_CREDENTIAL = "Identifiant/mot de passe incorrect !";
+export const INCORRECT_TOKEN = "Token d'authentification invalide !";
+
+//404 not found
+export const USER_NOT_FOUND = "Impossible de trouver cet utilisateur !";
+export const CATEGORY_NOT_FOUND = "Impossible de trouver cette catégorie !";
+export const ARTICLE_NOT_FOUND = "Impossible de trouver cet article !";
+export const COMMENTS_NOT_FOUND = "Aucun commentaire disponible pour cet article"
 
 //---------------RESPONSE SUCCESS MESSAGE---------------
 export const authSuccess = "Authentification réussi avec succès !";

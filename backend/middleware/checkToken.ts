@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { incorrectToken } from "../constants/constants";
+import { INCORRECT_TOKEN } from "../constants/constants";
 
 interface JwtPayload {
   id: string;
@@ -28,6 +28,6 @@ export const checkToken = async (
 
     next();
   } catch (error) {
-    res.status(401).json({ message: incorrectToken });
+    res.status(401).json({ message: INCORRECT_TOKEN });
   }
 };

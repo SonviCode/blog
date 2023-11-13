@@ -10,12 +10,12 @@ interface CommentInterface {
   content: string;
   date: Date;
   user_id: number;
-  article_id: number;
+  article_id: string;
 }
 
 /**
  * Method to create one comment
- * 
+ *
  * @param params the body of the comment
  * @returns Promises corresponding to the data API
  */
@@ -29,34 +29,34 @@ export const save = async (body: CommentInterface) => {
     body.article_id,
   ];
 
-  return databaseQuery(sql, params);
+  return databaseQuery(sql, params)
+    .then(() => find(body.article_id))
+    .catch((e) => e);
 };
 
+/**
+ * Method to find all comments according the article
+ *
+ * @param articleId the id of the comment
+ * @returns Promises corresponding to the data API
+ */
 export const find = async (articleId: string) => {
-  // const sql = process.env.SQL_GET_COMMENTS_BY_ARTICLE!;
-  const sql =
-    "SELECT comment.id, comment.user_id, comment.content, comment.date,  CONCAT(user.name,' ', user.firstname) AS user_name, imgUser AS user_img FROM comment INNER JOIN article ON article.id = comment.article_id INNER JOIN user ON user.id = comment.user_id WHERE article_id = ?";
+  const sql = process.env.SQL_GET_COMMENTS_BY_ARTICLE!;
 
-  return await new Promise((resolve, reject) => {
-    database.query(sql, [articleId], (err, comments) => {
-      if (err) reject(err);
-
-      resolve(comments);
-    });
-  });
+  return databaseQuery(sql, [articleId]);
 };
 
+/**
+ * Method to delete one comment
+ *
+ * @param articleId the id of the comment
+ * @param params the body of the comment
+ * @returns Promises corresponding to the data API
+ */
 export const deleteOne = async (params: { id: string }, articleId: string) => {
   const sql = process.env.SQL_DELETE_COMMENT!;
 
-  return await new Promise((resolve, reject) => {
-    database.query(sql, [params], async (err, comment) => {
-      if (err) return reject(err);
-      if (comment.length === 0) return reject(err);
-
-      const result = await find(articleId);
-
-      resolve(result);
-    });
-  });
+  return databaseQuery(sql, [params])
+    .then(() => find(articleId))
+    .catch((e) => e);
 };

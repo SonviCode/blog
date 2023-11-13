@@ -24,7 +24,6 @@ function Comments() {
   const [error, setError] = useState<string>("");
 
   console.log(comments);
-  
 
   const user: User | null = useSelector((state: RootState) => state.user.value);
 
@@ -60,7 +59,7 @@ function Comments() {
   };
 
   return (
-    <div>
+    <section className={styles.comment_section}>
       <h3>Commentaires</h3>
       {user && (
         <>
@@ -91,7 +90,9 @@ function Comments() {
                   <Image
                     className={styles.img_user}
                     // src={comment.}
-                    src={comment.user_img ? comment.user_img : "/no-user-image.jpg"}
+                    src={
+                      comment.user_img ? comment.user_img : "/no-user-image.jpg"
+                    }
                     alt={comment.user_id.toString()}
                     width={50}
                     height={50}
@@ -125,7 +126,7 @@ function Comments() {
           alertText={alertTextDeleteComment}
         />
       )}
-    </div>
+    </section>
   );
 }
 

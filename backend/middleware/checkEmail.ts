@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { database } from "../DB/database";
-import { emailAlreadyUse, emailNotFound } from "../constants/constants";
+import { EMAIl_ALREADY_USE, EMAIL_NOT_FOUND } from "../constants/constants";
 
 /**
  * Middleware to check if the email already exist - when the user want to sign up
@@ -14,13 +14,13 @@ export const checkIfEmailAlreadyExist = (
 
   const { email } = req.body;
 
-  if (!email) return res.status(400).json({ message: emailNotFound });
+  if (!email) return res.status(400).json({ message: EMAIL_NOT_FOUND });
 
   database.query(sql, email, (err, rows) => {
     if (err) return res.status(500).json(err);
 
     if (rows.length > 0)
-      return res.status(401).json({ message: emailAlreadyUse });
+      return res.status(401).json({ message: EMAIl_ALREADY_USE });
 
     next();
   });

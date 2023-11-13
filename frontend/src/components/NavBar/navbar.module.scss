@@ -22,7 +22,7 @@
 }
 
 .modal_nav {
-  padding: 20px;
+  padding: 80px;
   border-radius: 20px;
   box-shadow: var(--box-shadow);
   position: fixed;
@@ -30,6 +30,17 @@
   @include absolute-center;
   z-index: 1000;
   background-color: white;
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 25px;
+  }
+
+  li:hover {
+    font-weight: bold;
+  }
 }
 
 @media (max-width: 880px) {

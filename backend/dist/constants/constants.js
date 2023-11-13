@@ -1,15 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.commentCreated = exports.commentDeleted = exports.articleCreated = exports.categoryUpdated = exports.categoryDeleted = exports.categoryCreated = exports.userLogout = exports.userCreated = exports.authSuccess = exports.adminOnly = exports.articleNotFound = exports.categoryNotFound = exports.userNotFound = exports.incorrectToken = exports.emailAlreadyUse = exports.incorrectCredential = exports.emailNotFound = void 0;
+exports.commentCreated = exports.commentDeleted = exports.articleCreated = exports.categoryUpdated = exports.categoryDeleted = exports.categoryCreated = exports.userLogout = exports.userCreated = exports.authSuccess = exports.COMMENTS_NOT_FOUND = exports.ARTICLE_NOT_FOUND = exports.CATEGORY_NOT_FOUND = exports.USER_NOT_FOUND = exports.INCORRECT_TOKEN = exports.INCORRECT_CREDENTIAL = exports.EMAIl_ALREADY_USE = exports.EMAIL_NOT_FOUND = void 0;
 //---------------RESPONSE ERROR MESSAGE---------------
-exports.emailNotFound = "Impossible de trouver l'e-mail en paramètre !";
-exports.incorrectCredential = "Identifiant/mot de passe incorrect !";
-exports.emailAlreadyUse = "Adresse e-mail déjà utilisé !";
-exports.incorrectToken = "Token d'authentification invalide !";
-exports.userNotFound = "Impossible de trouver cet utilisateur !";
-exports.categoryNotFound = "Impossible de trouver cette catégorie !";
-exports.articleNotFound = "Impossible de trouver cet article !";
-exports.adminOnly = "Cette page est réservé aux administrateurs !";
+//email
+exports.EMAIL_NOT_FOUND = "Impossible de trouver l'e-mail en paramètre !";
+exports.EMAIl_ALREADY_USE = "Adresse e-mail déjà utilisé !";
+//login
+exports.INCORRECT_CREDENTIAL = "Identifiant/mot de passe incorrect !";
+exports.INCORRECT_TOKEN = "Token d'authentification invalide !";
+//404 not found
+exports.USER_NOT_FOUND = "Impossible de trouver cet utilisateur !";
+exports.CATEGORY_NOT_FOUND = "Impossible de trouver cette catégorie !";
+exports.ARTICLE_NOT_FOUND = "Impossible de trouver cet article !";
+exports.COMMENTS_NOT_FOUND = "Aucun commentaire disponible pour cet article";
 //---------------RESPONSE SUCCESS MESSAGE---------------
 exports.authSuccess = "Authentification réussi avec succès !";
 exports.userCreated = "Utilisateur créé avec succès !";

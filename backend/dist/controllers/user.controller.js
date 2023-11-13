@@ -41,6 +41,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const constants_1 = require("../constants/constants");
 const UserModel = __importStar(require("../models/user.model"));
+const checkPayload_service_1 = require("../service/checkPayload.service");
 dotenv_1.default.config();
 /**
  * Function to get all users
@@ -58,7 +59,7 @@ exports.getUsers = getUsers;
 const getUserById = (req, res) => {
     UserModel.findOne({ id: parseInt(req.params.id) })
         .then((user) => res.status(200).json(user))
-        .catch(() => res.status(404).json({ message: constants_1.userNotFound }));
+        .catch(() => res.status(404).json({ message: constants_1.USER_NOT_FOUND }));
 };
 exports.getUserById = getUserById;
 /**
@@ -84,7 +85,7 @@ const login = (req, res) => {
         .then((user) => __awaiter(void 0, void 0, void 0, function* () {
         const isValid = yield bcrypt_1.default.compare(req.body.password, user.password);
         if (!isValid)
-            return res.status(403).json({ message: constants_1.incorrectCredential });
+            return res.status(403).json({ message: constants_1.INCORRECT_CREDENTIAL });
         // CREATE THE TOKEN WITH JWT
         const id = user.id;
         const role = user.role;
@@ -100,7 +101,7 @@ const login = (req, res) => {
             .status(200)
             .json({ message: constants_1.authSuccess, token, id });
     }))
-        .catch(() => res.status(403).json({ message: constants_1.incorrectCredential }));
+        .catch(() => res.status(403).json({ message: constants_1.INCORRECT_CREDENTIAL }));
 };
 exports.login = login;
 /**
@@ -108,7 +109,17 @@ exports.login = login;
  * @param req.body
  */
 const updateUser = (req, res) => {
-    UserModel.findOneAndUpdate([Object.assign({}, req.body), { id: parseInt(req.params.id) }])
+    const imgUser = req.file
+        ? `${req.protocol}://${req.get("host")}/public/${req.file.filename}`
+        : "";
+    try {
+        (0, checkPayload_service_1.checkUserPayload)(req.body);
+    }
+    catch (error) {
+        res.status(400).json({ error });
+        return;
+    }
+    UserModel.findOneAndUpdate([Object.assign(Object.assign({}, req.body), { imgUser }), { id: req.params.id }])
         .then((user) => res.status(200).json(user))
         .catch((error) => res.status(404).json({ error }));
 };

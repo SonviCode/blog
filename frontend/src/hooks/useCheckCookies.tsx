@@ -26,7 +26,6 @@ const useCheckCookies = (): void => {
 
       fetchCookies();
     } catch (e) {
-      console.log(e);
       store.dispatch(setUser(null));
     }
 

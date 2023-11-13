@@ -1,11 +1,25 @@
+.slug {
+  p {
+    font-style: italic;
+    font-weight: 200;
+  }
+
+  svg {
+    font-size: 12px;
+    margin: 0 10px;
+  }
+}
+
 .container_title {
   display: flex;
+  gap: 20px;
 
   div {
     flex: 1;
     display: flex;
   }
 }
+
 .info_title {
   display: flex;
   flex-direction: column;
@@ -37,8 +51,9 @@
   }
 }
 .container_img {
-  width: 300px;
-  height: 205px;
+  width: 500px;
+  min-width: 500px;
+  height: 300px;
   position: relative;
 
   img {
@@ -54,7 +69,6 @@
   }
 }
 
-
 //---------------RESPONSIVE---------------
 @media screen and (max-width: 900px) {
   .container_title {
@@ -63,5 +77,14 @@
     div {
       flex: auto;
     }
+  }
+
+  .info_title {
+    padding-left: 0;
+  }
+  .container_img {
+    width: 100%;
+    min-width: 300px;
+ 
   }
 }

@@ -10,14 +10,15 @@
     flex-direction: column;
     position: relative;
 
-    input, p {
+    input,
+    p {
       border-radius: 4px;
       border: 1px solid gray;
       padding: 10px;
     }
 
     p {
-        background-color: var(--gray_light);
+      background-color: var(--gray_light);
     }
 
     svg {
@@ -26,6 +27,25 @@
       top: 35px;
       cursor: pointer;
       width: 18px;
+    }
+  }
+
+  .img_update {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 4px;
+    gap: 20px;
+    border: 1px solid gray;
+    padding: 10px;
+
+    button {
+      border-radius: 4px;
+      border: none;
+      background-color: var(--green);
+      color: var(--white);
+      padding: 5px;
     }
   }
 

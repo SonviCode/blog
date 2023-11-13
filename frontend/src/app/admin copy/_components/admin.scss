@@ -1,0 +1,107 @@
+@import "@/styles/mixins";
+// ----------------------CSS FOR ALL MODULES-----------------------------
+.admin_container {
+  padding: 20px;
+}
+
+//table
+.table {
+  // box-shadow: var(--box-shadow);
+  // border: 2px solid var(--gray);
+  width: 100%;
+  margin: 20px 0;
+  border-collapse: collapse;
+
+  td,
+  th {
+    border: 2px solid var(--gray);
+    padding: 8px;
+    text-align: left;
+    max-width: 200px;
+    overflow: hidden;
+  }
+
+  tr:nth-child(even) {
+    background-color: var(--gray-light);
+  }
+}
+
+.td_img {
+  position: relative;
+
+  img,
+  div {
+    position: absolute;
+    @include absolute-center;
+  }
+}
+
+.icon_handle {
+  position: relative;
+  width: 70px;
+  cursor: pointer;
+
+  svg {
+    position: absolute;
+    @include absolute-center;
+  }
+}
+
+.trash {
+  color: var(--red_error);
+}
+
+// button
+.add_element {
+  border: 2px solid var(--blue);
+  padding: 20px;
+  border-radius: 10px;
+  width: fit-content;
+}
+
+#cancel_btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  cursor: pointer;
+}
+
+//-------------------------CSS FOR MODAL EDIT------------------------
+.modal {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  width: fit-content;
+
+  div {
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--orange);
+    }
+  }
+}
+
+.confirm_modal {
+  button {
+    padding: 10px;
+    border-radius: 10px;
+
+    &:nth-child(2) {
+      background: var(--red);
+    }
+    &:nth-child(3) {
+      background: var(--green);
+    }
+  }
+}
+
+//REACT QUILL 
+.ql-container {
+  height: fit-content;
+}

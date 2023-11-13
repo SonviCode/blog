@@ -1,19 +1,30 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import styles from "./navbar.module.scss";
 import { NAV_LINKS } from "@/constants/constants";
+import useOutsideAlerter from "@/hooks/useOutsideAlerter";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { User } from "@/types/userTypes";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
+import styles from "./navbar.module.scss";
 
 const NavBar = () => {
-  const pathname = usePathname();
   const [toggleNav, setToggleNav] = useState<boolean>(false);
+  const pathname = usePathname();
+  // const wrapperRef = useRef(null);
+
+  // const isOutside = useOutsideAlerter(wrapperRef);
+
+  const { ref, isComponentVisible } = useOutsideAlerter(true);
+
+  // console.log(isComponentVisible);
+
+  // useEffect(() => {
+  //   console.log(isOutside);
+
+  //   if (isOutside) setToggleNav(false);
+  // }, [isOutside]);
 
   // if(pathname.includes())
 
@@ -24,8 +35,6 @@ const NavBar = () => {
   // console.log(pathname.split("/"));
   // console.log(pathname);
 
-  const user: User | null = useSelector((state: RootState) => state.user.value);
-
   return (
     <nav className={styles.nav}>
       <FontAwesomeIcon
@@ -34,41 +43,31 @@ const NavBar = () => {
         onClick={() => setToggleNav(!toggleNav)}
       />
       {toggleNav && (
-        <div className={styles.modal_nav}>
+        <div
+          className={styles.modal_nav}
+          ref={ref}
+          // onBlur={() => console.log("test")}
+        >
           <ul>
-            {NAV_LINKS.map((link) => {
-              return (
-                <li
-                  key={link.name}
-                  className={
-                    pathname.includes(link.href) ? styles.active_link : ""
-                  }
-                >
-                  <Link href={link.href}>
-                    {link.name === "Connexion" && user ? "Compte" : link.name}
-                  </Link>
-                </li>
-              );
-            })}
+            <NavLinks />
           </ul>
         </div>
       )}
       <ul className={styles.list_links}>
-        {NAV_LINKS.map((link) => {
-          return (
-            <li
-              key={link.name}
-              className={pathname.includes(link.href) ? styles.active_link : ""}
-            >
-              <Link href={link.href}>
-                {link.name === "Connexion" && user ? "Compte" : link.name}
-              </Link>
-            </li>
-          );
-        })}
+        <NavLinks />
       </ul>
     </nav>
   );
+};
+
+const NavLinks = () => {
+  return NAV_LINKS.map((link) => {
+    return (
+      <li key={link.name}>
+        <Link href={link.href}>{link.name}</Link>
+      </li>
+    );
+  });
 };
 
 export default NavBar;

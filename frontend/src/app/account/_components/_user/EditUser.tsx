@@ -1,30 +1,21 @@
-import { DIFFERENT_PASSWORD } from "@/constants/constants";
 import { User } from "@/types/userTypes";
-
 import { FormEvent, useState } from "react";
 import styles from "./edituser.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
+import { updateUser } from "@/service/userService";
 
 export default function EditUser({ user }: { user: User }) {
   const [error, setError] = useState<string>("");
-  const [seePswd, setSeePswd] = useState<boolean>(false);
+  const [updateImg, setUpdateImg] = useState<boolean>(false);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
-    const elements = e.currentTarget.elements as unknown as HTMLFormElement;
-    const password = elements.password.value;
-    const password_confirm = elements.password_confirm.value;
-
-    if (password !== password_confirm) {
-      setError(DIFFERENT_PASSWORD);
-      return;
-    }
-
-    //   signUp(formData, setError);
+    updateUser(formData, user.id, setError);
   };
 
   return (
@@ -54,12 +45,17 @@ export default function EditUser({ user }: { user: User }) {
         />
       </div>
       <div>
-        <label htmlFor="email">Email</label>
-        <p>{user.email}</p>
-      </div>
-      <div>
-        <label htmlFor="file">Photo de profil</label>
-        <input type="file" accept="image/*" id="file" name="file" />
+        <label htmlFor="file">Image</label>
+        {!user.imgUser || updateImg ? (
+          <input type="file" accept="image/*" id="file" name="file" required />
+        ) : (
+          <div className={styles.img_update}>
+            <Image src={user.imgUser} alt={user.name} width={30} height={30} />
+            <button type="button" onClick={() => setUpdateImg(true)}>
+              Changer l&apos;image
+            </button>
+          </div>
+        )}
       </div>
 
       <button>Modifier</button>

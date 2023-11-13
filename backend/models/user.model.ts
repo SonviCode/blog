@@ -1,4 +1,4 @@
-import { database } from "../DB/database";
+import { database, databaseQuery } from "../DB/database";
 import { hashPassword } from "../service/hash.service";
 import { v4 as uuidv4 } from "uuid";
 
@@ -63,18 +63,12 @@ export const find = async () => {
 };
 
 export const findOneAndUpdate = async (
-  params: [UserInterface, { id: number }]
+  params: [UserInterface, { id: string }]
 ) => {
   const sql = process.env.SQL_UPDATE_USER!;
   const body = params[0];
 
   if (body.password) await hashPassword(body);
 
-  return await new Promise((resolve, reject) => {
-    database.query(sql, params, (err, users) => {
-      if (err) reject(err);
-
-      resolve(users);
-    });
-  });
+  return databaseQuery(sql, params);
 };

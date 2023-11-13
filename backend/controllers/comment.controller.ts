@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import { Request, Response } from "express";
 import * as CommentModel from "../models/comment.model";
-import { commentCreated, commentDeleted } from "../constants/constants";
+import { COMMENTS_NOT_FOUND } from "../constants/constants";
 
 dotenv.config();
 
@@ -11,7 +11,7 @@ dotenv.config();
 export const getCommentsByArticle = (req: Request, res: Response) => {
   CommentModel.find(req.params.articleId)
     .then((comments) => res.status(200).json(comments))
-    .catch((error) => res.status(400).json({ error }));
+    .catch(() => res.status(404).json({ message: COMMENTS_NOT_FOUND }));
 };
 
 /**
@@ -32,6 +32,6 @@ export const addComment = (req: Request, res: Response) => {
   CommentModel.save({
     ...req.body,
   })
-    .then(() => getCommentsByArticle(req, res))
+    .then((comments) => res.status(201).json(comments))
     .catch((error) => res.status(400).json({ error }));
 };

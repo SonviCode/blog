@@ -27,7 +27,7 @@ const checkToken = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         next();
     }
     catch (error) {
-        res.status(401).json({ message: constants_1.incorrectToken });
+        res.status(401).json({ message: constants_1.INCORRECT_TOKEN });
     }
 });
 exports.checkToken = checkToken;

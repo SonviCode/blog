@@ -13,6 +13,9 @@ export const database = mysql.createConnection({
   database: process.env.NAME_DB,
 });
 
+/**
+ * a function call in the init to check if the database connexion is ok
+ */
 export const connectionDB = () => {
   database.connect((err) => {
     if (err) {
@@ -24,11 +27,20 @@ export const connectionDB = () => {
   });
 };
 
-export const databaseQuery = async (sql: string, params: string[] | Object) => {
+/**
+ * function to call the database and make a query
+ *
+ * @param sql the sql query (whitout parameter)
+ * @param params the parameter to put in the sql query
+ * @returns Promise pending
+ */
+export const databaseQuery = async (
+  sql: string,
+  params: string[] | Object
+): Promise<unknown> => {
   return await new Promise((resolve, reject) => {
     database.query(sql, params, (err, data) => {
       if (err) return reject(err);
-      if (data.length === 0) return reject(new Error());
 
       resolve(data);
     });
