@@ -11,7 +11,12 @@ export default function Contact() {
   return (
     <main>
       <div className={styles.container_img}>
-        <Image src="/contact_photo.JPG" alt="Tom contact" fill={true} />
+        <Image
+          src="/contact_photo.JPG"
+          alt="Tom contact"
+          fill={true}
+          sizes="100 vw"
+        />
       </div>
       <h1 className={styles.title} onClick={() => router.push("/")}>
         Mes projets te plaisent ?

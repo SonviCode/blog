@@ -6,6 +6,10 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FormEvent, useState } from "react";
 import styles from "./auth.module.scss";
+import { useRouter } from "next/navigation";
+import { User } from "@/types/userTypes";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export default function Login() {
   const [msg, setMsg] = useState<string>("");
@@ -29,7 +33,13 @@ export default function Login() {
     <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>
       <div>
         <label htmlFor="email">Email</label>
-        <input onChange={() => setMsg("")} type="email" id="email" required />
+        <input
+          onChange={() => setMsg("")}
+          type="email"
+          id="email"
+          autoComplete="email"
+          required
+        />
       </div>
       <div>
         <label htmlFor="password">Mot de passe</label>

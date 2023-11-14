@@ -68,8 +68,6 @@ export const addArticle = (req: Request, res: Response) => {
  * @param req.body : email, password
  */
 export const updateArticle = async (req: Request, res: Response) => {
-  console.log(req.file);
-
   if (req.file)
     req.body.imagePresentation = `${req.protocol}://${req.get("host")}/public/${
       req.file.filename

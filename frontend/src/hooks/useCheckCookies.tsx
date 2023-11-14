@@ -1,10 +1,13 @@
+import Loading from "@/app/loading";
 import { API_CHECK_COOKIES } from "@/constants/constants";
 import { setUser } from "@/redux/features/slice/userSlice";
 import { store } from "@/redux/store";
 import { fetchUser } from "@/service/userService";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const useCheckCookies = (): void => {
+const useCheckCookies = () => {
+  const [isLoading, setLoading] = useState<boolean>(true);
+
   const calledOnce = useRef(false);
 
   useEffect(() => {
@@ -27,10 +30,16 @@ const useCheckCookies = (): void => {
       fetchCookies();
     } catch (e) {
       store.dispatch(setUser(null));
+    } finally {
+      setLoading(false);
     }
 
     calledOnce.current = true;
   }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 };
 
 export default useCheckCookies;

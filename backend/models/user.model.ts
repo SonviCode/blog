@@ -13,6 +13,12 @@ export interface UserInterface {
   imgUser?: string;
 }
 
+/**
+ * Method to create an user
+ * 
+ * @param body the body of the user
+ * @returns Promises corresponding to the data API
+ */
 export const save = async (body: UserInterface) => {
   await hashPassword(body);
   const sql = process.env.SQL_SIGNUP!;
@@ -28,40 +34,38 @@ export const save = async (body: UserInterface) => {
     body.imgUser,
   ];
 
-  return await new Promise((resolve, reject) => {
-    database.query(sql, params, (err, user) => {
-      if (err) return reject(err);
-
-      resolve(user[0]);
-    });
-  });
+  return databaseQuery(sql, params);
 };
 
+/**
+ * Method to find an user by the id or the email
+ * 
+ * @param params id or email of the user
+ * @returns Promises corresponding to the data API
+ */
 export const findOne = async (params: Object) => {
   const sql = process.env.SQL_GET_USER_BY!;
 
-  return await new Promise((resolve, reject) => {
-    database.query(sql, [params], (err, user) => {
-      if (err) return reject(err);
-      if (user.length === 0) return reject(new Error());
-
-      resolve(user[0]);
-    });
-  });
+  return databaseQuery(sql, [params]);
 };
 
+/**
+ * Method to get all users
+ * 
+ * @returns Promises corresponding to the data API
+ */
 export const find = async () => {
   const sql = process.env.SQL_GET_USERS!;
 
-  return await new Promise((resolve, reject) => {
-    database.query(sql, (err, users) => {
-      if (err) reject(err);
-
-      resolve(users);
-    });
-  });
+  return databaseQuery(sql, "");
 };
 
+/**
+ * Method to update an user
+ * 
+ * @param params body to update, id of the user
+ * @returns Promises corresponding to the data API
+ */
 export const findOneAndUpdate = async (
   params: [UserInterface, { id: string }]
 ) => {

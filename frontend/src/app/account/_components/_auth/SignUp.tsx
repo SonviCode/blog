@@ -37,19 +37,39 @@ export default function SignUp() {
       className={styles.form}
     >
       <div>
-        <label htmlFor="firstname">Prénom <span>*</span></label>
-        <input type="text" id="firstname" name="firstname" required />
+        <label htmlFor="firstname">
+          Prénom <span>*</span>
+        </label>
+        <input
+          type="text"
+          id="firstname"
+          name="firstname"
+          autoComplete="firstname"
+          required
+        />
       </div>
       <div>
-        <label htmlFor="name">Nom <span>*</span></label>
-        <input type="text" id="name" name="name" required />
+        <label htmlFor="name">
+          Nom <span>*</span>
+        </label>
+        <input type="text" id="name" name="name" autoComplete="name" required />
       </div>
       <div>
-        <label htmlFor="email">Email <span>*</span></label>
-        <input type="email" id="email" name="email" required />
+        <label htmlFor="email">
+          Email <span>*</span>
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          autoComplete="email"
+          required
+        />
       </div>
       <div>
-        <label htmlFor="password">Mot de passe <span>*</span></label>
+        <label htmlFor="password">
+          Mot de passe <span>*</span>
+        </label>
         <input
           type={seePswd ? "text" : "password"}
           id="password"
@@ -63,7 +83,9 @@ export default function SignUp() {
         />
       </div>
       <div>
-        <label htmlFor="password_confirm">Confirmer le mot de passe <span>*</span></label>
+        <label htmlFor="password_confirm">
+          Confirmer le mot de passe <span>*</span>
+        </label>
         <input
           type={seePswd ? "text" : "password"}
           id="password_confirm"

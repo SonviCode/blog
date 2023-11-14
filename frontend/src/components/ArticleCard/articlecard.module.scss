@@ -2,12 +2,14 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   grid-gap: 40px;
+  margin-bottom: 40px;
 }
 
 .article {
   display: flex;
   flex-direction: column;
   max-height: 400px;
+  max-width: 400px;
 
   .container_img {
     position: relative;

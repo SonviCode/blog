@@ -21,15 +21,19 @@
   cursor: pointer;
 }
 
-.modal_nav {
-  padding: 80px;
-  border-radius: 20px;
-  box-shadow: var(--box-shadow);
+.responsive_nav {
   position: fixed;
+  width: 100%;
+  padding: 20px;
+  margin-top: 50px;
   display: flex;
-  @include absolute-center;
-  z-index: 1000;
+  justify-content: center;
+  top: 0;
+  left: 0;
+
+  z-index: 10;
   background-color: white;
+  box-shadow: var(--box-shadow);
 
   ul {
     display: flex;

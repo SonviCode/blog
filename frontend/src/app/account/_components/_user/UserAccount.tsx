@@ -20,6 +20,7 @@ function UserAccount({ user }: { user: User }) {
               src={user.imgUser ? user.imgUser : "/no-user-image.jpg"}
               alt="profil de user.firstname"
               fill={true}
+              sizes="100 vw"
             />
           </div>
           <h2>

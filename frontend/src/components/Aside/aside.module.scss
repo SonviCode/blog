@@ -36,8 +36,44 @@
   }
 }
 
+//----------------------SKELETON----------------------
+.skeleton {
+  width: 30%;
+  position: sticky;
+  top: 20px;
+  align-self: baseline;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  h2 {
+    margin-bottom: 30px;
+    border-radius: 10px;
+    width: 280px;
+    height: 24px;
+    background-color: var(--gray);
+  }
+
+  .content {
+    border-radius: 10px;
+    width: 280px;
+    height: 64px;
+    background-color: var(--gray);
+  }
+}
+
+//----------------------RESPONSIVE----------------------
 @media screen and (max-width: 1100px) {
   .aside {
+    width: 100%;
+    .article_container {
+      flex-wrap: wrap;
+      flex-direction: row;
+      display: flex;
+    }
+  }
+
+  .skeleton {
     width: 100%;
     .article_container {
       flex-wrap: wrap;

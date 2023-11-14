@@ -24,7 +24,7 @@ export const addArticle = async (
 
     const data = await res.json();
 
-    console.log(data);
+
 
     if (!res.ok) {
       setError(data.message);

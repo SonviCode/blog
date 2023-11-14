@@ -21,6 +21,7 @@ export default function Home() {
             src="/presentation.jpg"
             alt="photo de Tom dans les Pyrénées"
             fill={true}
+            sizes="100 vw"
           />
         </div>
         <div className={styles.presentation_text}>

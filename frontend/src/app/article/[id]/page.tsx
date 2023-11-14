@@ -18,7 +18,7 @@ import styles from "./article.module.scss";
 export default function Article() {
   const [article, setArticle] = useState<any>();
 
-  console.log(article);
+
 
   const pathname = usePathname();
 
@@ -32,7 +32,7 @@ export default function Article() {
 
   return (
     <main>
-      <div className={styles.slug}>
+      <div className="slug">
         <p>
           <Link href="/">Accueil</Link>{" "}
           <FontAwesomeIcon icon={faChevronRight} />{" "}
@@ -62,6 +62,7 @@ export default function Article() {
             src={article.imagePresentation}
             alt={article.title}
             fill={true}
+            sizes="100 vw"
           />
         </div>
       </div>

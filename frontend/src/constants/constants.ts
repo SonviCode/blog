@@ -16,9 +16,7 @@ export const API_GET_CATEGORYS = API_ROOTDIR + "category";
 // ARTICLE
 export const API_ARTICLE = API_ROOTDIR + "article";
 // COMMENT
-export const API_ADD_COMMENT = API_ROOTDIR + "comment";
-export const API_GET_COMMENTS = API_ROOTDIR + "comment";
-export const API_DELETE_COMMENT = API_ROOTDIR + "comment";
+export const API_COMMENT = API_ROOTDIR + "comment";
 
 //---------------RESPONSE---------------
 // ERROR MESSAGE

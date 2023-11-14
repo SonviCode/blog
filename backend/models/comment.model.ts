@@ -29,9 +29,7 @@ export const save = async (body: CommentInterface) => {
     body.article_id,
   ];
 
-  return databaseQuery(sql, params)
-    .then(() => find(body.article_id))
-    .catch((e) => e);
+  return databaseQuery(sql, params);
 };
 
 /**
@@ -49,14 +47,12 @@ export const find = async (articleId: string) => {
 /**
  * Method to delete one comment
  *
- * @param articleId the id of the comment
+ * @param id the id of the comment
  * @param params the body of the comment
  * @returns Promises corresponding to the data API
  */
-export const deleteOne = async (params: { id: string }, articleId: string) => {
+export const deleteOne = async (params: { id: string }) => {
   const sql = process.env.SQL_DELETE_COMMENT!;
 
   return databaseQuery(sql, [params])
-    .then(() => find(articleId))
-    .catch((e) => e);
 };

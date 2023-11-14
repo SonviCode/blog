@@ -58,7 +58,7 @@ exports.getUsers = getUsers;
  */
 const getUserById = (req, res) => {
     UserModel.findOne({ id: parseInt(req.params.id) })
-        .then((user) => res.status(200).json(user))
+        .then((user) => res.status(200).json(user[0]))
         .catch(() => res.status(404).json({ message: constants_1.USER_NOT_FOUND }));
 };
 exports.getUserById = getUserById;
@@ -83,12 +83,14 @@ exports.signUp = signUp;
 const login = (req, res) => {
     UserModel.findOne({ email: req.body.email })
         .then((user) => __awaiter(void 0, void 0, void 0, function* () {
-        const isValid = yield bcrypt_1.default.compare(req.body.password, user.password);
+        if (user[0].length === 0)
+            throw new Error();
+        const isValid = yield bcrypt_1.default.compare(req.body.password, user[0].password);
         if (!isValid)
             return res.status(403).json({ message: constants_1.INCORRECT_CREDENTIAL });
         // CREATE THE TOKEN WITH JWT
-        const id = user.id;
-        const role = user.role;
+        const id = user[0].id;
+        const role = user[0].role;
         const token = jsonwebtoken_1.default.sign({ id, role }, process.env.JWT_RANDOM_TOKEN, {
             expiresIn: "1h",
         });

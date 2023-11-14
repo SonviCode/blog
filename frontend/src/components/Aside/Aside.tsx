@@ -1,14 +1,23 @@
 import useFetchData from "@/hooks/useFetchData";
 import styles from "./aside.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { API_ARTICLE } from "@/constants/constants";
 import Link from "next/link";
 import { handleDate } from "@/utils/userUtils";
 
 export default function Aside() {
-  const [articles, setArticles] = useState<any[]>();
+  const [articles, setArticles] = useState<any[]>([]);
 
-  useFetchData(setArticles, API_ARTICLE);
+  const isLoading = useFetchData(setArticles, API_ARTICLE);
+
+  const MAX_ARTICLES_IN_ASIDE = 4;
+
+  useEffect(() => {
+    if (articles.length > MAX_ARTICLES_IN_ASIDE)
+      setArticles([...articles].splice(0, MAX_ARTICLES_IN_ASIDE));
+  }, [articles]);
+
+  if (isLoading) return <AsideSkeleton />;
 
   return (
     <aside className={styles.aside}>
@@ -38,3 +47,17 @@ export default function Aside() {
     </aside>
   );
 }
+
+const AsideSkeleton = () => {
+  return (
+    <aside className={styles.skeleton}>
+      <h2></h2>
+      <div className={styles.article_container}>
+        <div className={styles.content}></div>
+        <div className={styles.content}></div>
+        <div className={styles.content}></div>
+        <div className={styles.content}></div>
+      </div>
+    </aside>
+  );
+};

@@ -3,6 +3,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 100;
+}
+
+.header_fixed {
+  position: fixed;
+  background-color: white;
+  width: 100%;
 }
 
 .social_media {
@@ -25,5 +32,3 @@
   height: 20px;
   cursor: pointer;
 }
-
-

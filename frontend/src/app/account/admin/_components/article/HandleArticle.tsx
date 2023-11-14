@@ -28,8 +28,6 @@ function HandleArticle({
 
   useFetchData(setCategorys, API_GET_CATEGORYS);
 
-  console.log(defaultValue);
-
   const user: User | null = useSelector((state: RootState) => state.user.value);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {

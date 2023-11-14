@@ -19,7 +19,7 @@ export const getCategorys = (_req: Request, res: Response) => {
  * @param req.param : string corresponding to the name to retrieve
  */
 export const getCategoryByName = (req: Request, res: Response) => {
-  CategoryModel.findOne(req.params)
+  CategoryModel.findOne(req.params.name)
     .then((user: any) => res.status(200).json(user[0]))
     .catch(() => res.status(404).json({ message: CATEGORY_NOT_FOUND }));
 };

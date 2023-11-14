@@ -32,6 +32,19 @@ main {
   width: 80%;
 }
 
+// slug
+.slug {
+  p {
+    font-style: italic;
+    font-weight: 200;
+  }
+
+  svg {
+    font-size: 12px;
+    margin: 0 10px;
+  }
+}
+
 //----------------------RESPONSIVE----------------------
 @media (max-width: 1200px) {
   main {

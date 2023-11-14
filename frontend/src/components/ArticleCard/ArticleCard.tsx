@@ -23,6 +23,7 @@ function ArticleCard({ articles }: any) {
               src={article.imagePresentation}
               alt={article.title}
               fill={true}
+              sizes="100 vw"
             />
           </div>
           <div className={styles.article_info}>

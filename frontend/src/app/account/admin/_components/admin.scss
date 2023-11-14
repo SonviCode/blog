@@ -2,14 +2,19 @@
 // ----------------------CSS FOR ALL MODULES-----------------------------
 .admin_container {
   padding: 20px;
+  overflow: hidden;
 }
 
 //table
+.table_container {
+  overflow-x: auto;
+  margin: 20px 0;
+}
+
 .table {
   // box-shadow: var(--box-shadow);
   // border: 2px solid var(--gray);
   width: 100%;
-  margin: 20px 0;
   border-collapse: collapse;
 
   td,
@@ -18,6 +23,8 @@
     padding: 8px;
     text-align: left;
     max-width: 200px;
+    min-width: 100px;
+    height: 42px;
     overflow: hidden;
   }
 
@@ -101,7 +108,7 @@
   }
 }
 
-//REACT QUILL 
+//REACT QUILL
 .ql-container {
   height: fit-content;
 }

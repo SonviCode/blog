@@ -1,40 +1,19 @@
 "use client";
 
 import { NAV_LINKS } from "@/constants/constants";
-import useOutsideAlerter from "@/hooks/useOutsideAlerter";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import styles from "./navbar.module.scss";
 
-const NavBar = () => {
-  const [toggleNav, setToggleNav] = useState<boolean>(false);
-  const pathname = usePathname();
-  // const wrapperRef = useRef(null);
-
-  // const isOutside = useOutsideAlerter(wrapperRef);
-
-  const { ref, isComponentVisible } = useOutsideAlerter(true);
-
-  // console.log(isComponentVisible);
-
-  // useEffect(() => {
-  //   console.log(isOutside);
-
-  //   if (isOutside) setToggleNav(false);
-  // }, [isOutside]);
-
-  // if(pathname.includes())
-
-  // const arr = ["/", pathname.split("/").pop()[0]].join("")
-
-  // console.log(pathname.split("/").splice(-1).splice(0, 0, "/"));
-  // console.log(pathname.split("/").pop());
-  // console.log(pathname.split("/"));
-  // console.log(pathname);
-
+const NavBar = ({
+  toggleNav,
+  setToggleNav,
+}: {
+  toggleNav: boolean;
+  setToggleNav: Dispatch<SetStateAction<boolean>>;
+}) => {
   return (
     <nav className={styles.nav}>
       <FontAwesomeIcon
@@ -43,28 +22,30 @@ const NavBar = () => {
         onClick={() => setToggleNav(!toggleNav)}
       />
       {toggleNav && (
-        <div
-          className={styles.modal_nav}
-          ref={ref}
-          // onBlur={() => console.log("test")}
-        >
+        <div className={styles.responsive_nav}>
           <ul>
-            <NavLinks />
+            <NavLinks setToggleNav={setToggleNav} />
           </ul>
         </div>
       )}
       <ul className={styles.list_links}>
-        <NavLinks />
+        <NavLinks setToggleNav={setToggleNav} />
       </ul>
     </nav>
   );
 };
 
-const NavLinks = () => {
+const NavLinks = ({
+  setToggleNav,
+}: {
+  setToggleNav: Dispatch<SetStateAction<boolean>>;
+}) => {
   return NAV_LINKS.map((link) => {
     return (
       <li key={link.name}>
-        <Link href={link.href}>{link.name}</Link>
+        <Link href={link.href} onClick={() => setToggleNav(false)}>
+          {link.name}
+        </Link>
       </li>
     );
   });

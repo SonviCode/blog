@@ -1,21 +1,20 @@
-import { API_ADD_COMMENT, API_DELETE_COMMENT } from "@/constants/constants";
-import { Dispatch, SetStateAction } from "react";
+import { API_COMMENT } from "@/constants/constants";
 import { Comment } from "@/types/commentTypes";
+import { Dispatch, SetStateAction } from "react";
 
 /**
  * Service to add a comment
  *
- * @param formData
- * @param setError
- * @param setComments
+ * @param formData content of the comment
+ * @param setError to set error message if needed
+ * @returns
  */
 export const addComment = async (
-  formData: any,
-  setError: Dispatch<SetStateAction<string>>,
-  setComments: Dispatch<SetStateAction<Comment[]>>
+  formData: FormData,
+  setError: Dispatch<SetStateAction<string>>
 ) => {
   try {
-    const res = await fetch(API_ADD_COMMENT, {
+    const res = await fetch(API_COMMENT, {
       method: "POST",
       credentials: "include",
       body: formData,
@@ -23,33 +22,56 @@ export const addComment = async (
 
     const data = await res.json();
 
-    console.log(data);
-
     if (!res.ok) {
       setError(data.message);
       return;
     }
-
-    setComments(data);
   } catch (e) {
     console.log(e);
   }
 };
 
+/**
+ * Service to delete a comment
+ *
+ * @param id id of the comment
+ * @param setError to set error message if needed
+ * @returns
+ */
 export const deleteComment = async (
   id: number,
-  articleId: string,
+  setError: Dispatch<SetStateAction<string>>
+) => {
+  try {
+    const res = await fetch(`${API_COMMENT}/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.message);
+      return;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+/**
+ * Service to get all comments according an article
+ *
+ * @param article_id id of the article
+ * @param setComments to set the data directly after a add or a delete
+ */
+export const getComments = async (
+  article_id: string,
   setComments: Dispatch<SetStateAction<Comment[]>>
 ) => {
   try {
-    const res = await fetch(`${API_DELETE_COMMENT}/${id}`, {
-      method: "DELETE",
-      headers: {
-        Accept: "application.json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ articleId }),
-      credentials: "include",
+    const res = await fetch(`${API_COMMENT}/${article_id}`, {
+      method: "GET",
     });
 
     const data = await res.json();

@@ -1,7 +1,11 @@
 import dotenv from "dotenv";
 import { Request, Response } from "express";
 import * as CommentModel from "../models/comment.model";
-import { COMMENTS_NOT_FOUND } from "../constants/constants";
+import {
+  COMMENT_NOT_FOUND,
+  COMMENT_BAD_REQUEST,
+  COMMENT_CREATED,
+} from "../constants/constants";
 
 dotenv.config();
 
@@ -11,7 +15,7 @@ dotenv.config();
 export const getCommentsByArticle = (req: Request, res: Response) => {
   CommentModel.find(req.params.articleId)
     .then((comments) => res.status(200).json(comments))
-    .catch(() => res.status(404).json({ message: COMMENTS_NOT_FOUND }));
+    .catch(() => res.status(404).json({ message: COMMENT_NOT_FOUND }));
 };
 
 /**
@@ -19,9 +23,9 @@ export const getCommentsByArticle = (req: Request, res: Response) => {
  * @param req.body : name, firstname, email, password
  */
 export const deleteComment = (req: Request, res: Response) => {
-  CommentModel.deleteOne({ id: req.params.id }, req.body.articleId)
-    .then((comments) => res.status(200).json(comments))
-    .catch((error) => res.status(400).json({ error }));
+  CommentModel.deleteOne({ id: req.params.id })
+    .then(() => res.sendStatus(204))
+    .catch(() => res.status(400).json({ message: COMMENT_BAD_REQUEST }));
 };
 
 /**
@@ -32,6 +36,6 @@ export const addComment = (req: Request, res: Response) => {
   CommentModel.save({
     ...req.body,
   })
-    .then((comments) => res.status(201).json(comments))
-    .catch((error) => res.status(400).json({ error }));
+    .then(() => res.status(201).json({ message: COMMENT_CREATED }))
+    .catch(() => res.status(400).json({ message: COMMENT_BAD_REQUEST }));
 };

@@ -1,11 +1,15 @@
 import {
-  API_GET_COMMENTS,
+  API_COMMENT,
   COMMENT_EMPTY,
   alertTextDeleteComment,
 } from "@/constants/constants";
 import useFetchData from "@/hooks/useFetchData";
 import { RootState } from "@/redux/store";
-import { addComment, deleteComment } from "@/service/commentService";
+import {
+  addComment,
+  deleteComment,
+  getComments,
+} from "@/service/commentService";
 import { Comment } from "@/types/commentTypes";
 import { User } from "@/types/userTypes";
 import { handleDate } from "@/utils/userUtils";
@@ -29,9 +33,9 @@ function Comments() {
 
   const form = useRef<HTMLFormElement>(null);
   const pathname = usePathname();
-  const articleId = pathname.split("/")[2];
+  const article_id = pathname.split("/")[2];
 
-  useFetchData(setComments, `${API_GET_COMMENTS}/${articleId}`);
+  useFetchData(setComments, `${API_COMMENT}/${article_id}`);
 
   const handleAddComment = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,15 +51,17 @@ function Comments() {
 
     const formData = new FormData(e.currentTarget);
     formData.append("user_id", user?.id.toString()!);
-    formData.append("article_id", articleId);
+    formData.append("article_id", article_id);
 
-    addComment(formData, setError, setComments);
+    addComment(formData, setError);
+    getComments(article_id, setComments);
 
     form.current!.reset();
   };
 
-  const handleDeleteComment = (comment: Comment) => {
-    deleteComment(comment.id, articleId, setComments);
+  const handleDeleteComment = async (id: number) => {
+    await deleteComment(id, setError);
+    getComments(article_id, setComments);
   };
 
   return (
@@ -108,7 +114,7 @@ function Comments() {
                 <FontAwesomeIcon
                   icon={faTrash}
                   className={styles.delete_logo}
-                  onClick={() => handleDeleteComment(comment)}
+                  onClick={() => handleDeleteComment(comment.id)}
                   // onClick={() => setIsOpenModal(true)}
                 />
               )}

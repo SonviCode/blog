@@ -29,7 +29,7 @@ export const getUsers = (_req: Request, res: Response) => {
  */
 export const getUserById = (req: Request, res: Response) => {
   UserModel.findOne({ id: parseInt(req.params.id) })
-    .then((user) => res.status(200).json(user))
+    .then((user: any) => res.status(200).json(user[0]))
     .catch(() => res.status(404).json({ message: USER_NOT_FOUND }));
 };
 
@@ -58,14 +58,16 @@ export const signUp = (req: Request, res: Response) => {
 export const login = (req: Request, res: Response) => {
   UserModel.findOne({ email: req.body.email })
     .then(async (user: any) => {
-      const isValid = await bcrypt.compare(req.body.password, user.password);
+      if (user[0].length === 0) throw new Error();
+
+      const isValid = await bcrypt.compare(req.body.password, user[0].password);
 
       if (!isValid)
         return res.status(403).json({ message: INCORRECT_CREDENTIAL });
 
       // CREATE THE TOKEN WITH JWT
-      const id = user.id;
-      const role = user.role;
+      const id = user[0].id;
+      const role = user[0].role;
       const token = jwt.sign({ id, role }, process.env.JWT_RANDOM_TOKEN!, {
         expiresIn: "1h",
       });

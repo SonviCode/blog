@@ -22,11 +22,6 @@
   height: 100%;
   width: 100%;
 
-  img {
-    width: 50px;
-    height: 50px;
-  }
-
   .img_update {
     display: flex;
     flex-direction: row;
@@ -35,7 +30,7 @@
     border-radius: 4px;
     border: 1px solid gray;
     padding: 10px;
-  
+
     button {
       border-radius: 4px;
       border: none;
@@ -50,7 +45,8 @@
     flex-direction: column;
     position: relative;
 
-    input, select {
+    input,
+    select {
       border-radius: 4px;
       border: 1px solid gray;
       padding: 10px;

@@ -12,6 +12,9 @@ import { useState } from "react";
 import styles from "./category.module.scss";
 import Loading from "@/app/loading";
 import ArticleCard from "@/components/ArticleCard/ArticleCard";
+import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function Category() {
   const [category, setCategorys] = useState<Category>();
@@ -36,15 +39,28 @@ export default function Category() {
 
   return (
     <main>
+      <div className="slug">
+        <p>
+          <Link href="/">Accueil</Link>{" "}
+          <FontAwesomeIcon icon={faChevronRight} />{" "}
+          <Link href="/article">Articles</Link>{" "}
+          <FontAwesomeIcon icon={faChevronRight} /> {categoryName}
+        </p>
+      </div>
       <div className={styles.container_head}>
         <div className={styles.container_img}>
-          <Image src={category.imgUrl} alt={category.name} fill={true} />
+          <Image
+            src={category.imgUrl}
+            alt={category.name}
+            fill={true}
+            sizes="100 vw"
+          />
         </div>
         <h1 className={styles.title} style={{ background: category.color }}>
           {category.name}
         </h1>
       </div>
-      <h2>
+      <h2 className={styles.second_title}>
         Tout nos articles de la catégorie <span>{category.name}</span>
       </h2>
 
