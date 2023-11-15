@@ -8,6 +8,7 @@ import {
   userCreated,
   userLogout,
   USER_NOT_FOUND,
+  SIGNUP_BAD_REQUEST,
 } from "../constants/constants";
 import * as UserModel from "../models/user.model";
 import { checkUserPayload } from "../service/checkPayload.service";
@@ -38,6 +39,10 @@ export const getUserById = (req: Request, res: Response) => {
  * @param req.body : name, firstname, email, password
  */
 export const signUp = (req: Request, res: Response) => {
+console.log(req.body);
+
+
+
   // if an image is provided, set this, else set an empty string
   const imgUser = req.file
     ? `${req.protocol}://${req.get("host")}/public/${req.file!.filename}`
@@ -48,7 +53,7 @@ export const signUp = (req: Request, res: Response) => {
     imgUser,
   })
     .then(() => login(req, res))
-    .catch((error) => res.status(400).json({ error }));
+    .catch(() => res.status(400).json({ message: SIGNUP_BAD_REQUEST }));
 };
 
 /**

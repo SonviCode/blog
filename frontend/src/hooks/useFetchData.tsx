@@ -1,4 +1,6 @@
 import Loading from "@/app/loading";
+import { setUser } from "@/redux/features/slice/userSlice";
+import { store } from "@/redux/store";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 /**
@@ -24,10 +26,12 @@ const useFetchData = (
         });
 
         const data = await res.json();
+
         if (!res.ok) throw new Error(data.message);
+
         setData(data);
       } catch (e) {
-        console.error(e);
+        store.dispatch(setUser(null));
       } finally {
         setLoading(false);
       }

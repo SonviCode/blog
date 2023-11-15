@@ -27,6 +27,6 @@ export const checkAdmin = (req: Request, res: Response, next: NextFunction) => {
 
     next();
   } catch (error) {
-    res.status(401).json({ message: INCORRECT_TOKEN });
+    res.status(403).json({ message: INCORRECT_TOKEN });
   }
 };

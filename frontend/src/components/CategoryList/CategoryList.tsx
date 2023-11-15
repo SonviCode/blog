@@ -1,4 +1,4 @@
-import { API_GET_CATEGORYS } from "@/constants/constants";
+import { API_CATEGORY } from "@/constants/constants";
 import useFetchData from "@/hooks/useFetchData";
 import { Category } from "@/types/categoryTypes";
 import Image from "next/image";
@@ -10,11 +10,13 @@ import Loading from "@/app/loading";
 function CategoryList() {
   const [categorys, setCategorys] = useState<Category[]>();
 
-  const isLoading = useFetchData(setCategorys, API_GET_CATEGORYS);
+  const isLoading = useFetchData(setCategorys, API_CATEGORY);
 
   if (isLoading) return <CategoryListSkeleton />;
   return (
     categorys?.length! > 0 && (
+      <section>
+
       <ul className={styles.category}>
         {categorys?.map((category, i) => (
           <li key={i} style={{ background: category.color }}>
@@ -30,6 +32,7 @@ function CategoryList() {
           </li>
         ))}
       </ul>
+      </section>
     )
   );
 }

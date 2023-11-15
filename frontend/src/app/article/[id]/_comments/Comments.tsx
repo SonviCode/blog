@@ -27,8 +27,6 @@ function Comments() {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
-  console.log(comments);
-
   const user: User | null = useSelector((state: RootState) => state.user.value);
 
   const form = useRef<HTMLFormElement>(null);

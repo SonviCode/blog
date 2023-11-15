@@ -1,7 +1,6 @@
-import { database, databaseQuery } from "../DB/database";
 import dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
-import { UserInterface } from "./user.model";
+import { databaseQuery } from "../DB/database";
 
 dotenv.config();
 

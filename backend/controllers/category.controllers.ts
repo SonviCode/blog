@@ -1,6 +1,11 @@
 import dotenv from "dotenv";
 import { Request, Response } from "express";
-import { categoryCreated, CATEGORY_NOT_FOUND } from "../constants/constants";
+import {
+  categoryCreated,
+  CATEGORY_NOT_FOUND,
+  CATEGORY_BAD_REQUEST,
+  CATEGORY_CREATED,
+} from "../constants/constants";
 import * as CategoryModel from "../models/category.model";
 
 dotenv.config();
@@ -11,7 +16,7 @@ dotenv.config();
 export const getCategorys = (_req: Request, res: Response) => {
   CategoryModel.find()
     .then((categorys) => res.status(200).json(categorys))
-    .catch((error) => res.status(400).json({ error }));
+    .catch(() => res.status(400).json({ message: CATEGORY_BAD_REQUEST }));
 };
 
 /**
@@ -30,8 +35,8 @@ export const getCategoryByName = (req: Request, res: Response) => {
  */
 export const deleteCategory = (req: Request, res: Response) => {
   CategoryModel.deleteOne(req.params)
-    .then(() => getCategorys(req, res))
-    .catch((error) => res.status(400).json({ error }));
+    .then(() => res.sendStatus(204))
+    .catch(() => res.status(400).json({ message: CATEGORY_BAD_REQUEST }));
 };
 
 /**
@@ -39,14 +44,12 @@ export const deleteCategory = (req: Request, res: Response) => {
  * @param req.body : email, password
  */
 export const addCategory = (req: Request, res: Response) => {
-  console.log(req.body);
-
   CategoryModel.save({
     ...req.body,
     imgUrl: `${req.protocol}://${req.get("host")}/public/${req.file!.filename}`,
   })
-    .then(() => getCategorys(req, res))
-    .catch((error) => res.status(400).json({ error }));
+    .then(() => res.status(201).json({ message: CATEGORY_CREATED }))
+    .catch(() => res.status(400).json({ message: CATEGORY_BAD_REQUEST }));
 };
 
 /**
@@ -59,14 +62,7 @@ export const updateCategory = async (req: Request, res: Response) => {
       req.file!.filename
     }`;
 
-  try {
-    await CategoryModel.findOneAndUpdate([
-      { ...req.body },
-      { id: req.params.id },
-    ]);
-
-    getCategorys(req, res);
-  } catch (error) {
-    res.status(400).json({ error });
-  }
+  CategoryModel.findOneAndUpdate([{ ...req.body }, { id: req.params.id }])
+    .then(() => res.sendStatus(204))
+    .catch(() => res.status(400).json({ message: CATEGORY_BAD_REQUEST }));
 };

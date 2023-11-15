@@ -1,11 +1,21 @@
-import React, { useState, FormEvent, Dispatch, SetStateAction } from "react";
+import React, {
+  useState,
+  FormEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+} from "react";
 import styles from "./adminarticle.module.scss";
-import { addArticle, updateArticle } from "@/service/articleService";
+import {
+  addArticle,
+  getArticles,
+  updateArticle,
+} from "@/service/articleService";
 import { User } from "@/types/userTypes";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import useFetchData from "@/hooks/useFetchData";
-import { API_GET_CATEGORYS } from "@/constants/constants";
+import { API_CATEGORY } from "@/constants/constants";
 import { Category } from "@/types/categoryTypes";
 import { Article } from "@/types/articleTypes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,23 +36,28 @@ function HandleArticle({
   const [categorys, setCategorys] = useState<Category[]>();
   const [updateImg, setUpdateImg] = useState<boolean>(false);
 
-  useFetchData(setCategorys, API_GET_CATEGORYS);
+  useFetchData(setCategorys, API_CATEGORY);
 
   const user: User | null = useSelector((state: RootState) => state.user.value);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     formData.append("content", content);
     formData.append("user_id", user!.id.toString());
 
+    let success = true;
+
     if (defaultValue) {
-      updateArticle(defaultValue.id, formData, setError, setArticles);
+      success = await updateArticle(defaultValue.id, formData, setError);
     } else {
-      addArticle(formData, setError, setArticles);
+      success = await addArticle(formData, setError);
     }
 
-    setHandleArticle(false);
+    if (success) {
+      getArticles(setArticles);
+      setHandleArticle(false);
+    }
   };
 
   return (
@@ -50,6 +65,7 @@ function HandleArticle({
       className={styles.form}
       encType="multipart/form-data"
       onSubmit={(e) => handleSubmit(e)}
+      onChange={() => setError("")}
     >
       <div>
         <div
@@ -130,6 +146,7 @@ function HandleArticle({
       <button className="add_element">
         {defaultValue ? "Mettre à jour" : "Ajouter"}
       </button>
+      {error && <p className="error_msg">{error}</p>}
     </form>
   );
 }

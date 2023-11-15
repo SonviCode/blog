@@ -1,6 +1,10 @@
 import dotenv from "dotenv";
 import { Request, Response } from "express";
-import { ARTICLE_NOT_FOUND } from "../constants/constants";
+import {
+  ARTICLE_BAD_REQUEST,
+  ARTICLE_CREATED,
+  ARTICLE_NOT_FOUND,
+} from "../constants/constants";
 import * as ArticleModel from "../models/article.model";
 
 dotenv.config();
@@ -11,7 +15,7 @@ dotenv.config();
 export const getArticles = (_req: Request, res: Response) => {
   ArticleModel.find()
     .then((articles) => res.status(200).json(articles))
-    .catch((error) => res.status(400).json({ error }));
+    .catch(() => res.status(400).json({ message: ARTICLE_BAD_REQUEST }));
 };
 
 /**
@@ -44,8 +48,8 @@ export const getArticleByCategoryName = (req: Request, res: Response) => {
  */
 export const deleteArticle = (req: Request, res: Response) => {
   ArticleModel.deleteOne({ id: req.params.id })
-    .then(() => getArticles(req, res))
-    .catch((error) => res.status(400).json({ error }));
+    .then(() => res.sendStatus(204))
+    .catch(() => res.status(400).json({ message: ARTICLE_BAD_REQUEST }));
 };
 
 /**
@@ -53,14 +57,19 @@ export const deleteArticle = (req: Request, res: Response) => {
  * @param req.body : title, author and content
  */
 export const addArticle = (req: Request, res: Response) => {
+  if (!req.file) {
+    res.status(400).json({ message: ARTICLE_BAD_REQUEST });
+    return;
+  }
+
   ArticleModel.save({
     ...req.body,
     imagePresentation: `${req.protocol}://${req.get("host")}/public/${
       req.file!.filename
     }`,
   })
-    .then(() => getArticles(req, res))
-    .catch((error) => res.status(400).json({ error }));
+    .then(() => res.status(201).json({ message: ARTICLE_CREATED }))
+    .catch(() => res.status(400).json({ message: ARTICLE_BAD_REQUEST }));
 };
 
 /**
@@ -74,6 +83,6 @@ export const updateArticle = async (req: Request, res: Response) => {
     }`;
 
   ArticleModel.findOneAndUpdate([{ ...req.body }, { id: req.params.id }])
-    .then(() => getArticles(req, res))
-    .catch((error) => res.status(400).json({ error }));
+    .then(() => res.sendStatus(204))
+    .catch(() => res.status(400).json({ message: ARTICLE_BAD_REQUEST }));
 };

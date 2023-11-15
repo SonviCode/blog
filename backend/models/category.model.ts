@@ -34,7 +34,7 @@ export const save = async (body: CategoryInterface) => {
  * @returns Promises corresponding to the data API
  */
 export const findOne = async (params: Object) => {
-  const sql = process.env.SQL_GET_CATEGORY_BY_NAME!;  
+  const sql = process.env.SQL_GET_CATEGORY_BY_NAME!;
 
   return databaseQuery(sql, params);
 };

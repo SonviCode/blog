@@ -1,6 +1,6 @@
-import { API_GET_CATEGORYS } from "@/constants/constants";
+import { API_CATEGORY } from "@/constants/constants";
 import useFetchData from "@/hooks/useFetchData";
-import { deleteCategory } from "@/service/categoryService";
+import { deleteCategory, getCategorys } from "@/service/categoryService";
 import { Category } from "@/types/categoryTypes";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,15 +15,16 @@ function AdminCategory() {
   const [defaultValue, setDefaultValue] = useState<Category>();
   const [categorys, setCategorys] = useState<Category[]>([]);
 
-  useFetchData(setCategorys, API_GET_CATEGORYS);
+  useFetchData(setCategorys, API_CATEGORY);
 
   const handleAdd = (): void => {
     setDefaultValue(undefined);
     setHandling(true);
   };
 
-  const handleDelete = (id: number): void => {
-    deleteCategory(id, setCategorys);
+  const handleDelete = async (id: number) => {
+    await deleteCategory(id);
+    getCategorys(setCategorys);
   };
 
   const handleEdit = (category: Category): void => {

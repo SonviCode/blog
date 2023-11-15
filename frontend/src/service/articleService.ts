@@ -1,20 +1,18 @@
-import { API_ARTICLE } from "@/constants/constants";
+import { API_ARTICLE, ARTICLE_BAD_REQUEST } from "@/constants/constants";
 import { Article } from "@/types/articleTypes";
 import { Dispatch, SetStateAction } from "react";
 
-
 /**
  * service to add an article
- * 
- * @param formData 
- * @param setError 
- * @param setCategorys 
+ *
+ * @param formData
+ * @param setError
+ * @param setCategorys
  */
 export const addArticle = async (
   formData: FormData,
   setError: Dispatch<SetStateAction<string>>,
-  setCategorys: Dispatch<SetStateAction<Article[]>>
-) => {
+): Promise<boolean> => {
   try {
     const res = await fetch(API_ARTICLE, {
       method: "POST",
@@ -24,16 +22,14 @@ export const addArticle = async (
 
     const data = await res.json();
 
-
-
     if (!res.ok) {
       setError(data.message);
-      return;
+      return false;
     }
-
-    setCategorys(data);
+    return true;
   } catch (e) {
-    console.log(e);
+    setError(ARTICLE_BAD_REQUEST);
+    return false;
   }
 };
 
@@ -43,8 +39,7 @@ export const addArticle = async (
  * @param formData
  */
 export const deleteArticle = async (
-  id: number,
-  setArticles: Dispatch<SetStateAction<Article[]>>
+  id: number
 ) => {
   try {
     const res = await fetch(`${API_ARTICLE}/${id}`, {
@@ -52,11 +47,7 @@ export const deleteArticle = async (
       credentials: "include",
     });
 
-    const data = await res.json();
-
     if (!res.ok) throw res;
-
-    setArticles(data);
   } catch (e) {
     console.log(e);
   }
@@ -71,8 +62,7 @@ export const updateArticle = async (
   id: number,
   formData: FormData,
   setError: Dispatch<SetStateAction<string>>,
-  setArticles: Dispatch<SetStateAction<Article[]>>
-) => {
+): Promise<boolean> => {
   try {
     const res = await fetch(`${API_ARTICLE}/${id}`, {
       method: "PUT",
@@ -84,8 +74,30 @@ export const updateArticle = async (
 
     if (!res.ok) {
       setError(data.message);
-      return;
+      return false;
     }
+    return true;
+  } catch (e) {
+    setError(ARTICLE_BAD_REQUEST);
+    return false;
+  }
+};
+
+/**
+ * Service to get all articles
+ *
+ * @param setArticles to set the data directly after a add, delete or update
+ */
+export const getArticles = async (
+  setArticles: Dispatch<SetStateAction<Article[]>>
+) => {
+  try {
+    const res = await fetch(API_ARTICLE, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    const data = await res.json();
 
     setArticles(data);
   } catch (e) {

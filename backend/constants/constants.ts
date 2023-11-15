@@ -15,7 +15,15 @@ export const COMMENT_NOT_FOUND =
 
 //400
 export const COMMENT_BAD_REQUEST =
-  "Il y a un problème avec ce commentaire, réessayez !";
+  "Il y a un problème avec ce commentaire, veuillez réessayez !";
+export const CATEGORY_BAD_REQUEST =
+  "Il y a un problème avec cette catégorie, veuillez réessayez !";
+export const ARTICLE_BAD_REQUEST =
+  "Il y a un problème avec cet article, veuillez réessayez !";
+export const SIGNUP_BAD_REQUEST =
+  "problème de création du compte, veuillez réessayez !";
+export const INVALID_PAYLOAD =
+  "Données invalides, veuillez réessayez !";
 
 //---------------RESPONSE SUCCESS MESSAGE---------------
 export const authSuccess = "Authentification réussi avec succès !";
@@ -28,6 +36,5 @@ export const articleCreated = "Article créé avec succès !";
 
 //201
 export const COMMENT_CREATED = "Commentaire créé avec succès !";
-
-//204
-export const COMMENT_DELETED = "Commentaire supprimé avec succès !";
+export const CATEGORY_CREATED = "Category créé avec succès !";
+export const ARTICLE_CREATED = "Article créé avec succès !";

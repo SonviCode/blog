@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  API_GET_CATEGORYS,
+  API_CATEGORY,
   BLOG_NAME,
   NAV_LINKS,
   PITCH_PRESENTATION,
@@ -17,7 +17,7 @@ import styles from "./footer.module.scss";
 export default function Footer() {
   const [categorys, setCategorys] = useState<Category[]>();
 
-  useFetchData(setCategorys, API_GET_CATEGORYS);
+  useFetchData(setCategorys, API_CATEGORY);
 
   return (
     <footer className={styles.footer}>

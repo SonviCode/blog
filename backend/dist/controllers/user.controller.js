@@ -67,13 +67,14 @@ exports.getUserById = getUserById;
  * @param req.body : name, firstname, email, password
  */
 const signUp = (req, res) => {
+    console.log(req.body);
     // if an image is provided, set this, else set an empty string
     const imgUser = req.file
         ? `${req.protocol}://${req.get("host")}/public/${req.file.filename}`
         : "";
     UserModel.save(Object.assign(Object.assign({}, req.body), { imgUser }))
         .then(() => (0, exports.login)(req, res))
-        .catch((error) => res.status(400).json({ error }));
+        .catch(() => res.status(400).json({ message: constants_1.SIGNUP_BAD_REQUEST }));
 };
 exports.signUp = signUp;
 /**

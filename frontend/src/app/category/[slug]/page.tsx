@@ -2,7 +2,7 @@
 
 import ArticleList from "@/components/ArticleList/ArticleList";
 import Aside from "@/components/Aside/Aside";
-import { API_ARTICLE, API_GET_CATEGORYS } from "@/constants/constants";
+import { API_ARTICLE, API_CATEGORY } from "@/constants/constants";
 import useFetchData from "@/hooks/useFetchData";
 import { Category } from "@/types/categoryTypes";
 import Error from "next/error";
@@ -31,7 +31,7 @@ export default function Category() {
   );
   isLoading = useFetchData(
     setCategorys,
-    `${API_GET_CATEGORYS}/${categoryName}`
+    `${API_CATEGORY}/${categoryName}`
   );
 
   if (isLoading) return <Loading />;

@@ -5,7 +5,7 @@ import useFetchData from "@/hooks/useFetchData";
 import { Article } from "@/types/articleTypes";
 import { useState } from "react";
 import "react-quill/dist/quill.snow.css";
-import { deleteArticle } from "@/service/articleService";
+import { deleteArticle, getArticles } from "@/service/articleService";
 import { handleDate } from "@/utils/userUtils";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,16 +25,15 @@ function AdminArticles() {
     setHandling(true);
   };
 
-  const handleDelete = (id: number): void => {
-    deleteArticle(id, setArticles);
+  const handleDelete = async (id: number): Promise<void> => {
+    await deleteArticle(id);
+    getArticles(setArticles);
   };
 
   const handleEdit = (article: Article): void => {
     setDefaultValue(article);
     setHandling(true);
   };
-
-
 
   if (handling)
     return (

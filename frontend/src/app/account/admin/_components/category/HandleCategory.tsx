@@ -1,4 +1,8 @@
-import { addCategory, updateCategory } from "@/service/categoryService";
+import {
+  addCategory,
+  getCategorys,
+  updateCategory,
+} from "@/service/categoryService";
 import { Category } from "@/types/categoryTypes";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,15 +19,17 @@ function HandleCategory({
   const [error, setError] = useState<string>("");
   const [updateImg, setUpdateImg] = useState<boolean>(false);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
     if (defaultValue) {
-      updateCategory(defaultValue.id, formData, setError, setCategorys);
+      await updateCategory(defaultValue.id, formData, setError);
     } else {
-      addCategory(formData, setError, setCategorys);
+      await addCategory(formData, setError);
     }
+
+    getCategorys(setCategorys);
 
     setHandleCategory(false);
   };

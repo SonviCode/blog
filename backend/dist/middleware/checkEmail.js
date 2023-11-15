@@ -4,9 +4,10 @@ exports.checkIfEmailAlreadyExist = void 0;
 const database_1 = require("../DB/database");
 const constants_1 = require("../constants/constants");
 /**
- * Middleware to check if the email already exist - when the user want to sign up
+ * Middleware to check if the email already exist when the user want to sign up
  */
 const checkIfEmailAlreadyExist = (req, res, next) => {
+    console.log(req.body);
     const sql = process.env.SQL_CHECK_EMAIL;
     const { email } = req.body;
     if (!email)
