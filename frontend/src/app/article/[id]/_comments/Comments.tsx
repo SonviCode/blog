@@ -93,7 +93,6 @@ function Comments() {
                 <div className={styles.user_info}>
                   <Image
                     className={styles.img_user}
-                    // src={comment.}
                     src={
                       comment.user_img ? comment.user_img : "/no-user-image.jpg"
                     }

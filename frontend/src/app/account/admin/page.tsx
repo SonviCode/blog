@@ -59,9 +59,9 @@ function AdminAccount() {
           </p>
           <p>{user.email}</p>
           <p>{handleDate(user.date)}</p>
-          <p onClick={() => setIndex(4)} className={styles.edit}>
+          {/* <p onClick={() => setIndex(4)} className={styles.edit}>
             <FontAwesomeIcon icon={faPenToSquare} /> Modifier mes informations
-          </p>
+          </p> */}
           <button className={styles.logout} onClick={() => fetchLogout()}>
             Se déconnecter
           </button>
@@ -70,7 +70,7 @@ function AdminAccount() {
       {index == 1 && <AdminCategory />}
       {index == 2 && <AdminArticles />}
       {index == 3 && <AdminUser />}
-      {index == 4 && <EditUser user={user} />}
+      {/* {index == 4 && <EditUser user={user} />} */}
     </div>
   );
 }

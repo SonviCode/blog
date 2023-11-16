@@ -26,13 +26,8 @@ export const INVALID_PAYLOAD =
   "Données invalides, veuillez réessayez !";
 
 //---------------RESPONSE SUCCESS MESSAGE---------------
-export const authSuccess = "Authentification réussi avec succès !";
-export const userCreated = "Utilisateur créé avec succès !";
-export const userLogout = "Utilisateur déconnecté avec succès !";
-export const categoryCreated = "Catégorie créé avec succès !";
-export const categoryDeleted = "Catégorie supprimé avec succès !";
-export const categoryUpdated = "Catégorie mise à jour avec succès !";
-export const articleCreated = "Article créé avec succès !";
+export const AUTH_SUCCESS = "Authentification réussi avec succès !";
+export const USER_LOGOUT = "Utilisateur déconnecté avec succès !";
 
 //201
 export const COMMENT_CREATED = "Commentaire créé avec succès !";

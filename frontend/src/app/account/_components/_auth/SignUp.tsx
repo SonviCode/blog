@@ -35,6 +35,7 @@ export default function SignUp() {
       encType="multipart/form-data"
       onSubmit={(e) => handleSubmit(e)}
       className={styles.form}
+      onChange={() => setError("")}
     >
       <div>
         <label htmlFor="firstname">

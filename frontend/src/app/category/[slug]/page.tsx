@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import styles from "./category.module.scss";
 import Loading from "@/app/loading";
-import ArticleCard from "@/components/ArticleCard/ArticleCard";
+import ArticleGrid from "@/components/ArticleGrid/ArticleGrid";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
@@ -29,10 +29,7 @@ export default function Category() {
     setArticles,
     `${API_ARTICLE}/category/${categoryName}`
   );
-  isLoading = useFetchData(
-    setCategorys,
-    `${API_CATEGORY}/${categoryName}`
-  );
+  isLoading = useFetchData(setCategorys, `${API_CATEGORY}/${categoryName}`);
 
   if (isLoading) return <Loading />;
   if (!category) return <Error statusCode={404} />;
@@ -64,7 +61,7 @@ export default function Category() {
         Tout nos articles de la catégorie <span>{category.name}</span>
       </h2>
 
-      <ArticleCard articles={articles} />
+      <ArticleGrid articles={articles} />
     </main>
   );
 }

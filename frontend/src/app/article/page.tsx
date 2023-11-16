@@ -1,6 +1,6 @@
 "use client";
 
-import ArticleCard from "@/components/ArticleCard/ArticleCard";
+import ArticleGrid from "@/components/ArticleGrid/ArticleGrid";
 import CategoryList from "@/components/CategoryList/CategoryList";
 import { API_ARTICLE } from "@/constants/constants";
 import useFetchData from "@/hooks/useFetchData";
@@ -16,7 +16,7 @@ export default function Articles() {
       <h1>Tout nos articles disponibles</h1>
 
       <CategoryList />
-      <ArticleCard articles={articles} />
+      <ArticleGrid articles={articles} />
     </main>
   );
 }

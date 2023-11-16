@@ -9,16 +9,17 @@ import {
   updateUser,
 } from "../controllers/user.controller";
 import { checkIfEmailAlreadyExist } from "../middleware/user/checkEmail";
-import { checkToken } from "../middleware/checkToken";
+import { checkToken } from "../middleware/token/checkToken";
 import { multerConfig } from "../middleware/multerConfig";
-import { checkAdmin } from "../middleware/checkAdmin";
-import { checkPayload } from "../middleware/user/checkPayload";
+import { checkAdmin } from "../middleware/token/checkAdmin";
+import { checkPayload } from "../middleware/checkPayload";
 
 const router = express.Router();
 
 router.get("/users", checkAdmin, getUsers);
 router.get("/user/:id", checkToken, getUserById);
-router.put("/update/:id", checkToken, multerConfig, updateUser);
+// TODO
+// router.put("/update/:id", checkToken, multerConfig, updateUser); 
 router.post(
   "/signup",
   multerConfig,

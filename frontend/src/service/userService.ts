@@ -62,11 +62,10 @@ export const fetchLogout = async () => {
 };
 
 /**
- * Service to create user info and call the fetch user function
+ * service to add an user
  *
- * @param formData
- * @param setMsg
- * @returns
+ * @param formData content of article to add
+ * @param setError to display error message if needed
  */
 export const signUp = async (
   formData: FormData,
@@ -92,11 +91,11 @@ export const signUp = async (
 };
 
 /**
- * Service to create user info and call the fetch user function
+ * service to update an user
  *
- * @param formData
- * @param setMsg
- * @returns
+ * @param formData content of user to update
+ * @param id id to update
+ * @param setError to display error message if needed
  */
 export const updateUser = async (
   formData: FormData,

@@ -14,7 +14,7 @@ export const database = mysql.createConnection({
 });
 
 /**
- * a function call in the init to check if the database connexion is ok
+ * function call in the init to check if the database connexion is ok
  */
 export const connectionDB = () => {
   database.connect((err) => {
@@ -31,7 +31,7 @@ export const connectionDB = () => {
  * function to call the database and make a query
  *
  * @param sql the sql query (whitout parameter)
- * @param params the parameter to put in the sql query
+ * @param params the parameter to put in the sql query, an array if you have multip parameter
  * @returns Promise pending
  */
 export const databaseQuery = async (

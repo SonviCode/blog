@@ -2,7 +2,7 @@ import Loading from "@/app/loading";
 import { API_CHECK_COOKIES } from "@/constants/constants";
 import { setUser } from "@/redux/features/slice/userSlice";
 import { store } from "@/redux/store";
-import { fetchUser } from "@/service/userService";
+import { fetchLogout, fetchUser } from "@/service/userService";
 import { useEffect, useRef, useState } from "react";
 
 const useCheckCookies = () => {
@@ -29,6 +29,7 @@ const useCheckCookies = () => {
 
       fetchCookies();
     } catch (e) {
+      fetchLogout();
       store.dispatch(setUser(null));
     } finally {
       setLoading(false);

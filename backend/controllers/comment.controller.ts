@@ -20,7 +20,7 @@ export const getCommentsByArticle = (req: Request, res: Response) => {
 
 /**
  * Function to delete one comment
- * @param req.body : name, firstname, email, password
+ * @param req.param : id to delete
  */
 export const deleteComment = (req: Request, res: Response) => {
   CommentModel.deleteOne({ id: req.params.id })
@@ -30,7 +30,7 @@ export const deleteComment = (req: Request, res: Response) => {
 
 /**
  * Function to add one comment
- * @param req.body : user_id, content, article_id
+ * @param req.body : content of comment to add
  */
 export const addComment = (req: Request, res: Response) => {
   CommentModel.save({

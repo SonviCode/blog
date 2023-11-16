@@ -9,7 +9,7 @@ import styles from "./user.module.scss";
 import EditUser from "./EditUser";
 
 function UserAccount({ user }: { user: User }) {
-  const [isEditUserInfo, setIsEditUserInfo] = useState<boolean>(false);
+  // const [isEditUserInfo, setIsEditUserInfo] = useState<boolean>(false);
 
   return (
     <div className={styles.container_user}>
@@ -29,9 +29,10 @@ function UserAccount({ user }: { user: User }) {
           <p>{handleDate(user.date)}</p>
           <p>{user.email}</p>
         </div>
-        <p className={styles.edit} onClick={() => setIsEditUserInfo(true)}>
+        {/*TODO*/}
+        {/* <p className={styles.edit} onClick={() => setIsEditUserInfo(true)}>
           <FontAwesomeIcon icon={faPenToSquare} /> Modifier mes informations
-        </p>
+        </p> */}
         {/* <p className={styles.edit}>
           <FontAwesomeIcon icon={faLock} /> Modifier mon mot de passe
         </p> */}
@@ -40,7 +41,7 @@ function UserAccount({ user }: { user: User }) {
         </button>
       </div>
 
-      {isEditUserInfo && <EditUser user={user} />}
+      {/* {isEditUserInfo && <EditUser user={user} />} */}
     </div>
   );
 }

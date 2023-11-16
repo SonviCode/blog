@@ -43,7 +43,7 @@ export const save = async (body: ArticleInterface) => {
  * @param params id of the article
  * @returns Promises corresponding to the data API
  */
-export const findOne = async (params: Object) => {
+export const findBy = async (params: Object) => {
   const sql = process.env.SQL_GET_ARTICLE_BY!;
 
   return databaseQuery(sql, params);

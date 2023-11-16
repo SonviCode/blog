@@ -1,10 +1,9 @@
 import dotenv from "dotenv";
 import { Request, Response } from "express";
 import {
-  categoryCreated,
-  CATEGORY_NOT_FOUND,
   CATEGORY_BAD_REQUEST,
   CATEGORY_CREATED,
+  CATEGORY_NOT_FOUND
 } from "../constants/constants";
 import * as CategoryModel from "../models/category.model";
 
@@ -21,7 +20,7 @@ export const getCategorys = (_req: Request, res: Response) => {
 
 /**
  * Function to get one category by the name
- * @param req.param : string corresponding to the name to retrieve
+ * @param req.param : string corresponding to the category name to retrieve
  */
 export const getCategoryByName = (req: Request, res: Response) => {
   CategoryModel.findOne(req.params.name)
@@ -31,7 +30,7 @@ export const getCategoryByName = (req: Request, res: Response) => {
 
 /**
  * Function to delete one category
- * @param req.body : name, firstname, email, password
+ * @param req.param id to delete
  */
 export const deleteCategory = (req: Request, res: Response) => {
   CategoryModel.deleteOne(req.params)
@@ -41,7 +40,7 @@ export const deleteCategory = (req: Request, res: Response) => {
 
 /**
  * Function to add one catgeory
- * @param req.body : email, password
+ * @param req.body : content of category to add
  */
 export const addCategory = (req: Request, res: Response) => {
   CategoryModel.save({
@@ -54,7 +53,7 @@ export const addCategory = (req: Request, res: Response) => {
 
 /**
  * Function to update one catgeory
- * @param req.body : email, password
+ * @param req.body : content of category to update
  */
 export const updateCategory = async (req: Request, res: Response) => {
   if (req.file)

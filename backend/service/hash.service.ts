@@ -9,5 +9,3 @@ export const hashPassword = async (body: UserInterface): Promise<void> => {
     return console.log({ error });
   }
 };
-
-export const comparePassword = async () => {};

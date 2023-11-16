@@ -3,11 +3,10 @@ import { Category } from "@/types/categoryTypes";
 import { Dispatch, SetStateAction } from "react";
 
 /**
- * Service to add a category
+ * service to add a category
  *
- * @param formData
- * @param setError
- * @param setSucces
+ * @param formData content of article to add
+ * @param setError to display error message if needed
  */
 export const addCategory = async (
   formData: FormData,
@@ -34,9 +33,9 @@ export const addCategory = async (
 };
 
 /**
- * Service to delete a category
+ * Service to delete an article
  *
- * @param formData
+ * @param id id to delete
  */
 export const deleteCategory = async (
   id: number,
@@ -56,9 +55,11 @@ export const deleteCategory = async (
 };
 
 /**
- * Service to update a category
+ * service to update a category
  *
- * @param formData
+ * @param id id to update
+ * @param formData content of category to update
+ * @param setError to display error message if needed
  */
 export const updateCategory = async (
   id: number,

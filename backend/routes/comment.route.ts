@@ -4,7 +4,7 @@ import {
   deleteComment,
   getCommentsByArticle,
 } from "../controllers/comment.controller";
-import { checkToken } from "../middleware/checkToken";
+import { checkToken } from "../middleware/token/checkToken";
 import { multerConfig } from "../middleware/multerConfig";
 
 const router = express.Router();

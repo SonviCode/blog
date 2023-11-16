@@ -18,8 +18,6 @@ import styles from "./article.module.scss";
 export default function Article() {
   const [article, setArticle] = useState<any>();
 
-
-
   const pathname = usePathname();
 
   const isLoading = useFetchData(

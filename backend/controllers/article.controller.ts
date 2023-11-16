@@ -23,7 +23,7 @@ export const getArticles = (_req: Request, res: Response) => {
  * @param req.param : number corresponding to the id to retrieve
  */
 export const getArticleById = (req: Request, res: Response) => {
-  ArticleModel.findOne({ "article.id": req.params.id })
+  ArticleModel.findBy({ "article.id": req.params.id })
     .then((article: any) => {
       if (article.length === 0) throw new Error();
 
@@ -36,15 +36,15 @@ export const getArticleById = (req: Request, res: Response) => {
  * Function to get all article according the category name
  * @param req.param : number corresponding to the category name to retrieve
  */
-export const getArticleByCategoryName = (req: Request, res: Response) => {
-  ArticleModel.findOne({ "category.name": req.params.name })
+export const getArticlesByCategoryName = (req: Request, res: Response) => {
+  ArticleModel.findBy({ "category.name": req.params.name })
     .then((article: any) => res.status(200).json(article))
     .catch((e) => res.status(404).json({ message: ARTICLE_NOT_FOUND, e }));
 };
 
 /**
  * Function to sign up = create an user
- * @param req.body : name, firstname, email, password
+ * @param req.param : number corresponding to the id to delete
  */
 export const deleteArticle = (req: Request, res: Response) => {
   ArticleModel.deleteOne({ id: req.params.id })
@@ -54,7 +54,7 @@ export const deleteArticle = (req: Request, res: Response) => {
 
 /**
  * Function to add an article
- * @param req.body : title, author and content
+ * @param req.body the data for the new article
  */
 export const addArticle = (req: Request, res: Response) => {
   if (!req.file) {
@@ -74,7 +74,7 @@ export const addArticle = (req: Request, res: Response) => {
 
 /**
  * Function to update one catgeory
- * @param req.body : email, password
+ * @param req.body the data to update the article
  */
 export const updateArticle = async (req: Request, res: Response) => {
   if (req.file)

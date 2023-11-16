@@ -57,7 +57,7 @@ exports.getUsers = getUsers;
  * @param req.param : number corresponding to the id to retrieve
  */
 const getUserById = (req, res) => {
-    UserModel.findOne({ id: parseInt(req.params.id) })
+    UserModel.findOne({ id: req.params.id })
         .then((user) => res.status(200).json(user[0]))
         .catch(() => res.status(404).json({ message: constants_1.USER_NOT_FOUND }));
 };
@@ -67,7 +67,6 @@ exports.getUserById = getUserById;
  * @param req.body : name, firstname, email, password
  */
 const signUp = (req, res) => {
-    console.log(req.body);
     // if an image is provided, set this, else set an empty string
     const imgUser = req.file
         ? `${req.protocol}://${req.get("host")}/public/${req.file.filename}`
@@ -102,14 +101,14 @@ const login = (req, res) => {
             maxAge: 3600000, // validity period of the token ( in seconds )
         })
             .status(200)
-            .json({ message: constants_1.authSuccess, token, id });
+            .json({ message: constants_1.AUTH_SUCCESS, token, id });
     }))
         .catch(() => res.status(403).json({ message: constants_1.INCORRECT_CREDENTIAL }));
 };
 exports.login = login;
 /**
- * Function to login and get the token
- * @param req.body
+ * Function to update data of user
+ * @param req.body : content of user to update
  */
 const updateUser = (req, res) => {
     const imgUser = req.file
@@ -138,11 +137,13 @@ const logout = (_req, res) => {
         maxAge: -1,
     })
         .status(200)
-        .json({ message: constants_1.userLogout });
+        .json({ message: constants_1.USER_LOGOUT });
 };
 exports.logout = logout;
 /**
  * Function call the first time on the page to know if your session is currently good
+ * before that, we call the middleware checkToken, so the error (if the user is not connected)
+ * is catch before this controller
  */
 const checkCookies = (req, res) => {
     res.status(200).json({ id: req.auth });

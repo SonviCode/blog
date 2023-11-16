@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Notice() {
   return (
-    <div>
+    <section>
       <h1>Mentions légales</h1>
       <p>
         Conditions d’utilisation L’utilisation du présent site implique
@@ -62,6 +62,6 @@ export default function Notice() {
         preuve d’identité. Le site ne recueille pas d’informations personnelles,
         et n’est pas assujetti à déclaration à la CNIL.
       </p>
-    </div>
+    </section>
   );
 }

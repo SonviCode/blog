@@ -3,11 +3,10 @@ import { Comment } from "@/types/commentTypes";
 import { Dispatch, SetStateAction } from "react";
 
 /**
- * Service to add a comment
+ * service to add a comment
  *
- * @param formData content of the comment
- * @param setError to set error message if needed
- * @returns
+ * @param formData content of article to add
+ * @param setError to display error message if needed
  */
 export const addComment = async (
   formData: FormData,
@@ -32,11 +31,10 @@ export const addComment = async (
 };
 
 /**
- * Service to delete a comment
+ * Service to delete an article
  *
- * @param id id of the comment
- * @param setError to set error message if needed
- * @returns
+ * @param id id to delete
+ * @param setError to display error message if needed
  */
 export const deleteComment = async (
   id: number,

@@ -5,13 +5,12 @@ import { Dispatch, SetStateAction } from "react";
 /**
  * service to add an article
  *
- * @param formData
- * @param setError
- * @param setCategorys
+ * @param formData content of article to add
+ * @param setError to display error message if needed
  */
 export const addArticle = async (
   formData: FormData,
-  setError: Dispatch<SetStateAction<string>>,
+  setError: Dispatch<SetStateAction<string>>
 ): Promise<boolean> => {
   try {
     const res = await fetch(API_ARTICLE, {
@@ -36,11 +35,9 @@ export const addArticle = async (
 /**
  * Service to delete an article
  *
- * @param formData
+ * @param id id to delete
  */
-export const deleteArticle = async (
-  id: number
-) => {
+export const deleteArticle = async (id: number) => {
   try {
     const res = await fetch(`${API_ARTICLE}/${id}`, {
       method: "DELETE",
@@ -54,14 +51,16 @@ export const deleteArticle = async (
 };
 
 /**
- * Service to update an article
+ * service to update an article
  *
- * @param formData
+ * @param id id to update
+ * @param formData content of article to update
+ * @param setError to display error message if needed
  */
 export const updateArticle = async (
   id: number,
   formData: FormData,
-  setError: Dispatch<SetStateAction<string>>,
+  setError: Dispatch<SetStateAction<string>>
 ): Promise<boolean> => {
   try {
     const res = await fetch(`${API_ARTICLE}/${id}`, {
@@ -70,9 +69,8 @@ export const updateArticle = async (
       body: formData,
     });
 
-    const data = await res.json();
-
     if (!res.ok) {
+      const data = await res.json();
       setError(data.message);
       return false;
     }
